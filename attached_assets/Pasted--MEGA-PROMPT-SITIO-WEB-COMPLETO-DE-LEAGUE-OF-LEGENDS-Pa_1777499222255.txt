@@ -1,0 +1,956 @@
+# 🏆 MEGA PROMPT — SITIO WEB COMPLETO DE LEAGUE OF LEGENDS
+## Para usar en Replit Agent / Cursor / ChatGPT / Gemini / Claude
+
+---
+
+> **INSTRUCCIÓN GENERAL:** Construye un sitio web épico, cinematográfico y completamente funcional sobre League of Legends. Este sitio debe superar en diseño, contenido y experiencia al sitio oficial de Riot Games (www.leagueoflegends.com). El sitio debe sentirse como una experiencia de juego, no como una página web genérica.
+
+---
+
+## 🎯 STACK TÉCNICO
+
+- **Framework:** React + Vite (o Next.js si prefieres SSR)
+- **Estilos:** Tailwind CSS + CSS custom variables + animaciones CSS puras
+- **Fuentes:** Google Fonts → `Cinzel` (títulos épicos), `Rajdhani` (cuerpo, UI)
+- **Íconos:** Lucide React
+- **Animaciones:** Framer Motion
+- **Enrutamiento:** React Router DOM v6
+- **Imágenes de campeones:** Usar la API pública oficial de Riot/DataDragon:
+  - URL base splash art: `https://ddragon.leagueoflegends.com/cdn/img/champion/splash/{ChampionName}_0.jpg`
+  - URL base loading screen: `https://ddragon.leagueoflegends.com/cdn/img/champion/loading/{ChampionName}_0.jpg`
+  - URL ícono cuadrado: `https://ddragon.leagueoflegends.com/cdn/14.9.1/img/champion/{ChampionName}.png`
+  - JSON de todos los campeones: `https://ddragon.leagueoflegends.com/cdn/14.9.1/data/es_ES/champion.json`
+  - JSON detalle de campeón: `https://ddragon.leagueoflegends.com/cdn/14.9.1/data/es_ES/champion/{ChampionName}.json`
+  - **NOTA:** Reemplaza `14.9.1` por la última versión disponible en: `https://ddragon.leagueoflegends.com/api/versions.json`
+- **Mapas:** Usar imágenes de mapas oficiales vía:
+  - `https://static.wikia.nocookie.net/leagueoflegends/images/` (Wiki de LoL)
+  - O generar mapas SVG propios detallados en código
+- **Paleta de colores:**
+  ```css
+  --gold-primary: #C8AA6E;
+  --gold-light: #F0E6D3;
+  --gold-dark: #785A28;
+  --blue-magic: #0BC4E3;
+  --blue-nexus: #1E90FF;
+  --blue-dark: #050E1A;
+  --blue-mid: #091428;
+  --red-fire: #C8542A;
+  --purple-void: #9B5CD4;
+  --green-nature: #2E7D32;
+  --white-poro: #F0E6D3;
+  ```
+
+---
+
+## 🗂️ ESTRUCTURA DE PÁGINAS Y RUTAS
+
+```
+/                    → HOME — Landing épico
+/campeones           → GALERÍA de todos los campeones
+/campeon/:nombre     → PERFIL individual de cada campeón
+/historia            → LORE — Historia del universo de Runeterra
+/regiones            → MAPA DE RUNETERRA + regiones interactivas
+/region/:nombre      → Página de cada región
+/modos-de-juego      → Todos los modos: SR, ARAM, TFT, Arena
+/mapas               → Mapas del juego con detalles
+/elementos           → Guía de items del juego
+/runas               → Sistema de runas explicado
+/esports             → Mundo competitivo (Worlds, LEC, LCS, etc.)
+/parches             → Historial de parches importantes
+/musica              → Música y bandas del universo LoL
+```
+
+---
+
+## 🏠 PÁGINA HOME — Diseño Completo
+
+### Sección 1: NAV fija
+- Logo "LEAGUE OF LEGENDS" en fuente Cinzel dorada
+- Links: Campeones | Historia | Regiones | Modos de Juego | Esports
+- Botón "JUGAR GRATIS" con clip-path hexagonal y efecto hover dorado
+- Fondo: transparente con blur al hacer scroll
+- Borde inferior con línea dorada de 1px al scrollear
+
+### Sección 2: HERO CINEMATOGRÁFICO
+- Fondo: video loop o imagen de splash art de campeón destacado
+- Capa de overlay: gradiente oscuro azul marino
+- Patrón de hexágonos animado (muy sutil, 4% opacidad)
+- Partículas doradas flotando hacia arriba
+- Título principal: "ENTRA AL CAMPO DE BATALLA" en Cinzel, 8rem, gradiente dorado
+- Subtítulo: descripción del juego en Rajdhani
+- 2 botones: "JUGAR AHORA" (dorado sólido) + "VER HISTORIA" (outline)
+- Indicador de scroll animado
+
+### Sección 3: STATS BAR
+```
+170+ Campeones  |  165+ Países  |  150M+ Jugadores  |  13+ Años de historia
+```
+
+### Sección 4: CAMPEONES DESTACADOS
+- Grid de 5 campeones en cards verticales (aspect-ratio 2/3)
+- Imagen splash art de DataDragon
+- Al hover: card se eleva, aparece nombre y rol, brillo dorado
+- Botón "VER TODOS LOS CAMPEONES" centrado
+
+### Sección 5: ROLES
+Mostrar los 5 roles con íconos SVG custom:
+- 🗡️ ASESINO — Elimina objetivos clave
+- 🛡️ TANQUE — Absorbe el daño del equipo
+- 🔮 MAGO — Poder mágico devastador
+- 🏹 TIRADOR — Daño físico constante a distancia
+- 🤝 SOPORTE — Protege y potencia al equipo
+
+### Sección 6: MAPA DE RUNETERRA INTERACTIVO (preview)
+- Imagen del mapa de Runeterra
+- Puntos interactivos que al hover muestran el nombre de la región
+- Botón para ir a la página completa de regiones
+
+### Sección 7: HISTORIA DESTACADA
+- 3 cards con historias/lore de campeones populares
+- Cada card: imagen + título + extracto de lore + "Leer más"
+
+### Sección 8: ESPORTS
+- Banner de Worlds con logo
+- Últimos resultados de torneos
+- Equipos más populares: T1, G2, Cloud9, Team Liquid, NaVi, LOUD
+
+### Sección 9: MÚSICA
+- Sección dedicada a los grupos musicales del universo LoL:
+  - K/DA, Pentakill, True Damage, Star Guardian, Battle Academia
+- Cards con nombre del grupo, género musical y canciones más famosas
+
+### Sección 10: FOOTER
+- Logo + links de navegación
+- Redes sociales
+- Copyright de Riot Games
+- Links legales
+
+---
+
+## 👥 PÁGINA DE CAMPEONES — `/campeones`
+
+### Funcionalidades:
+1. **Filtro por Rol:** Todos / Asesino / Tanque / Mago / Tirador / Soporte / Luchador
+2. **Filtro por Región:** Demacia / Noxus / Ionia / Freljord / Islas de las Sombras / Void / Piltóver / Zaun / Shurima / Targón / Bilgewater / Ixtal / Bandle City
+3. **Filtro por Dificultad:** Fácil / Medio / Difícil
+4. **Barra de búsqueda** en tiempo real
+5. **Vista:** Grid (tarjetas) o Lista
+
+### Grid de campeones:
+- Cargar todos desde la API de DataDragon: `https://ddragon.leagueoflegends.com/cdn/14.9.1/data/es_ES/champion.json`
+- Cada card muestra: splash art, nombre, título, rol (como badge), dificultad
+- Animación de entrada staggered (cada card aparece con delay)
+- Hover: zoom, brillo, overlay con stats básicas
+
+---
+
+## ⚔️ PERFIL DE CAMPEÓN — `/campeon/:nombre`
+
+Cargar datos de: `https://ddragon.leagueoflegends.com/cdn/14.9.1/data/es_ES/champion/{Nombre}.json`
+
+### Layout:
+**Hero del campeón:**
+- Splash art a pantalla completa como fondo
+- Overlay oscuro gradiente desde abajo
+- Nombre del campeón en Cinzel gigante
+- Título (ej: "El Amo de las Sombras")
+- Rol + Dificultad como badges
+- Stats base (HP, Mana, Armor, etc.) como barras animadas
+
+**Tabs de navegación:**
+- HABILIDADES | LORE | SKINS | BUILDS | COUNTERS | ALIADOS
+
+**Tab HABILIDADES:**
+- Pasiva + Q + W + E + R con íconos desde DataDragon
+- Al hacer click en cada habilidad: descripción completa, cooldown, costo de mana, daño
+- Animación al cambiar de habilidad
+
+**Tab LORE (Historia):**
+Para cada campeón incluir su historia completa escrita de forma inmersiva. Los campeones más importantes con lore extenso:
+
+*(Ver sección LORE COMPLETO más abajo)*
+
+**Tab SKINS:**
+- Grid con todas las skins del campeón
+- Imagen: `https://ddragon.leagueoflegends.com/cdn/img/champion/splash/{Nombre}_{numero}.jpg`
+- Nombre de la skin, precio en RP, fecha de lanzamiento
+
+**Tab BUILDS:**
+- Build recomendada por rol
+- Items con íconos de DataDragon
+- Runas recomendadas con íconos
+- Orden de habilidades a subir
+- Tips y consejos de juego
+
+**Tab COUNTERS:**
+- Campeones que le ganan (con porcentaje de winrate)
+- Campeones a los que gana
+- Campeones que lo complementan (sinergias)
+
+---
+
+## 📖 LORE — HISTORIA DE RUNETERRA Y CAMPEONES
+
+### Historia del Universo
+
+**Runeterra** es un mundo mágico creado hace eones. Existen distintas regiones con culturas, conflictos y campeones únicos. Las fuentes de conflicto principales:
+- La **Magia del Rune** (poder primigenio que corrompe)
+- La guerra entre **Demacia y Noxus**
+- El **Vacío** que amenaza con consumir toda existencia
+- Los **Celestiales** que observan y a veces intervienen
+
+---
+
+### LORE DE LOS 50 CAMPEONES MÁS POPULARES
+
+Incluye estas historias en la base de datos del sitio (objeto JSON en el código):
+
+```javascript
+const championsLore = {
+
+  "Jinx": {
+    nombre: "Jinx",
+    titulo: "La Criminal Libre",
+    region: "Zaun",
+    lore: `Jinx es una criminal de gatillo alegre originaria de Zaun, conocida por sembrar el caos y la destrucción allá donde va. Totalmente impredecible e imperturbable, deja a su paso una estela de explosiones, graffitis y víctimas aterrorizadas. Desprovista de todo escrúpulo moral, Jinx disfruta cuando puede provocar el conflicto más caótico posible, armada hasta los dientes con un arsenal de explosivos y armas de fuego. En el pasado conocida como Powder, fue separada de su hermana Vi tras una terrible tragedia. Su mente se fracturó y adoptó la personalidad de Jinx: un caos andante que vive para la destrucción. Su arma favorita es Pow-Pow, su minigun, y Fishbones, su lanzacohetes con forma de tiburón.`,
+    curiosidades: [
+      "Jinx es la protagonista de la serie animada Arcane de Netflix",
+      "En Arcane se revela que su nombre real era Powder",
+      "Su hermana es Vi, otra campeona del juego",
+      "Creó todos sus inventos con piezas robadas de Piltóver"
+    ],
+    frases: [
+      "¡Explotar cosas es lo más divertido del mundo!",
+      "¿Tengo un problema? ¡NO, TÚ tienes el problema!",
+      "¡Kaboom! ¡Hehe, eso nunca pasa de moda!"
+    ]
+  },
+
+  "Vi": {
+    nombre: "Vi",
+    titulo: "La Oficial de Piltóver",
+    region: "Piltóver / Zaun",
+    lore: `Vi es una oficial de los Sheriffs de Piltóver con el puño antes que el cerebro y una actitud imposible de amansar. Creció en los callejones de Zaun, donde aprendió a sobrevivir con sus puños mucho antes de unirse a la aplicación de la ley. Sus guanteletes hextech le dan una fuerza devastadora capaz de atravesar paredes enteras. Lleva una larga vida buscando a su hermana Jinx, sin saber el monstruo en que se ha convertido la chica que una vez intentó proteger.`,
+    curiosidades: [
+      "Vi y Jinx son hermanas, separadas en la tragedia de la infancia",
+      "Sus guanteletes fueron construidos por ella misma con tecnología hextech",
+      "En Arcane, Vi fue encarcelada por años antes de escapar",
+      "Su nombre completo nunca ha sido revelado oficialmente"
+    ],
+    frases: [
+      "¡Hay dos tipos de gente: los que huyen y los que caen!",
+      "Los puños antes que las preguntas.",
+      "Conmigo es fácil: te digo lo que pienso y luego te rompo la cara."
+    ]
+  },
+
+  "Yasuo": {
+    nombre: "Yasuo",
+    titulo: "El Samurai Sin Viento",
+    region: "Ionia",
+    lore: `Yasuo es un maestro espadachín ioniano que lleva una vida de vergüenza, deshonra y fuga. Acusado falsamente del asesinato del Anciano Leng, tuyo mentor, Yasuo huyó mientras buscaba al verdadero asesino. Con su técnica del Viento Desatado y su espada antigua, se convirtió en un fugitivo que deambula por Ionia luchando con sus propios demonios interiores. Cada batalla es para él una búsqueda de redención imposible. Su hermano Yone lo persiguió y murió en el intento, dejando a Yasuo con una culpa que lo consume.`,
+    curiosidades: [
+      "Yasuo es el campeón más jugado y odiado/amado de la historia del juego",
+      "Su hermano Yone también es campeón jugable",
+      "Su pasiva 'Flujo' le permite construir un escudo a partir del movimiento",
+      "El verdadero asesino del Anciano Leng resultó ser el Maestro Yi corrompido"
+    ],
+    frases: [
+      "La muerte es como el viento… siempre a mi lado.",
+      "Una espada por sí sola no basta.",
+      "No tengo amigos, pero tampoco necesito enemigos."
+    ]
+  },
+
+  "Ahri": {
+    nombre: "Ahri",
+    titulo: "La Zorra de Nueve Colas",
+    region: "Ionia",
+    lore: `Ahri es una vastaya con forma de zorro que tiene la capacidad innata de absorber la esencia vital de los mortales mediante su magia. Aunque sus orígenes son en la cultura vastaya del noreste de Ionia, siempre se ha sentido distante de sus raíces. Con el tiempo ha llegado a aborrecer sus instintos predadores, y ha decidido buscar una forma de recuperar los recuerdos de sus víctimas absorbidos durante años. Viaja sola por el mundo, dejando un reguero de corazones rotos a su paso, buscando la identidad perdida de las almas que ha consumido.`,
+    curiosidades: [
+      "Ahri fue diseñada inspirándose en la mitología coreana del Kumiho (zorro de nueve colas)",
+      "Es uno de los campeones más icónicos y populares, especialmente en Asia",
+      "Tiene una de las mayores colecciones de skins en el juego",
+      "Su habilidad ultimate 'Espíritu Apresurado' tiene 3 cargas de dash"
+    ],
+    frases: [
+      "Todos tienen algo que ocultar. Yo solo hago que sea más fácil.",
+      "¿Mi aspecto te distrae? Qué lástima.",
+      "Las almas de mis víctimas claman en mi interior. Y yo las escucho."
+    ]
+  },
+
+  "Thresh": {
+    nombre: "Thresh",
+    titulo: "El Guardián de las Cadenas",
+    region: "Islas de las Sombras",
+    lore: `Thresh no es simplemente un guardián ni un carcelero; es un coleccionista de almas. Desde su oscuro inframundo entre la vida y la muerte, Thresh anhela almas, no para torturarlas sino por el interés perverso en verlas sufrir para siempre. Antes era un vigilante de la Orden de la Sombra, pero se corrompió lentamente por la oscuridad de las Islas de las Sombras. Ahora su linterna dorada es una trampa para las almas de sus víctimas, condenadas a la agonía eterna dentro del cristal. Cada alma que atrapa lo hace más poderoso.`,
+    curiosidades: [
+      "La linterna de Thresh contiene las almas de sus víctimas",
+      "Su pasiva recolecta almas de enemigos muertos permanentemente para ganar armadura",
+      "Thresh nunca envejece porque ya no está realmente vivo",
+      "Es considerado uno de los mejores soportes de toda la historia del juego"
+    ],
+    frases: [
+      "Cada alma tiene su precio. La tuya tardará en pagarse.",
+      "Ven, ven a mí. El dolor solo dura un momento, la eternidad es para siempre.",
+      "¿Acaso creías que morirías? Tengo planes mucho mejores para ti."
+    ]
+  },
+
+  "Lux": {
+    nombre: "Lux",
+    titulo: "La Dama de la Luminosidad",
+    region: "Demacia",
+    lore: `Lux nació en la familia noble Crownguard de Demacia, uno de los clanes más influyentes del reino. Posee un control magistral sobre la luz, canalizando y amplificando la energía lumínica para devastar a sus enemigos. Sin embargo, Demacia es un reino que detesta y teme la magia, por lo que Lux ha ocultado su poder durante años. Trabaja en secreto como espía al servicio de Demacia mientras mantiene su fachada de noble cortesana. Últimamente sus secretos se complican cuando la persecución de los magos se intensifica y ella debe elegir bando.`,
+    curiosidades: [
+      "El hermano de Lux es Garen, también campeón jugable y el arquetipo del guerrero demaciense",
+      "Lux tiene uno de los rangos de habilidad final (R) más largo del juego",
+      "Su apellido completo es Luxanna Crownguard",
+      "La tensión entre Garen y Katarina (de Noxus) hace referencia a Romeo y Julieta"
+    ],
+    frases: [
+      "¡La demencia también es una forma de brillar!",
+      "Siempre hay una forma de iluminar incluso la oscuridad más profunda.",
+      "¡El poder de la luz me pertenece!"
+    ]
+  },
+
+  "Zed": {
+    nombre: "Zed",
+    titulo: "El Maestro de las Sombras",
+    region: "Ionia",
+    lore: `Zed es el líder maestro del Orden de las Sombras, la primera persona en combinar con éxito el arte de la sombra con la práctica ioniana del combate. Abandonado de niño, fue recogido y entrenado por el Maestro Kusho, líder de la Orden de las Sombras de la época. Superó a todos los demás estudiantes incluido el propio hijo de Kusho, Shen. Cuando se le prohibió acceder al camino de las sombras prohibidas, Zed lo tomó por la fuerza, mató a su maestro y tomó el control del Orden. Ahora cree que solo mediante el poder absoluto puede proteger Ionia de los invasores noxianos.`,
+    curiosidades: [
+      "Zed y Shen fueron compañeros de entrenamiento antes de convertirse en enemigos",
+      "Su sombra viva es una extensión de su alma dividida por la magia de las sombras",
+      "Es uno de los asesinos más populares del juego en todos los tiempos",
+      "Tiene la mayor cantidad de mecánicas de sombra/clon del juego"
+    ],
+    frases: [
+      "La muerte no es la oscuridad. La muerte es la luz que se desvanece.",
+      "Mis sombras nunca duermen.",
+      "Maté a mi maestro. Y fue lo correcto."
+    ]
+  },
+
+  "Jinx": { /* ya definido arriba */ },
+
+  "LeeSin": {
+    nombre: "Lee Sin",
+    titulo: "El Monje Ciego",
+    region: "Ionia",
+    lore: `Lee Sin es un monje de Ionia que sigue el camino de la penitencia y el poder del Dragón. En sus años jóvenes, Lee Sin invocó accidentalmente el Dragón usando magia prohibida, quemando vivos a sus compañeros de monasterio. Atormentado por la culpa, se arrancó los ojos para expiar su pecado. Ahora ve el mundo a través de los sonidos, vibraciones y el ki (energía vital). Es considerado uno de los guerreros más habilidosos de todo Ionia, y su dominio del combate desarmado es legendario.`,
+    curiosidades: [
+      "Lee Sin es el campeón con mayor 'skill cap' (más difícil de dominar) de la historia del juego",
+      "Su patada (Dragon's Rage, R) puede relanzar un campeón sobre un muro hacia el equipo enemigo",
+      "Fue ciego por decisión propia, como penitencia",
+      "Es el campeón favorito de la mayoría de jugadores profesionales de jungle"
+    ],
+    frases: [
+      "Sin vista, pero no sin visión.",
+      "La oscuridad es el mayor maestro.",
+      "El dragón vive en todos nosotros. Yo simplemente lo libero."
+    ]
+  },
+
+  "Katarina": {
+    nombre: "Katarina",
+    titulo: "La Sinvergüenza Letal",
+    region: "Noxus",
+    lore: `Katarina es la asesina más temida de Noxus, hija del General Du Couteau, uno de los soldados más respetados del imperio. Desde pequeña fue entrenada en el arte del asesinato y la espada. Es capaz de lanzarse sobre sus enemigos con una velocidad sobrehumana, lanzando dagas y degollando a sus víctimas con brutal eficiencia. Aunque sirve al Imperio Noxiano, Katarina sigue su propio código de honor retorcido. Su relación con Garen de Demacia es una de las historias de amor prohibido más famosas del lore de Runeterra.`,
+    curiosidades: [
+      "Katarina puede reiniciar su ultimate 'Frenzy de Dagas' si mata a un campeón",
+      "Su relación con Garen es la más famosa del universo LoL",
+      "Tiene una hermana llamada Cassiopeia (también campeona)",
+      "Su pasiva permite lanzar el cuchillo que dejó caer el enemigo derrotado"
+    ],
+    frases: [
+      "El honor no tiene lugar en la guerra.",
+      "La velocidad es la diferencia entre la vida y la muerte.",
+      "Si quieres sobrevivir, no te interpongas en mi camino."
+    ]
+  },
+
+  "Darius": {
+    nombre: "Darius",
+    titulo: "La Mano de Noxus",
+    region: "Noxus",
+    lore: `No hay figura más temida en toda Noxus que Darius, el gran general conocido como la Mano de Noxus. Criado en la pobreza más absoluta, Darius sobrevivió gracias a su fuerza bruta y su inquebrantable voluntad. Se unió al ejército noxiano como soldado raso y ascendió hasta convertirse en el comandante más implacable del imperio. Darius cree en la fuerza como filosofía de vida: solo los más fuertes merecen gobernar. Su hacha Decapitadora ha enviado centenares de cabezas a rodar por los campos de batalla.`,
+    curiosidades: [
+      "El hermano de Darius es Draven (también campeón jugable)",
+      "Su pasiva acumula sangrado hasta 5 veces, aumentando el daño del ultimate",
+      "Su ultimate 'Noxian Guillotine' hace daño verdadero si el enemigo está con 5 stacks",
+      "Darius representa la filosofía de Noxus: solo el poder importa"
+    ],
+    frases: [
+      "¡Noxus conquistará todo!",
+      "La clemencia es para los débiles.",
+      "Mi hacha ha probado la sangre de reyes. La tuya no será diferente."
+    ]
+  },
+
+  "Ezreal": {
+    nombre: "Ezreal",
+    titulo: "El Explorador Prodigioso",
+    region: "Piltóver",
+    lore: `Ezreal es un joven y audaz explorador de Piltóver con un don natural para la magia arcana. Criado por su tío arqueólogo, Ezreal desarrolló un talento para colarse en lugares prohibidos, desactivar trampas y escapar por los pelos. Su guantelete arcano, hallado en una tumba perdida de Shurima, amplifica sus poderes mágicos y le permite lanzar proyectiles de energía pura. Ezreal ama la fama, la gloria y las aventuras peligrosas, todo aderezado con una buena dosis de arrogancia juvenil.`,
+    curiosidades: [
+      "El guantelete de Ezreal tiene poderes que él mismo no comprende del todo",
+      "Es considerado uno de los ADC más técnicos del juego",
+      "Su relación con Lux es famosa en el fandom aunque no oficial en el lore",
+      "Ezreal fue diseñado como una fusión entre Indiana Jones y un mago"
+    ],
+    frases: [
+      "¡Soy tan bueno que ni yo me lo creo!",
+      "Explorar tumbas es mi deporte favorito.",
+      "Podría hacer esto sin mis ojos cerrados. Pero lo haré con ellos abiertos."
+    ]
+  },
+
+  "Blitzcrank": {
+    nombre: "Blitzcrank",
+    titulo: "La Gran Máquina de Vapor",
+    region: "Zaun",
+    lore: `Blitzcrank es un gólem de vapor construido originalmente en Zaun para manejar materiales peligrosos en los alcantarillados. Aunque fue creado para trabajo servil, desarrolló una forma de conciencia propia. Dotado de inteligencia y de un sentido innato de la justicia, Blitzcrank usa su enorme poder físico para ayudar a los desvalidos de Zaun en lugar de destruir. Es una de las pocas máquinas de Zaun con alma propia, y su cuerpo metálico esconde un corazón genuino que desea proteger a los inocentes.`,
+    curiosidades: [
+      "El gancho de Blitzcrank (Q) es el grab más famoso y temido del juego",
+      "Fue construido por Viktor antes de que Viktor abandonara Zaun por Piltóver",
+      "Blitzcrank tiene conciencia propia, lo que lo distingue de otras máquinas",
+      "Su frase 'ERROR 404' se usa mémicamente en la comunidad"
+    ],
+    frases: [
+      "PROCESANDO: AMENAZA DETECTADA. ACCIÓN: NEUTRALIZAR.",
+      "Mi corazón es de acero, pero siente.",
+      "La eficiencia es la máxima virtud."
+    ]
+  },
+
+  "Morgana": {
+    nombre: "Morgana",
+    titulo: "La Caída del Cielo",
+    region: "Demacia (origen celestial)",
+    lore: `Morgana es una de las Hijas Aladas, ángeles caídos que descienden de los cielos para guiar a la humanidad. Pero a diferencia de su hermana Kayle, Morgana eligió permanecer entre los mortales, atando sus alas con cadenas de hierro para no olvidar el sufrimiento humano. Rechazó el frío juicio de los celestiales y adoptó la compasión y el perdón como sus valores. Su magia oscura no es malvada: es el poder de enraizar la injusticia para que no escape. La tensión entre Morgana y Kayle es una de las historias más profundas del universo.`,
+    curiosidades: [
+      "Morgana y Kayle son hermanas, hijas de la Celestial Mihail",
+      "Su W 'Piscina de Tormento' es considerada una de las mejores habilidades anti-tanque",
+      "Su E 'Escudo Oscuro' bloquea habilidades de control de multitudes (CC)",
+      "A pesar de su aspecto oscuro, Morgana representa la misericordia, no la maldad"
+    ],
+    frases: [
+      "La justicia sin misericordia no es justicia.",
+      "No soy el monstruo. Los monstruos usan armadura brillante.",
+      "Cargué mis cadenas por elección. ¿Cuántos pueden decir lo mismo?"
+    ]
+  },
+
+  "Nasus": {
+    nombre: "Nasus",
+    titulo: "El Curador de las Arenas",
+    region: "Shurima",
+    lore: `Nasus es un ser antiguo con forma de chacal que sirvió durante eones como guardián de la biblioteca más grande de Shurima. Fue uno de los Guardianes Ascendidos de Shurima, guerreros transformados por el sol para proteger el imperio. Cuando Shurima cayó por la traición, Nasus fue atrapado en otro plano durante miles de años. Al regresar encontró su amada civilización convertida en ruinas y arena. Ahora busca restaurar la gloria de Shurima mientras lucha contra la corrupción de su hermano Renekton, a quien debe enfrentar para redimirlo o destruirlo.`,
+    curiosidades: [
+      "Nasus escala infinitamente: su Q gana daño permanente por cada kill",
+      "Su hermano es Renekton, también campeón jugable y su archienemigo",
+      "Nasus fue el guardián de la mayor biblioteca de conocimiento del mundo",
+      "Es considerado uno de los late-game carries más poderosos si se le permite farmear"
+    ],
+    frases: [
+      "El tiempo destruye todo... excepto mi determinación.",
+      "Soy la enciclopedia viviente de un imperio muerto.",
+      "Hermano... la ira te consume. Como siempre lo hizo."
+    ]
+  },
+
+  "Caitlyn": {
+    nombre: "Caitlyn",
+    titulo: "La Sherif de Piltóver",
+    region: "Piltóver",
+    lore: `Caitlyn es la sheriff más hábil de Piltóver, reconocida como la mejor tiradora de toda la ciudad-estado. Nacida en una familia noble de Piltóver, descubrió su talento para el rifle desde joven. Tras un ataque de las bandas de Zaun que dañó a su familia, decidió dedicar su vida a proteger la ley y el orden en la Ciudad del Progreso. Su rifle hextech personalizado puede disparar con una precisión sobrehumana desde distancias imposibles. Trabaja frecuentemente junto a Vi, aunque su relación es de constante tensión y respeto mutuo.`,
+    curiosidades: [
+      "Caitlyn y Vi son la pareja más famosa de la historia de LoL",
+      "En Arcane se profundiza en su historia y familia",
+      "Su sombrero policial es tan icónico como ella misma",
+      "El alcance de su basic attack es el más largo de todos los ADC del juego"
+    ],
+    frases: [
+      "Un disparo. Una victoria. Así es como se hace.",
+      "En Piltóver, la ley siempre alcanza al culpable.",
+      "No necesito ver el objetivo para acertar."
+    ]
+  },
+
+  "Heimerdinger": {
+    nombre: "Heimerdinger",
+    titulo: "El Ínclito Inventor",
+    region: "Piltóver",
+    lore: `Heimerdinger es uno de los yordles más brillantes de Piltóver y uno de los fundadores de la Academia de Ciencia y Progreso (CSPT). Su mente produce ideas tan rápido que le resulta imposible comunicarse con fluidez con otras personas. Sus pequeñas torretas hextech son obras de ingeniería revolucionaria que el propio Heimerdinger mejora constantemente. Aunque su carácter excéntrico y su estatura pequeña hacen que la gente lo subestime, ningún inventor de Piltóver se le acerca en genialidad.`,
+    curiosidades: [
+      "Heimerdinger tiene el mayor coeficiente de inteligencia del universo de LoL según el lore",
+      "Es uno de los yordles (criaturas mágicas pequeñas) del juego",
+      "Fue co-fundador de la primera academia científica de Piltóver",
+      "En Arcane tiene un papel importante como mentor y guía moral"
+    ],
+    frases: [
+      "¡Eureka! Aunque este término ya está en desuso científicamente.",
+      "La ciencia avanza gracias a la imaginación, no a la cautela.",
+      "Mis torretas no son armas. Son... ayudantes muy agresivos."
+    ]
+  },
+
+  "MasterYi": {
+    nombre: "Master Yi",
+    titulo: "El Espadachín de Wuju",
+    region: "Ionia",
+    lore: `Master Yi es el último exponente vivo del estilo de lucha Wuju, una disciplina ioniana que entrelaza la mente, el cuerpo y el espíritu con la hoja. La aldea de Wuju fue destruida por los invasores noxianos usando magia química, y Yi sobrevivió de milagro. Desde entonces ha dedicado su vida a preservar el legado de Wuju entrenando nuevos estudiantes, aunque la tragedia ha dejado cicatrices profundas en su alma. Su armadura de visión múltiple le permite ver en múltiples planos simultáneamente.`,
+    curiosidades: [
+      "Master Yi es el campeón más fácil de aprender del juego",
+      "Su ultimate 'Highlander' le hace inmune a ralentizaciones y aumenta velocidad",
+      "Fue el maestro de Wukong antes de los eventos del juego",
+      "El casco con múltiples lentes es para ver el ki y los planos espirituales"
+    ],
+    frases: [
+      "Un verdadero maestro es un eterno estudiante.",
+      "Wuju no muere. Vive en cada golpe de mi hoja.",
+      "La velocidad del pensamiento supera la velocidad del cuerpo."
+    ]
+  },
+
+  "Teemo": {
+    nombre: "Teemo",
+    titulo: "El Explorador Veloz",
+    region: "Bandle City",
+    lore: `Teemo es un yordle de Bandle City conocido por su alegre disposición... y por ser considerado el ser más peligroso de Runeterra por quienes lo han visto en combate. Teemo pertenece a los Exploradores de Bandle, una unidad de reconocimiento de yordles que operan en solitario por el mundo. Su apariencia adorable esconde un letal talento para el sigilo, el veneno y la colocación de trampas. Nadie sabe cómo encuentra siempre su objetivo. Nadie sabe de dónde viene. Y eso es exactamente como a Teemo le gusta.`,
+    curiosidades: [
+      "Teemo es el campeón más odiado del juego por sus hongos invisibles",
+      "Sus hongos (R) se vuelven invisibles y pueden colocarse en todo el mapa",
+      "Teemo puede volverse invisible estando quieto (pasiva)",
+      "La comunidad lo llama 'Satanás' o 'el demonio del top' de forma afectuosa/odiosa"
+    ],
+    frases: [
+      "¡El honor ante todo! (Mientras coloca hongos venenosos en tus arbustos)",
+      "¡Un explorador siempre encuentra su camino!",
+      "¿He dicho ya que me encanta mi trabajo?"
+    ]
+  },
+
+  "Ashe": {
+    nombre: "Ashe",
+    titulo: "La Reina de Flecha de Escarcha",
+    region: "Freljord",
+    lore: `Ashe es la reina guerrera de la tribu de los Avarosa, una de las tres tribus principales del gélido Freljord. Lleva el peso de un antiguo destino: según la leyenda, es la reencarnación de la semidiosa Ashe original que unificó el Freljord en el pasado. La actual Ashe intenta repetir ese logro uniendo las tres tribus en guerra: los Avarosa, los Inuit de la Tormenta y los Espíritus de las Nieves. Su arco de hielo, Cristal de Prometeo, jamás falla y puede disparar flechas de hielo que congelan a sus enemigos.`,
+    curiosidades: [
+      "Ashe está casada con Tryndamere en el lore (ambos son campeones)",
+      "Su flecha de cristal (R) puede viajar por todo el mapa y aturdir",
+      "Es considerada la campeona más adecuada para aprender el rol de ADC",
+      "Su objetivo es unir todas las tribus del Freljord bajo su liderazgo"
+    ],
+    frases: [
+      "El frío purifica. El frío unifica.",
+      "Soy la flecha del destino.",
+      "Mi pueblo ha esperado demasiado. No fallaré."
+    ]
+  },
+
+  "Sett": {
+    nombre: "Sett",
+    titulo: "El Jefe de la Banda",
+    region: "Ionia",
+    lore: `Sett creció en los fosos de combate de Ionia, hijo de un famoso luchador noxiano y una madre ioniana. Cuando su padre desapareció, Sett tuvo que ganarse la vida con sus puños desde la infancia. Ascendió en los combates clandestinos hasta convertirse en el jefe indiscutible de todos los fosos de pelea de Ionia. Su negocio no es la guerra ni la conquista: es el espectáculo del combate. Sett respeta la fuerza por encima de todo, y él mismo es la personificación de la fuerza bruta elevada a arte.`,
+    curiosidades: [
+      "Sett puede absorber el daño recibido y devolverlo como daño verdadero (W)",
+      "Es uno de los luchadores de top lane más populares en el juego competitivo",
+      "Su madre aparece en el lore y es su mayor motivación",
+      "Sett representa una visión diferente de la fuerza: honor en el combate limpio"
+    ],
+    frases: [
+      "¿Quieres pelearme? Ese es el mejor plan que he escuchado hoy.",
+      "Yo no rompo las reglas. Soy las reglas.",
+      "Ma tiene razón: el esfuerzo siempre paga."
+    ]
+  }
+
+};
+```
+
+---
+
+## 🗺️ REGIONES DE RUNETERRA — Página Completa
+
+### Incluir todas estas regiones con su descripción, historia, clima, campeones y conflictos:
+
+```javascript
+const regions = [
+  {
+    id: "demacia",
+    nombre: "Demacia",
+    subtitulo: "El Reino de la Justicia y el Honor",
+    color: "#1E90FF",
+    clima: "Templado, bosques y montañas nevadas",
+    descripcion: `Demacia es un reino poderoso y orgulloso, famoso por sus inquebrantables principios de honor, virtud y desconfianza hacia la magia. Sus ciudades están construidas con piedra pétrima, un material mágicamente inerte que suprime la magia. El reino fue fundado por refugiados que huían de guerras mágicas, y ese trauma colectivo creó una sociedad que ve la magia como una amenaza existencial. Recientemente, una revuelta de magos amenaza con fracturar el reino desde dentro.`,
+    campeones: ["Garen", "Lux", "Jarvan IV", "Fiora", "Galio", "Poppy", "Quinn", "Shyvana", "Sona", "Vayne", "Xin Zhao"],
+    conflictos: ["Guerra centenaria contra Noxus", "Persecución interna de magos", "Revuelta de los Liberados"],
+    curiosidades: [
+      "La piedra pétrima de Demacia suprime la magia activamente",
+      "Lux y Garen son hermanos y ambos pertenecen a la familia Crownguard",
+      "Jarvan IV es el príncipe heredero del reino"
+    ]
+  },
+  {
+    id: "noxus",
+    nombre: "Noxus",
+    subtitulo: "El Imperio del Poder Sin Límites",
+    color: "#C8542A",
+    clima: "Variado — desde tundras hasta desiertos según la región conquistada",
+    descripcion: `Noxus es el imperio más poderoso y expansionista de Runeterra. Su filosofía es simple pero brutal: el poder lo es todo. Cualquiera puede ascender en Noxus si demuestra suficiente fuerza, sin importar su origen. El imperio ha conquistado docenas de naciones y absorbe sus culturas y fortalezas. A diferencia de Demacia, Noxus abraza la magia si sirve al poder. Sus legiones son temidas en todo el mundo conocido.`,
+    campeones: ["Darius", "Katarina", "Draven", "Swain", "Riven", "Talon", "Vladimir", "Kled", "Mordekaiser", "Cassiopeia", "Sion"],
+    conflictos: ["Invasión de Ionia", "Conflicto centenario con Demacia", "Luchas internas por el poder del Trifarí"],
+    curiosidades: [
+      "Swain es el actual Gran General de Noxus tras un golpe de estado",
+      "Noxus tiene tres tipos de poder: fuerza bruta, astucia y voluntad de hierro",
+      "El Trifarí es la cúpula gobernante formada por tres líderes"
+    ]
+  },
+  {
+    id: "ionia",
+    nombre: "Ionia",
+    subtitulo: "El Primer Continente, Tierra de la Magia y el Espíritu",
+    color: "#9B5CD4",
+    clima: "Templado húmedo, bosques milenarios y archipiélagos",
+    descripcion: `Ionia es quizás la región más mágicamente dotada de Runeterra. Sus habitantes viven en armonía con el Espíritu de Runeterra, una red invisible de magia que conecta todos los seres vivos. Las artes espirituales, la meditación y el equilibrio entre el mundo físico y espiritual son centrales para la cultura ioniana. Fue invadida por Noxus hace años, dejando cicatrices que aún no sanan. Muchos campeones ionianos buscan recuperar ese equilibrio perdido.`,
+    campeones: ["Yasuo", "Yone", "Ahri", "Zed", "Lee Sin", "Karma", "Kennen", "Akali", "Irelia", "Master Yi", "Shen", "Wukong", "Jhin"],
+    conflictos: ["Secuelas de la invasión noxiana", "Guerra entre el Orden de las Sombras y el Ojo de Twilight", "El retorno de Viego"],
+    curiosidades: [
+      "Ionia es un archipiélago compuesto por islas conectadas por magia",
+      "La magia espiritual ioniana es única: conecta a los seres con el Nexo Natural",
+      "El equilibrio entre luz y oscuridad es fundamental en su filosofía"
+    ]
+  },
+  {
+    id: "freljord",
+    nombre: "Freljord",
+    subtitulo: "Las Tierras Eternas del Hielo y la Tormenta",
+    color: "#87CEEB",
+    clima: "Ártico extremo, tormentas eternas y inviernos que duran años",
+    descripcion: `El Freljord es una vasta extensión helada al norte de Runeterra donde solo los más fuertes sobreviven. Tres tribus principales compiten por el control de la región: los Avarosa liderados por Ashe, los Inuit de la Tormenta de Sejuani y los Espíritus de las Nieves de Lissandra. Bajo el hielo duermen los Watchers, antiguos seres del Void que llegaron al mundo antes que la humanidad. Lissandra los mantiene dormidos a cualquier costo.`,
+    campeones: ["Ashe", "Tryndamere", "Sejuani", "Lissandra", "Braum", "Nunu & Willump", "Olaf", "Volibear", "Anivia", "Gnar"],
+    conflictos: ["Guerra de las Tres Tribus", "Amenaza de los Watchers bajo el hielo", "Incursiones de monstruos del Vacío"],
+    curiosidades: [
+      "Braum es el héroe más querido del Freljord, conocido por su bondad infinita",
+      "Volibear es una deidad antigua del Freljord que precede a la humanidad",
+      "Los Watchers son seres del Void atrapados bajo el hielo por Lissandra"
+    ]
+  },
+  {
+    id: "piltover",
+    nombre: "Piltóver",
+    subtitulo: "La Ciudad del Progreso",
+    color: "#F0C040",
+    clima: "Templado industrial, siempre cubierto por smog de fábrica",
+    descripcion: `Piltóver es la ciudad más avanzada tecnológicamente de Runeterra. Conocida como la Ciudad del Progreso, es el hogar de los inventores más brillantes del mundo, quienes fusionan la ciencia con la magia en una tecnología llamada hextec. La ciudad tiene dos caras: la brillante y opulenta Piltóver arriba, y la oscura y contaminada Zaun en los niveles inferiores. La tensión entre ambas ciudades es constante y explosiva.`,
+    campeones: ["Caitlyn", "Vi", "Ezreal", "Heimerdinger", "Jayce", "Viktor", "Jinx", "Ekko", "Camille", "Orianna", "Seraphine"],
+    conflictos: ["Tensión política entre Piltóver y Zaun", "Control de la tecnología hextech", "Criminalidad organizada de Zaun"],
+    curiosidades: [
+      "La serie Arcane de Netflix se sitúa principalmente en Piltóver y Zaun",
+      "La technología hextech fusiona magia cristalizada con ingeniería",
+      "Piltóver está literalmente construida sobre Zaun"
+    ]
+  },
+  {
+    id: "zaun",
+    nombre: "Zaun",
+    subtitulo: "La Ciudad Gris, Bajo las Sombras de Piltóver",
+    color: "#2E8B57",
+    clima: "Industrial tóxico, smog verde-amarillo permanente",
+    descripcion: `Zaun es la ciudad de las sombras que vive bajo Piltóver, literalmente. En sus calles oscuras y túneles llenos de smog químico habitan los pobres, los rechazados y los peligrosos. Los zaunitas son ingeniosos por necesidad: se modifican a sí mismos con tecnología shimmer (una droga-sustancia mágica) para sobrevivir en condiciones imposibles. A pesar de su reputación, Zaun tiene una cultura vibrante, leal y feroz que Piltóver nunca entenderá.`,
+    campeones: ["Jinx", "Vi", "Ekko", "Viktor", "Singed", "Blitzcrank", "Warwick"],
+    conflictos: ["Opresión de Piltóver", "Guerra del shimmer", "Experimentos ilegales con magia y tecnología"],
+    curiosidades: [
+      "El shimmer es una sustancia que otorga poderes pero destruye la mente y el cuerpo",
+      "Zaun fue separada de Piltóver por un desastre industrial hace generaciones",
+      "Singed es el científico más peligroso de Zaun, sin ningún límite moral"
+    ]
+  },
+  {
+    id: "shurima",
+    nombre: "Shurima",
+    subtitulo: "El Imperio Perdido de las Arenas",
+    color: "#DAA520",
+    clima: "Desierto extremo, tormentas de arena, calor letal",
+    descripcion: `Shurima fue hace miles de años el mayor imperio del mundo conocido, hogar de los Ascendidos, guerreros transformados por el Dios Sol en seres semidivinos. El imperio cayó por la traición y el abuso del poder, y sus ciudades quedaron sepultadas bajo la arena. En el presente, el Dios Solar Azir ha resucitado e intenta restaurar Shurima a su antigua gloria, mientras antiguos Ascendidos corrompidos como Xerath amenazan con destruirlo todo.`,
+    campeones: ["Azir", "Nasus", "Renekton", "Xerath", "Sivir", "Taliyah", "Amumu", "Rammus", "Skarner"],
+    conflictos: ["Resurrección del Imperio de Shurima", "Guerra entre Azir y Xerath", "Los Ascendidos corrompidos"],
+    curiosidades: [
+      "Shurima fue el mayor imperio de la historia de Runeterra",
+      "Los Ascendidos son humanos transformados en semidioses por el Disco del Sol",
+      "Nasus y Renekton son hermanos y ambos son Ascendidos de la antigua Shurima"
+    ]
+  },
+  {
+    id: "islas-sombras",
+    nombre: "Islas de las Sombras",
+    subtitulo: "Tierra de Muerte y Almas Condenadas",
+    color: "#2E4057",
+    clima: "Neblina eterna, muerte mágica que corroe todo lo vivo",
+    descripcion: `Las Islas de las Sombras son el lugar más oscuro y peligroso de Runeterra. Fueron una vez las Islas Doradas, un paraíso de vida y magia. Pero un ritual salió terriblemente mal, desatando una fuerza llamada La Ruina que convirtió toda vida en muerte no muerta. La Bruma Negra que emana de las islas mata todo lo vivo que toca. El Rey Arruinado Viego, que causó el desastre, aún vaga por el mundo buscando resucitar a su amada esposa.`,
+    campeones: ["Thresh", "Hecarim", "Yorick", "Kalista", "Mordekaiser", "Viego", "Gwen", "Senna", "Lucian", "Mist Walkers"],
+    conflictos: ["La Ruina que se extiende por Runeterra", "El Rey Arruinado Viego", "Los espíritus atrapados en las islas"],
+    curiosidades: [
+      "Las Islas Doradas eran el lugar más sagrado de Runeterra antes de La Ruina",
+      "Senna estuvo atrapada dentro de la linterna de Thresh durante décadas",
+      "Thresh colecciona almas activamente, cada una aumenta su poder"
+    ]
+  },
+  {
+    id: "targon",
+    nombre: "Targón",
+    subtitulo: "La Cima del Mundo, Hogar de los Celestiales",
+    color: "#FF8C00",
+    clima: "Extremo de alta montaña, nieves eternas y rayos cósmicos",
+    descripcion: `El Monte Targón es la montaña más alta del mundo conocido, y en su cima habitan los Aspectos: seres celestiales que descienden para habitar cuerpos mortales. Pocos escaladores sobreviven el ascenso. Quienes lo logran son juzgados por los Aspectos: los dignos se convierten en sus huéspedes, obteniendo poderes divinos. Los indignos mueren. Desde Targón, los Celestiales vigilan el universo y luchan contra las fuerzas del Vacío que amenazan la existencia.`,
+    campeones: ["Pantheon", "Leona", "Diana", "Soraka", "Taric", "Aurelion Sol", "Kayle", "Morgana", "Aphelios"],
+    conflictos: ["Guerra entre los Aspectos de la Luz y de la Luna", "La amenaza del Vacío desde el cosmos", "El libre albedrío de los huéspedes mortales"],
+    curiosidades: [
+      "Pantheon es el Aspecto de la Guerra, que tomó control del cuerpo mortal Atreus",
+      "Aurelion Sol es una deidad cósmica que fue esclavizada por Targón mediante trucos",
+      "Aphelios y su hermana Alune son huéspedes del Aspecto de la Luna"
+    ]
+  },
+  {
+    id: "bilgewater",
+    nombre: "Bilgewater",
+    subtitulo: "Puerto de Piratas, Mercenarios y Monstruos Marinos",
+    color: "#008B8B",
+    clima: "Tropical húmedo, tormentas constantes, mareas impredecibles",
+    descripcion: `Bilgewater es el puerto sin ley más grande del mundo. Aquí no hay gobierno real, solo el poder del dinero, los puños y las armas. Piratas, mercenarios, cazadores de recompensas y comerciantes sin escrúpulos coexisten en una ciudad que nunca duerme. Las criaturas del mar profundo merodean cerca del puerto, y los rituales de muerte son tan comunes como el comercio. El Mar de Camacho que rodea Bilgewater esconde secretos de civilizaciones perdidas.`,
+    campeones: ["Gangplank", "Miss Fortune", "Twisted Fate", "Graves", "Nautilus", "Fizz", "Nami", "Pyke", "Illaoi"],
+    conflictos: ["Lucha por el control del puerto tras la caída de Gangplank", "El Dios Profundo Nagakabouros y su culto", "Los rencores de Pyke contra los traidores del mar"],
+    curiosidades: [
+      "Bilgewater no tiene un gobierno central estable",
+      "Miss Fortune vengó el asesinato de su madre por Gangplank",
+      "Pyke es un fantasma vengativo que asesina a todos los que lo traicionaron"
+    ]
+  },
+  {
+    id: "void",
+    nombre: "El Vacío",
+    subtitulo: "La Nada que Todo lo Devora",
+    color: "#6A0DAD",
+    clima: "No existe clima — el Vacío es la ausencia de existencia",
+    descripcion: `El Vacío no es un lugar: es la ausencia de todo. Una dimensión de pura nada que existía antes de que Runeterra fuera creada. Las criaturas del Vacío son conceptualmente lo opuesto a toda vida: desean consumir, destruir y borrar la existencia. Kog'Maw, Vel'Koz, Cho'Gath, Rek'Sai y Kassadin son algunos de sus agentes. El Vacío amenaza con tragarse todo Runeterra, y solo unos pocos luchan para evitarlo.`,
+    campeones: ["Kassadin", "Kai'Sa", "Kog'Maw", "Cho'Gath", "Rek'Sai", "Vel'Koz", "Malzahar", "Bel'Veth"],
+    conflictos: ["Invasión constante del Vacío al mundo real", "Kassadin busca a su hija Kai'Sa dentro del Vacío", "El Vacío corrompe a quienes se acercan demasiado"],
+    curiosidades: [
+      "Kai'Sa sobrevivió dentro del Vacío desde los 10 años",
+      "Kassadin es el padre de Kai'Sa, que entró al Vacío para buscarla",
+      "Bel'Veth quiere reemplazar toda Runeterra con una civilización del Vacío"
+    ]
+  }
+];
+```
+
+---
+
+## 🎮 MODOS DE JUEGO — Página Completa
+
+```javascript
+const gameModes = [
+  {
+    id: "summoners-rift",
+    nombre: "La Grieta del Invocador",
+    tipo: "Modo Principal",
+    jugadores: "5v5",
+    descripcion: "El mapa más icónico de League of Legends. Dos equipos de 5 jugadores se enfrentan para destruir el Nexo enemigo. El mapa tiene tres carriles (Top, Mid, Bot), una jungla, y docenas de objetivos estratégicos.",
+    objetivos: [
+      "Dragones: 4 tipos elementales + Dragón Anciano",
+      "Barón Nashor: el monstruo más poderoso de la jungla",
+      "Torres: protegen el camino al Nexo",
+      "Inhibidores: dan ventaja al equipo que los destruye",
+      "Nexo: objetivo final para ganar la partida"
+    ],
+    duracion: "25-45 minutos promedio",
+    color: "#1E7A1E"
+  },
+  {
+    id: "aram",
+    nombre: "ARAM — Todos en el Carril Central",
+    tipo: "Modo Alternativo",
+    jugadores: "5v5",
+    descripcion: "All Random All Mid. Un solo carril en el Puente de los Abismos Helados. Los campeones son asignados aleatoriamente. Puro combate de equipo sin parar, sin jungla, sin estrategia compleja. Perfecto para relajarse.",
+    duracion: "15-25 minutos promedio",
+    color: "#1E90FF"
+  },
+  {
+    id: "tft",
+    nombre: "Teamfight Tactics",
+    tipo: "Auto Battler",
+    jugadores: "8 jugadores individual",
+    descripcion: "Un juego de estrategia donde compras campeones, los posicionas y los combinas en sinergias. Cada ronda se pelea automáticamente. El último en pie gana. Completamente distinto al LoL tradicional.",
+    duracion: "30-40 minutos promedio",
+    color: "#9B5CD4"
+  },
+  {
+    id: "arena",
+    nombre: "Arena",
+    tipo: "Modo 2v2v2v2",
+    jugadores: "4 equipos de 2",
+    descripcion: "Cuatro parejas de dos jugadores se enfrentan en combates directos en arenas pequeñas. Entre rondas puedes aumentar tu campeón con mejoras aleatorias. El último equipo en pie gana.",
+    duracion: "15-25 minutos promedio",
+    color: "#C8542A"
+  }
+];
+```
+
+---
+
+## 🎵 MÚSICA DEL UNIVERSO — Página de Música
+
+```javascript
+const musicGroups = [
+  {
+    nombre: "K/DA",
+    genero: "K-Pop, EDM",
+    miembros: ["Ahri", "Akali", "Evelynn", "Kai'Sa", "(G)I-DLE en la vida real"],
+    canciones: ["POP/STARS", "THE BADDEST", "MORE", "I'LL SHOW YOU"],
+    descripcion: "El grupo virtual más exitoso de Riot Games. K/DA es un grupo de pop coreano ficticio formado por cuatro campeonas de LoL. POP/STARS fue la canción más escuchada en YouTube por semanas al lanzarse."
+  },
+  {
+    nombre: "Pentakill",
+    genero: "Heavy Metal, Power Metal",
+    miembros: ["Mordekaiser (bajo)", "Karthus (vocalista)", "Yorick (guitarra)", "Sona (teclados)", "Olaf (batería)", "Kayle (guitar)"],
+    canciones: ["Mortal Reminder", "Lightbringer", "Tear of the Goddess", "Grasp of the Undying", "One for All"],
+    descripcion: "El primer grupo musical del universo de LoL. Pentakill es una banda de metal formada por campeones no-muertos y guerreros. Su música es brutal, épica y perfectamente alineada con el espíritu del juego."
+  },
+  {
+    nombre: "True Damage",
+    genero: "Hip-Hop, Trap, R&B",
+    miembros: ["Ekko", "Qiyana", "Senna", "Yasuo", "Akali"],
+    canciones: ["GIANTS"],
+    descripcion: "Un supergrupo de hip-hop del universo de LoL, presentado en el evento del Campeonato Mundial 2019 en París. Su única canción GIANTS fue interpretada en vivo durante la ceremonia de apertura."
+  },
+  {
+    nombre: "Star Guardian",
+    genero: "J-Pop, Electro Pop",
+    miembros: ["Lux (primera Star Guardian)", "Jinx", "Janna", "Lulu", "Poppy", "Soraka"],
+    canciones: ["Feel Alive", "Everything Goes", "Still Here"],
+    descripcion: "Un universo alternativo donde las campeonas son guerreras mágicas similares a las Sailor Moon. La música es luminosa, esperanzadora y heroica, perfecta para el universo de fantasía mágica."
+  }
+];
+```
+
+---
+
+## 🏆 ESPORTS — Sección Competitiva
+
+```javascript
+const esports = {
+  torneos: [
+    {
+      nombre: "Campeonato Mundial (Worlds)",
+      frecuencia: "Anual (Octubre-Noviembre)",
+      descripcion: "El torneo más grande de LoL. Los mejores equipos de cada región compiten por el Trofeo de la Copa Invocadora, el premio más codiciado del esport.",
+      campeones_historicos: ["T1 (SKT T1) - 4 veces", "Samsung Galaxy/Gen.G - 2 veces", "Fnatic - 1 vez", "Taipei Assassins - 1 vez"]
+    },
+    {
+      nombre: "MSI — Mid-Season Invitational",
+      frecuencia: "Anual (Mayo)",
+      descripcion: "Torneo de mitad de temporada donde los campeones de cada región se enfrentan."
+    }
+  ],
+  regiones: ["LCK (Corea)", "LPL (China)", "LEC (Europa)", "LCS (Norteamérica)", "CBLOL (Brasil)", "LLA (Latinoamérica)", "PCS (Pacífico)", "VCS (Vietnam)"],
+  jugadores_legendarios: [
+    { nombre: "Faker (T1)", rol: "Mid", descripcion: "El mejor jugador de la historia del LoL. 4 veces campeón mundial.", pais: "Corea del Sur" },
+    { nombre: "Uzi (RNG)", rol: "ADC", descripcion: "El mejor ADC de la historia según muchos expertos.", pais: "China" },
+    { nombre: "Caps (G2)", rol: "Mid", descripcion: "El mejor jugador europeo de la historia.", pais: "Dinamarca" },
+    { nombre: "Doublelift (Team Liquid)", rol: "ADC", descripcion: "El ADC norteamericano más conocido de la historia.", pais: "Estados Unidos" }
+  ]
+};
+```
+
+---
+
+## 🎨 COMPONENTES DE DISEÑO REQUERIDOS
+
+### Componente: ChampionCard
+```jsx
+// Mostrar imagen splash de DataDragon, nombre, título, rol como badge, dificultad como estrellas
+// Hover: zoom + overlay con botón "Ver Perfil"
+// Animación: fade + slide-up al montar
+```
+
+### Componente: RegionCard
+```jsx
+// Imagen de fondo temática de la región
+// Nombre + subtítulo
+// Lista de campeones con íconos pequeños
+// Hover: se expande mostrando descripción
+```
+
+### Componente: AbilityDisplay
+```jsx
+// Ícono de habilidad desde DataDragon
+// Nombre de habilidad
+// Tecla (Pasiva/Q/W/E/R)
+// Descripción completa
+// Stats: cooldown, costo de mana, rango
+// Animación al hacer click
+```
+
+### Componente: LoreText
+```jsx
+// Texto de lore con efecto de aparición letra a letra
+// Citas del campeón con formato especial
+// Imagen de arte conceptual como fondo sutil
+```
+
+### Componente: InteractiveMap
+```jsx
+// SVG del mapa de Runeterra
+// Puntos interactivos por región
+// Al hover: tooltip con nombre y 3 campeones de esa región
+// Al click: navegar a /region/:id
+```
+
+---
+
+## 📱 DISEÑO RESPONSIVE
+
+- **Desktop (1440px+):** Layout completo con grids de 5 columnas para campeones
+- **Laptop (1024-1439px):** Grid de 4 columnas
+- **Tablet (768-1023px):** Grid de 3 columnas, nav comprimida
+- **Mobile (< 768px):** Grid de 2 columnas, hamburger menu, nav drawer
+
+---
+
+## ⚡ ANIMACIONES Y EFECTOS REQUERIDOS
+
+1. **Page Load:** Fade in de 0.8s con stagger de elementos
+2. **Scroll Reveal:** Elementos entran desde abajo al hacer scroll (Intersection Observer)
+3. **Champion Card Hover:** Scale 1.05 + gold glow + overlay
+4. **Particle System:** Partículas doradas flotantes en el hero
+5. **Hexagonal Grid:** Patrón hexagonal animado con movimiento lento
+6. **Ability Animation:** Click en habilidad → zoom + descripción con slide
+7. **Region Map:** Pulsación suave en puntos del mapa
+8. **Loading Screen:** Animación de espada o hexágono dorado rotando
+9. **Nav Scroll Effect:** Nav se vuelve opaca con blur al hacer scroll
+10. **Button Ripple:** Efecto ripple dorado en todos los botones CTA
+
+---
+
+## 🔧 INSTRUCCIONES FINALES PARA EL AGENTE
+
+1. **Empieza por:** Configurar React + Vite + Tailwind + React Router + Framer Motion
+2. **Luego:** Crear el sistema de colores y fuentes (CSS variables globales)
+3. **Luego:** Crear componentes base (Button, Card, Badge, Section)
+4. **Luego:** Implementar fetch de la API de DataDragon con manejo de errores
+5. **Luego:** Construir página por página en orden de importancia (Home → Champions → Champion Profile → Lore → Regions)
+6. **Siempre:** Usar las URLs de DataDragon para imágenes reales de campeones
+7. **Siempre:** Lazy loading en todas las imágenes para performance
+8. **Siempre:** Error boundaries en cada página para manejar fallos de API
+9. **Siempre:** Animaciones con Framer Motion, no librerías extra
+10. **Resultado final:** Un sitio web que haga quedar al oficial de Riot como si fuera de 2010
+
+---
+
+*Prompt generado con conocimiento completo del universo de League of Legends*
+*Versión 1.0 — Para uso en Replit Agent, Cursor, o cualquier AI coder*
