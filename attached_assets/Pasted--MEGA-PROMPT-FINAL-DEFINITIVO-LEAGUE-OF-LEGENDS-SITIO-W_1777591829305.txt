@@ -1,0 +1,1154 @@
+# 🏆 MEGA PROMPT FINAL DEFINITIVO — LEAGUE OF LEGENDS SITIO WEB DIOS
+## La versión más completa, épica y detallada jamás creada
+### Para Replit Agent — Pega TODO esto y deja que trabaje
+
+---
+
+> **MISIÓN:** Construir el sitio web de League of Legends más épico, completo y cinematográfico que haya existido. El objetivo es simple: hacer que el sitio oficial de Riot Games parezca una página hecha en 2005. Este sitio debe sentirse como JUGAR LoL, no como VER una página web.
+
+---
+
+## 🛠️ STACK TÉCNICO — SIN NEGOCIACIÓN
+
+```bash
+# Instalar TODO esto antes de escribir una sola línea:
+npm create vite@latest lol-epic-site -- --template react
+cd lol-epic-site
+npm install react-router-dom framer-motion gsap @gsap/react
+npm install tsparticles react-particles tsparticles-slim
+npm install react-intersection-observer axios
+npm install lucide-react clsx
+```
+
+```css
+/* FUENTES — Importar en index.css */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Rajdhani:wght@300;400;500;600;700&family=IM+Fell+English:ital@0;1&display=swap');
+
+/* VARIABLES GLOBALES — Colores exactos del juego */
+:root {
+  --gold-primary:   #C8AA6E;
+  --gold-light:     #F0E6D3;
+  --gold-bright:    #FFD700;
+  --gold-dark:      #785A28;
+  --blue-dark:      #050E1A;
+  --blue-mid:       #091428;
+  --blue-accent:    #0BC4E3;
+  --blue-nexus:     #1E90FF;
+  --red-fire:       #C8542A;
+  --purple-void:    #9B5CD4;
+  --font-display:   'Cinzel', serif;
+  --font-ui:        'Rajdhani', sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--blue-dark);
+  color: var(--gold-light);
+  font-family: var(--font-ui);
+  cursor: none; /* cursor custom activado */
+}
+```
+
+---
+
+## 🗂️ ESTRUCTURA COMPLETA DE RUTAS
+
+```
+/                     → HOME épico con hero cinematográfico
+/campeones            → Galería completa 170+ campeones con filtros
+/campeon/:id          → Perfil completo de cada campeón
+/regiones             → Mapa interactivo de Runeterra
+/region/:id           → Página individual de cada región
+/modos                → Los 4 modos de juego con mapas SVG
+/historia             → Línea de tiempo 2006-2024
+/esports              → Mundiales, jugadores legendarios, equipos
+/musica               → K/DA, Pentakill, True Damage, Heartsteel, Star Guardian
+/items                → Guía de items con buscador
+/runas                → Sistema de runas explicado
+```
+
+---
+
+## 🖥️ PÁGINA HOME — CADA SECCIÓN EN DETALLE
+
+### NAV fija (siempre visible):
+```jsx
+// Logo: "LEAGUE OF LEGENDS" en Cinzel dorado + ícono de espada
+// Links: Campeones | Regiones | Modos | Historia | Esports | Música
+// Botón "JUGAR GRATIS" con clip-path hexagonal y efecto shine al hover
+// Al scrollear 50px: fondo azul oscuro + backdrop-filter: blur(20px)
+// Borde inferior: línea de 1px con gradiente dorado
+```
+
+### HERO (pantalla completa):
+```jsx
+// Fondo: splash art de Jinx_0.jpg a pantalla completa, con parallax al scroll
+// Overlay: gradiente rgba(5,14,26,0.7) de bottom a top
+// Patrón hexagonal SVG animado: opacity 0.03, se mueve lentamente
+// Partículas doradas que suben (tsparticles)
+
+// Contenido centrado:
+// - Badge: "TEMPORADA 2025" en dorado pequeño
+// - Título: "DOMINA EL CAMPO DE BATALLA" en Cinzel 8rem, gradiente dorado
+//   → Efecto glitch al hover (ver animación CSS más abajo)
+// - Subtítulo: "170+ campeones. Estrategia infinita. Una sola victoria."
+// - 2 botones:
+//   → "JUGAR GRATIS" (dorado sólido, esquinas cortadas hexagonales)
+//   → "EXPLORAR CAMPEONES" (outline dorado)
+// - Scroll indicator animado (flecha que pulsa)
+
+const heroVariants = {
+  initial: { opacity: 0, y: 40 },
+  animate: { opacity: 1, y: 0, transition: { duration: 1, ease: [0.23, 1, 0.32, 1] } }
+};
+```
+
+### SECCIÓN: CAMPEONES DESTACADOS (6 cards)
+```jsx
+// Cargar desde DataDragon API, mostrar 6 al azar rotando cada 10s
+// Animación: stagger 0.1s de delay entre cada card al entrar al viewport
+// Cada card:
+//   - Imagen: loading screen art (vertical, perfecta para cards)
+//   - Hover: scale(1.06) + y(-12px) + gold glow + overlay con "Ver Perfil"
+//   - Nombre en Cinzel, título en Rajdhani
+//   - Badge de rol con color según tipo
+// Al final: botón "VER LOS 170+ CAMPEONES"
+```
+
+### SECCIÓN: MODOS DE JUEGO (preview compacto)
+```jsx
+// 4 cards horizontales
+// Cada una muestra el mapa SVG mini (no imágenes de personajes)
+// Click → navega a /modos
+```
+
+### SECCIÓN: UNIVERSO MUSICAL
+```jsx
+// Background: negro absoluto con estrellas
+// 5 grupos en cards horizontales scrolleables
+// K/DA → púrpura, Pentakill → rojo oscuro, True Damage → dorado
+// Heartsteel → rosa/magenta, Star Guardian → rosa claro
+// Cada card muestra nombre del grupo + artista más icónico
+```
+
+### SECCIÓN: ESPORTS LATEST
+```jsx
+// "EL ESCENARIO MÁS GRANDE DEL MUNDO"
+// Stats: 73M espectadores simultáneos | 13 Mundiales | 150M+ jugadores
+// Cards de los 3 equipos más históricos: T1, G2, DRX
+```
+
+### FOOTER
+```jsx
+// Logo + tagline + links
+// Redes: Twitter/X, YouTube, Instagram, TikTok, Discord
+// "© 2025 Riot Games. League of Legends es una marca registrada."
+// "Este es un sitio fan-made con fines educativos."
+```
+
+---
+
+## 🎮 PÁGINA CAMPEONES — `/campeones`
+
+### Filtros (todos funcionales):
+```jsx
+// 1. Búsqueda en tiempo real por nombre
+// 2. Rol: Todos | Asesino | Luchador | Mago | Tirador | Soporte | Tanque
+// 3. Región: Demacia | Noxus | Ionia | Freljord | Piltóver | Zaun | Shurima
+//            Islas de las Sombras | Targón | Bilgewater | El Vacío | Ixtal | Bandle City
+// 4. Dificultad: Fácil | Medio | Difícil
+// 5. Ordenar: A-Z | Z-A | Más nuevo | Más antiguo
+// 6. Vista: Grid (default) / Lista
+
+// Cargar desde:
+const VERSION_URL = 'https://ddragon.leagueoflegends.com/api/versions.json';
+const CHAMPS_URL = `https://ddragon.leagueoflegends.com/cdn/${version}/data/en_US/champion.json`;
+```
+
+### ChampionCard (componente):
+```jsx
+const ChampionCard = ({ champion, index }) => {
+  const { ref, inView } = useInView({ threshold: 0.1, triggerOnce: true });
+  
+  // Imagen: SIEMPRE loading screen art (composición vertical perfecta)
+  const imgURL = `https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${champion.id}_0.jpg`;
+  
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 60 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.5, delay: (index % 6) * 0.07 }}
+      onMouseMove={handle3DTilt}
+      onMouseLeave={resetTilt}
+      style={{ transformStyle: 'preserve-3d', perspective: '1000px' }}
+      onClick={() => navigate(`/campeon/${champion.id}`)}
+    >
+      <img
+        src={imgURL}
+        alt={getChampionName(champion.id)}
+        loading="lazy"
+        style={{ objectFit: 'cover', objectPosition: 'center 15%' }}
+      />
+      {/* Badge de rol */}
+      {/* Nombre: getChampionName(champion.id) — NUNCA champion.name */}
+      {/* Título en español */}
+      {/* Overlay con botón al hover */}
+    </motion.div>
+  );
+};
+
+// EFECTO 3D TILT al hover:
+const handle3DTilt = (e) => {
+  const rect = e.currentTarget.getBoundingClientRect();
+  const x = (e.clientX - rect.left) / rect.width - 0.5;
+  const y = (e.clientY - rect.top) / rect.height - 0.5;
+  e.currentTarget.style.transform = `
+    perspective(1000px) rotateY(${x * 12}deg) rotateX(${-y * 12}deg) translateZ(8px)
+  `;
+};
+```
+
+### NOMBRES CORRECTOS — MAPA COMPLETO (NUNCA traducir):
+```javascript
+const CHAMPION_NAMES = {
+  Aatrox: "Aatrox", Ahri: "Ahri", Akali: "Akali", Akshan: "Akshan",
+  Alistar: "Alistar", Ambessa: "Ambessa", Amumu: "Amumu", Anivia: "Anivia",
+  Annie: "Annie", Aphelios: "Aphelios", Ashe: "Ashe",
+  AurelionSol: "Aurelion Sol", Aurora: "Aurora", Azir: "Azir",
+  Bard: "Bard", Belveth: "Bel'Veth", Blitzcrank: "Blitzcrank",
+  Brand: "Brand", Braum: "Braum", Briar: "Briar",
+  Caitlyn: "Caitlyn", Camille: "Camille", Cassiopeia: "Cassiopeia",
+  Chogath: "Cho'Gath", Corki: "Corki", Darius: "Darius", Diana: "Diana",
+  DrMundo: "Dr. Mundo", Draven: "Draven", Ekko: "Ekko", Elise: "Elise",
+  Evelynn: "Evelynn", Ezreal: "Ezreal", Fiddlesticks: "Fiddlesticks",
+  Fiora: "Fiora", Fizz: "Fizz", Galio: "Galio", Gangplank: "Gangplank",
+  Garen: "Garen", Gnar: "Gnar", Gragas: "Gragas", Graves: "Graves",
+  Gwen: "Gwen", Hecarim: "Hecarim", Heimerdinger: "Heimerdinger",
+  Hwei: "Hwei", Illaoi: "Illaoi", Irelia: "Irelia", Ivern: "Ivern",
+  Janna: "Janna", JarvanIV: "Jarvan IV", Jax: "Jax", Jayce: "Jayce",
+  Jhin: "Jhin", Jinx: "Jinx", KSante: "K'Sante", Kaisa: "Kai'Sa",
+  Kalista: "Kalista", Karma: "Karma", Karthus: "Karthus",
+  Kassadin: "Kassadin", Katarina: "Katarina", Kayle: "Kayle",
+  Kayn: "Kayn", Kennen: "Kennen", Khazix: "Kha'Zix",
+  Kindred: "Kindred", Kled: "Kled", KogMaw: "Kog'Maw",
+  Leblanc: "LeBlanc", LeeSin: "Lee Sin", Leona: "Leona",
+  Lillia: "Lillia", Lissandra: "Lissandra", Lucian: "Lucian",
+  Lulu: "Lulu", Lux: "Lux", Malphite: "Malphite", Malzahar: "Malzahar",
+  Maokai: "Maokai", MasterYi: "Master Yi", Mel: "Mel", Milio: "Milio",
+  MissFortune: "Miss Fortune", Mordekaiser: "Mordekaiser",
+  Morgana: "Morgana", Naafiri: "Naafiri", Nami: "Nami", Nasus: "Nasus",
+  Nautilus: "Nautilus", Neeko: "Neeko", Nidalee: "Nidalee",
+  Nilah: "Nilah", Nocturne: "Nocturne", NunuWillump: "Nunu & Willump",
+  Olaf: "Olaf", Orianna: "Orianna", Ornn: "Ornn", Pantheon: "Pantheon",
+  Poppy: "Poppy", Pyke: "Pyke", Qiyana: "Qiyana", Quinn: "Quinn",
+  Rakan: "Rakan", Rammus: "Rammus", RekSai: "Rek'Sai", Rell: "Rell",
+  Renata: "Renata Glasc", Renekton: "Renekton", Rengar: "Rengar",
+  Riven: "Riven", Rumble: "Rumble", Ryze: "Ryze", Samira: "Samira",
+  Sejuani: "Sejuani", Senna: "Senna", Seraphine: "Seraphine",
+  Sett: "Sett", Shaco: "Shaco", Shen: "Shen", Shyvana: "Shyvana",
+  Singed: "Singed", Sion: "Sion", Sivir: "Sivir", Skarner: "Skarner",
+  Smolder: "Smolder", Sona: "Sona", Soraka: "Soraka", Swain: "Swain",
+  Sylas: "Sylas", Syndra: "Syndra", TahmKench: "Tahm Kench",
+  Taliyah: "Taliyah", Talon: "Talon", Taric: "Taric", Teemo: "Teemo",
+  Thresh: "Thresh", Tristana: "Tristana", Trundle: "Trundle",
+  Tryndamere: "Tryndamere", TwistedFate: "Twisted Fate", Twitch: "Twitch",
+  Udyr: "Udyr", Urgot: "Urgot", Varus: "Varus", Vayne: "Vayne",
+  Veigar: "Veigar", VelKoz: "Vel'Koz", Vex: "Vex", Vi: "Vi",
+  Viego: "Viego", Viktor: "Viktor", Vladimir: "Vladimir",
+  Volibear: "Volibear", Warwick: "Warwick", Wukong: "Wukong",
+  Xayah: "Xayah", Xerath: "Xerath", XinZhao: "Xin Zhao",
+  Yasuo: "Yasuo", Yone: "Yone", Yorick: "Yorick", Yuumi: "Yuumi",
+  Zac: "Zac", Zed: "Zed", Zeri: "Zeri", Ziggs: "Ziggs",
+  Zilean: "Zilean", Zoe: "Zoe", Zyra: "Zyra"
+};
+export const getChampionName = (id) => CHAMPION_NAMES[id] || id;
+```
+
+---
+
+## ⚔️ PERFIL DE CAMPEÓN — `/campeon/:id`
+
+### Fetch de datos:
+```javascript
+const version = (await fetch('https://ddragon.leagueoflegends.com/api/versions.json').then(r => r.json()))[0];
+const data = await fetch(
+  `https://ddragon.leagueoflegends.com/cdn/${version}/data/en_US/champion/${champId}.json`
+).then(r => r.json());
+const champ = data.data[champId];
+// champ tiene: id, name, title, blurb, lore, skins[], spells[], passive, stats, info
+```
+
+### HERO del perfil (pantalla completa):
+```jsx
+// Fondo: splash art _0 a pantalla completa con parallax
+// Overlay: gradiente fuerte desde bottom
+// Nombre: getChampionName(id) en Cinzel 10rem, UPPERCASE, gradiente dorado
+// Título (champ.title) debajo en Rajdhani
+// Badges: rol + dificultad + región
+// Barras de stats animadas (Attack/Defense/Magic/Difficulty) que se llenan al entrar
+
+// LOADING SCREEN animado: al navegar a esta página, mostrar por 1.5s
+// una pantalla negra con el loading screen art del campeón de fondo
+// y una barra dorada que se llena de izquierda a derecha
+```
+
+### Tabs (con animación Framer Motion):
+```
+HABILIDADES | LORE | SKINS | COUNTERS
+```
+
+### Tab HABILIDADES:
+```jsx
+// Fila de 5 iconos: Pasiva + Q + W + E + R
+// Cada ícono:
+//   URL pasiva: `https://ddragon.leagueoflegends.com/cdn/${v}/img/passive/${champ.passive.image.full}`
+//   URL spell:  `https://ddragon.leagueoflegends.com/cdn/${v}/img/spell/${spell.image.full}`
+// Al hacer click: panel que desliza desde abajo con:
+//   - Nombre de la habilidad
+//   - Descripción (limpiar los tags HTML con regex)
+//   - Cooldown por nivel
+//   - Costo de mana por nivel
+// Animación del ícono activo: glow dorado + scale(1.2)
+```
+
+### Tab LORE:
+```jsx
+// Texto: champ.lore (viene de la API en inglés, traducirlo internamente o usar es_ES)
+// Para es_ES: fetch con data/es_ES/champion/${id}.json
+// Diseño: texto en Rajdhani sobre fondo con splash art muy oscuro (opacity 0.05)
+// Citas del campeón (ver array de frases más abajo por campeón)
+// Línea dorada decorativa antes del lore
+```
+
+### Tab SKINS — CON MODAL CINEMATOGRÁFICO:
+```jsx
+// Grid de skins obtenidas de champ.skins[]
+// Cada skin:
+//   URL: `https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${id}_${skin.num}.jpg`
+//   Nombre: skin.name (si es "default" → "Clásico [Nombre del Campeón]")
+
+// AL HACER CLICK → MODAL con Framer Motion layoutId:
+// La card "vuela" hasta ocupar la pantalla entera
+// Imagen en máxima resolución
+// Nombre de skin en grande
+// Botón cerrar con X animada
+// Click fuera → cierra con zoom-out
+
+<AnimatePresence>
+  {selectedSkin && (
+    <motion.div
+      className="skin-modal-overlay"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      onClick={() => setSelectedSkin(null)}
+    >
+      <motion.div
+        layoutId={`skin-${selectedSkin.num}`}
+        className="skin-modal-content"
+        onClick={e => e.stopPropagation()}
+      >
+        <motion.img
+          layoutId={`skin-img-${selectedSkin.num}`}
+          src={`https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${champId}_${selectedSkin.num}.jpg`}
+        />
+        <motion.h2 layoutId={`skin-name-${selectedSkin.num}`}>
+          {selectedSkin.name}
+        </motion.h2>
+      </motion.div>
+    </motion.div>
+  )}
+</AnimatePresence>
+```
+
+---
+
+## 🎵 PÁGINA MÚSICA — `/musica`
+
+### Los 5 grupos con datos EXACTOS del juego:
+
+```javascript
+const MUSIC_GROUPS = [
+  {
+    id: "kda",
+    name: "K/DA",
+    genre: "K-Pop / Pop Electrónico",
+    year: 2018,
+    color: "#9B5CD4",
+    description: "El grupo virtual más exitoso del universo de LoL. POP/STARS fue reproducida más de 400 millones de veces. Su actuación en el Mundial 2018 en Corea fue la primera con hologramas en tiempo real en un evento de esports.",
+    songs: [
+      { title: "POP/STARS", year: 2018, desc: "El debut explosivo que rompió todos los récords" },
+      { title: "THE BADDEST", year: 2020, desc: "El regreso con más poder y oscuridad" },
+      { title: "MORE", year: 2020, desc: "Mensaje de superación y ambición sin límites" },
+      { title: "I'LL SHOW YOU", year: 2020, desc: "El cierre épico del EP ALL OUT" }
+    ],
+    members: [
+      { champId: "Ahri",    name: "Ahri",    skinName: "K/DA Ahri",    skinNum: 9  },
+      { champId: "Akali",   name: "Akali",   skinName: "K/DA Akali",   skinNum: 8  },
+      { champId: "Evelynn", name: "Evelynn", skinName: "K/DA Evelynn", skinNum: 5  },
+      { champId: "Kaisa",   name: "Kai'Sa",  skinName: "K/DA Kai'Sa",  skinNum: 2  }
+    ]
+  },
+  {
+    id: "pentakill",
+    name: "Pentakill",
+    genre: "Heavy Metal / Power Metal",
+    year: 2014,
+    color: "#8B0000",
+    description: "El primer grupo musical del universo de LoL. Una banda de metal formada por campeones de los no-muertos y guerreros brutales. Su música es oscura, épica y devastadora.",
+    songs: [
+      { title: "Mortal Reminder", year: 2014, desc: "El álbum debut que fundó el metal en Runeterra" },
+      { title: "Smite and Ignite", year: 2017, desc: "Segundo álbum, más oscuro y pesado" },
+      { title: "III: Lost Chapter", year: 2021, desc: "El regreso triunfal con un álbum completo" }
+    ],
+    members: [
+      { champId: "Mordekaiser", name: "Mordekaiser", skinName: "Pentakill Mordekaiser", skinNum: 1 },
+      { champId: "Karthus",     name: "Karthus",     skinName: "Pentakill Karthus",     skinNum: 4 },
+      { champId: "Yorick",      name: "Yorick",       skinName: "Pentakill Yorick",      skinNum: 1 },
+      { champId: "Sona",        name: "Sona",         skinName: "Pentakill Sona",        skinNum: 4 },
+      { champId: "Olaf",        name: "Olaf",         skinName: "Pentakill Olaf",        skinNum: 1 },
+      { champId: "Kayle",       name: "Kayle",        skinName: "Pentakill Kayle",       skinNum: 3 }
+    ]
+  },
+  {
+    id: "truedamage",
+    name: "True Damage",
+    genre: "Hip-Hop / Trap / R&B",
+    year: 2019,
+    color: "#C8AA6E",
+    description: "Supergrupo de hip-hop presentado en vivo en el Mundial 2019 en París. Su única canción GIANTS fue interpretada con hologramas en el Accor Arena ante 20,000 personas.",
+    songs: [
+      { title: "GIANTS", year: 2019, desc: "Actuación histórica en vivo en Worlds 2019 París" }
+    ],
+    members: [
+      { champId: "Ekko",   name: "Ekko",   skinName: "True Damage Ekko",   skinNum: 4  },
+      { champId: "Qiyana", name: "Qiyana", skinName: "True Damage Qiyana", skinNum: 1  },
+      { champId: "Senna",  name: "Senna",  skinName: "True Damage Senna",  skinNum: 1  },
+      { champId: "Yasuo",  name: "Yasuo",  skinName: "True Damage Yasuo",  skinNum: 5  },
+      { champId: "Akali",  name: "Akali",  skinName: "True Damage Akali",  skinNum: 10 }
+    ]
+  },
+  {
+    id: "heartsteel",
+    name: "Heartsteel",  // ← NUNCA traducir a "Acero del Corazón"
+    genre: "Pop Alternativo / R&B / Hip-Hop",
+    year: 2023,
+    color: "#FF1493",
+    description: "El grupo más reciente del universo musical de LoL (2023). Pop alternativo rebelde con estética de amor y caos. PARANOIA fue un hit instantáneo con millones de reproducciones.",
+    songs: [
+      { title: "PARANOIA", year: 2023, desc: "El debut explosivo de Heartsteel" },
+      { title: "SELF MADE", year: 2023, desc: "Himno de ambición y superación personal" },
+      { title: "ON OUR WAY", year: 2023, desc: "La balada del grupo completo" }
+    ],
+    members: [
+      { champId: "Sett",     name: "Sett",     skinName: "Heartsteel Sett",     skinNum: 5  },
+      { champId: "Yone",     name: "Yone",     skinName: "Heartsteel Yone",     skinNum: 4  },
+      { champId: "Kayn",     name: "Kayn",     skinName: "Heartsteel Kayn",     skinNum: 4  },
+      { champId: "Aphelios", name: "Aphelios", skinName: "Heartsteel Aphelios", skinNum: 3  },
+      { champId: "Ezreal",   name: "Ezreal",   skinName: "Heartsteel Ezreal",   skinNum: 14 },
+      { champId: "KSante",   name: "K'Sante",  skinName: "Heartsteel K'Sante",  skinNum: 1  }
+    ]
+  },
+  {
+    id: "starguardian",
+    name: "Star Guardian",
+    genre: "J-Pop / Electro Pop",
+    year: 2017,
+    color: "#FF69B4",
+    description: "Un universo alternativo de guerreras mágicas inspirado en el anime. Su música es luminosa, heroica y esperanzadora. Feel Alive (2022) es su canción más popular.",
+    songs: [
+      { title: "Still Here", year: 2017, desc: "La canción original del primer evento Star Guardian" },
+      { title: "Feel Alive", year: 2022, desc: "El himno del regreso del universo en 2022" },
+      { title: "Everything Goes", year: 2022, desc: "Balada emocional del universo 2022" }
+    ],
+    members: [
+      { champId: "Lux",   name: "Lux",   skinName: "Star Guardian Lux",   skinNum: 7 },
+      { champId: "Jinx",  name: "Jinx",  skinName: "Star Guardian Jinx",  skinNum: 4 },
+      { champId: "Janna", name: "Janna", skinName: "Star Guardian Janna", skinNum: 4 },
+      { champId: "Lulu",  name: "Lulu",  skinName: "Star Guardian Lulu",  skinNum: 4 },
+      { champId: "Poppy", name: "Poppy", skinName: "Star Guardian Poppy", skinNum: 5 }
+    ]
+  }
+];
+```
+
+### Diseño de cada grupo musical:
+```jsx
+// Cada grupo ocupa una sección completa con:
+// - Fondo negro con gradiente del color del grupo (5% opacidad)
+// - Borde superior: 3px del color del grupo
+// - Nombre del grupo en Cinzel UPPERCASE con glow del color del grupo
+// - Badge de género flotante
+// - Grid de miembros:
+//   URL imagen: `https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${member.champId}_${member.skinNum}.jpg`
+//   Mostrar debajo: nombre del campeón (dorado) + nombre de skin (gris pequeño)
+//   Al hover: scale(1.04) + borde del color del grupo
+// - Lista de canciones con animación de entrada
+// - Descripción completa del grupo
+```
+
+---
+
+## 🗺️ MODOS DE JUEGO — `/modos`
+
+### REGLA CRÍTICA: Los modos muestran MAPAS SVG, nunca imágenes de campeones.
+
+```jsx
+// GRIETA DEL INVOCADOR — SVG del mapa:
+const SummonersRiftSVG = () => (
+  <svg viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="800" height="800" fill="#0d2b0d" rx="8"/>
+    {/* Zona base azul */}
+    <rect x="20" y="620" width="160" height="160" fill="#0a1f3d" rx="4"/>
+    {/* Zona base roja */}
+    <rect x="620" y="20" width="160" height="160" fill="#3d0a0a" rx="4"/>
+    {/* Carril Top */}
+    <path d="M 100 700 L 100 100 L 700 100" stroke="#4a7c59" strokeWidth="55" fill="none" strokeLinecap="round"/>
+    {/* Carril Bot */}
+    <path d="M 100 700 L 700 700 L 700 100" stroke="#4a7c59" strokeWidth="55" fill="none" strokeLinecap="round"/>
+    {/* Carril Mid */}
+    <line x1="100" y1="700" x2="700" y2="100" stroke="#5a9c6a" strokeWidth="45"/>
+    {/* Río horizontal */}
+    <path d="M 0 420 Q 180 380 400 400 Q 620 420 800 380" stroke="#1a4a7a" strokeWidth="28" fill="none" opacity="0.7"/>
+    {/* Nexo Azul */}
+    <circle cx="100" cy="700" r="30" fill="#1E90FF" opacity="0.9"/>
+    <text x="100" y="704" textAnchor="middle" fill="white" fontSize="10" fontWeight="bold">NEXO</text>
+    {/* Nexo Rojo */}
+    <circle cx="700" cy="100" r="30" fill="#FF4444" opacity="0.9"/>
+    <text x="700" y="104" textAnchor="middle" fill="white" fontSize="10" fontWeight="bold">NEXO</text>
+    {/* Torres azules */}
+    {[[100,560],[100,420],[100,280],[200,100],[340,100],[480,100]].map(([x,y],i) => (
+      <rect key={i} x={x-8} y={y-8} width="16" height="16" fill="#4488ff" rx="2"/>
+    ))}
+    {/* Torres rojas */}
+    {[[700,240],[700,380],[700,520],[600,700],[460,700],[320,700]].map(([x,y],i) => (
+      <rect key={i} x={x-8} y={y-8} width="16" height="16" fill="#ff4444" rx="2"/>
+    ))}
+    {/* Dragón */}
+    <circle cx="570" cy="570" r="18" fill="#c8542a" opacity="0.8"/>
+    <text x="570" y="595" textAnchor="middle" fill="#C8AA6E" fontSize="9">DRAGÓN</text>
+    {/* Barón */}
+    <circle cx="220" cy="220" r="18" fill="#9B5CD4" opacity="0.8"/>
+    <text x="220" y="245" textAnchor="middle" fill="#C8AA6E" fontSize="9">BARÓN</text>
+    {/* Labels carriles */}
+    <text x="50" y="400" fill="#C8AA6E" fontSize="13" fontWeight="bold" transform="rotate(-90,50,400)">TOP</text>
+    <text x="400" y="760" fill="#C8AA6E" fontSize="13" fontWeight="bold" textAnchor="middle">BOT</text>
+    <text x="430" y="420" fill="#C8AA6E" fontSize="13" fontWeight="bold" transform="rotate(-45,430,420)">MID</text>
+  </svg>
+);
+
+// ABISMO DE LOS LAMENTOS (ARAM) — SVG:
+const HowlingAbyssSVG = () => (
+  <svg viewBox="0 0 900 300" xmlns="http://www.w3.org/2000/svg">
+    <rect width="900" height="300" fill="#071020"/>
+    {/* Abismo bajo el puente */}
+    <rect x="0" y="200" width="900" height="100" fill="#020810"/>
+    {/* El puente único */}
+    <rect x="0" y="100" width="900" height="100" fill="#1a2a4a" opacity="0.9"/>
+    <rect x="0" y="98" width="900" height="4" fill="#2a4a7a"/>
+    <rect x="0" y="198" width="900" height="4" fill="#2a4a7a"/>
+    {/* Nexos */}
+    <circle cx="60" cy="150" r="28" fill="#1E90FF"/>
+    <text x="60" y="154" textAnchor="middle" fill="white" fontSize="9" fontWeight="bold">NEXO</text>
+    <circle cx="840" cy="150" r="28" fill="#FF4444"/>
+    <text x="840" y="154" textAnchor="middle" fill="white" fontSize="9" fontWeight="bold">NEXO</text>
+    {/* Torres */}
+    {[150,270,630,750].map(x => (
+      <rect key={x} x={x-9} y={118} width="18" height="64" fill="#C8AA6E" rx="2"/>
+    ))}
+    {/* Inhibidores */}
+    <circle cx="200" cy="150" r="10" fill="#4488ff"/>
+    <circle cx="700" cy="150" r="10" fill="#ff4444"/>
+    {/* Texto del abismo */}
+    <text x="450" y="265" textAnchor="middle" fill="#0BC4E3" fontSize="11" opacity="0.4">ABISMO HELADO DE LOS LAMENTOS</text>
+  </svg>
+);
+
+// TFT — Tablero hexagonal SVG:
+const TFTBoardSVG = () => {
+  const hexes = [];
+  for (let row = 0; row < 4; row++) {
+    for (let col = 0; col < 7; col++) {
+      const x = col * 80 + (row % 2 === 0 ? 40 : 0) + 40;
+      const y = row * 70 + 40;
+      hexes.push({ x, y, row, col });
+    }
+  }
+  return (
+    <svg viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg">
+      <rect width="640" height="320" fill="#0a0a1a"/>
+      {hexes.map(({x, y}, i) => (
+        <polygon key={i}
+          points={`${x},${y-30} ${x+26},${y-15} ${x+26},${y+15} ${x},${y+30} ${x-26},${y+15} ${x-26},${y-15}`}
+          fill="#1a1a3a" stroke="#C8AA6E" strokeWidth="1.5" opacity="0.7"
+        />
+      ))}
+      <text x="320" y="295" textAnchor="middle" fill="#C8AA6E" fontSize="12">TEAMFIGHT TACTICS</text>
+    </svg>
+  );
+};
+```
+
+---
+
+## 📅 HISTORIA DE LOL — `/historia`
+
+### Línea de tiempo completa (mostrar como timeline vertical con alternancia izquierda/derecha):
+
+```javascript
+const LOL_TIMELINE = [
+  { year: 2006, title: "El Sueño Nace en DotA", type: "fundacion",
+    desc: "Brandon 'Ryze' Beck y Marc 'Tryndamere' Merrill se conocen jugando Defense of the Ancients. Frustrados con las limitaciones del mod, deciden crear su propio juego desde cero." },
+  { year: 2006, title: "Fundación de Riot Games", type: "fundacion",
+    desc: "Se funda Riot Games en Los Ángeles con 4 empleados. El nombre 'Riot' refleja su mentalidad: ir contra el sistema establecido de la industria de los videojuegos." },
+  { year: 2008, title: "Beta Cerrada — Los Primeros 40 Campeones", type: "juego",
+    desc: "LoL entra en beta. Los primeros campeones incluyen a Annie, Ashe, Fiddlesticks, Kayle, Master Yi, Morgana, Nunu, Ryze, Sion, Sivir, Soraka, Teemo, Tristana, Twisted Fate, Veigar, Warwick." },
+  { year: 2009, title: "LANZAMIENTO OFICIAL — 27 de Octubre", type: "lanzamiento",
+    desc: "League of Legends se lanza gratuitamente para PC. El modelo free-to-play con cosméticos revoluciona la industria. 40 campeones disponibles en el lanzamiento." },
+  { year: 2011, title: "Primer Campeonato Mundial", type: "esports",
+    desc: "Season 1 World Championship en DreamHack, Suecia. Fnatic gana el primer título con un prize pool de $50,000 USD. Los esports de LoL comienzan oficialmente." },
+  { year: 2012, title: "El Juego Más Jugado del Mundo", type: "hito",
+    desc: "LoL supera los 32 millones de jugadores registrados. Se convierte en el PC game más jugado del mundo, superando a WoW y CS. Los servidores colapsan constantemente." },
+  { year: 2012, title: "Season 2 Worlds — Los Ángeles", type: "esports",
+    desc: "Taipei Assassins (TPA) vence a Azubu Frost en el USC Galen Center. 8,000 espectadores en vivo. Millones en streaming. La escena competitiva explota globalmente." },
+  { year: 2013, title: "Faker Llega al Escenario — SKT T1 Campeón", type: "esports",
+    desc: "Lee 'Faker' Sang-hyeok debuta profesionalmente y lleva a SKT T1 al título mundial en el Staples Center, LA. Es reconocido inmediatamente como el mejor del mundo. Prize pool: $2M." },
+  { year: 2014, title: "150 Millones de Jugadores Registrados", type: "hito",
+    desc: "LoL alcanza 150 millones de cuentas. 67 millones de jugadores activos por mes. Es el juego más jugado en PC del planeta por un margen enorme." },
+  { year: 2015, title: "SKT T1 — Bicampeones Mundiales", type: "esports",
+    desc: "SKT T1 gana su segundo Mundial en Bruselas. Faker domina completamente. 36 millones de espectadores simultáneos — un record para cualquier evento de esports hasta esa fecha." },
+  { year: 2016, title: "SKT T1 — Tricampeones. Faker el GOAT.", type: "esports",
+    desc: "Tercer título para SKT T1 en el Staples Center. Faker es universalmente reconocido como el Greatest Of All Time. El único tricampeón de la historia hasta ese momento." },
+  { year: 2017, title: "Samsung Galaxy Rompe la Dinastía", type: "esports",
+    desc: "Samsung Galaxy derrota a SKT T1 en una final 3-0 en Beijing. 60 millones de espectadores. Es el fin de la era dorada de SKT. Crown y Ruler brillan." },
+  { year: 2018, title: "K/DA — POP/STARS Cambia Todo", type: "cultura",
+    desc: "Riot lanza K/DA con POP/STARS durante el Mundial 2018 en Corea. La actuación con hologramas en tiempo real es histórica. La canción alcanza 400M+ de reproducciones en YouTube." },
+  { year: 2018, title: "Invictus Gaming — China en la Cima", type: "esports",
+    desc: "iG de China gana el primer Mundial chino en suelo coreano. Las celebraciones en China son masivas. Rookie es el MVP. El dominio coreano se rompe definitivamente." },
+  { year: 2019, title: "FunPlus Phoenix — True Damage en París", type: "esports",
+    desc: "FPX gana el Mundial 2019. True Damage actúa en vivo en el Accor Arena de París. Lwx y Crisp son la botlane del torneo. Prize pool: $2.25M." },
+  { year: 2020, title: "DAMWON Gaming — El COVID No Para a LoL", type: "esports",
+    desc: "El Mundial 2020 es completamente online por la pandemia. DAMWON Gaming gana. ShowMaker emerge como el mejor mid laner de su generación. El juego sigue creciendo." },
+  { year: 2021, title: "ARCANE — Netflix. 9 Emmy Awards.", type: "cultura",
+    desc: "Riot lanza Arcane en Netflix. La historia de Vi y Jinx en Piltóver y Zaun. Gana 9 Emmy Awards, considerada una de las mejores series animadas de la historia. 34M de hogares ven la S1." },
+  { year: 2021, title: "EDward Gaming — Los Chinos Triunfan Otra Vez", type: "esports",
+    desc: "EDG vence a DAMWON KIA en épica final de 5 partidas en Islandia. Jiejie y Scout brillan. Las celebraciones en China son históricas." },
+  { year: 2022, title: "T1 — El Cuarto Título de Faker", type: "esports",
+    desc: "T1 gana su cuarto Campeonato Mundial en San Francisco venciendo a DRX en final épica. Faker consigue el cuarto anillo. 73M espectadores simultáneos — record absoluto de la industria." },
+  { year: 2023, title: "Heartsteel — El Nuevo Fenómeno Musical", type: "cultura",
+    desc: "Riot lanza Heartsteel, el nuevo grupo musical del universo LoL. Pop alternativo y R&B. PARANOIA se convierte en hit instantáneo. Sett, Yone, Kayn, Aphelios, Ezreal y K'Sante." },
+  { year: 2023, title: "Arcane S2 — El Universo Crece", type: "cultura",
+    desc: "La segunda temporada de Arcane llega a Netflix completando la historia de Vi, Jinx, Jayce, Viktor y la guerra entre Piltóver y Zaun. Mel se convierte en el nuevo personaje central." },
+  { year: 2024, title: "T1 — Pentacampeones. La Dinastía Eterna.", type: "esports",
+    desc: "T1 gana su quinto título mundial convirtiéndose en el equipo más ganador de toda la historia. Faker juega su décima temporada profesional a los 28 años. La leyenda continúa." },
+  { year: 2025, title: "170+ Campeones — El Universo Sin Límites", type: "hito",
+    desc: "LoL supera los 170 campeones. Ambessa, Mel, Smolder, Aurora, Hwei, Briar, Naafiri, Milio y K'Sante son los últimos en unirse. El juego sigue siendo el MOBA más jugado del mundo." }
+];
+```
+
+---
+
+## 🏆 ESPORTS — `/esports`
+
+```javascript
+const LEGENDARY_PLAYERS = [
+  { name: "Faker", team: "T1", role: "Mid Lane", country: "🇰🇷 Corea del Sur",
+    titles: 4, desc: "El Greatest Of All Time. 4 títulos mundiales. 10+ temporadas profesionales. Referente absoluto de todo el esport.",
+    champId: "Zed", // su campeón más icónico
+    years: "2013 - presente" },
+  { name: "Uzi", team: "Royal Never Give Up", role: "ADC", country: "🇨🇳 China",
+    titles: 0, desc: "Considerado por muchos el mejor ADC de la historia. Finalista mundial múltiples veces. Su mecánica con ADC es inalcanzable.", champId: "Vayne", years: "2013 - 2020" },
+  { name: "Caps", team: "G2 Esports", role: "Mid Lane", country: "🇩🇰 Dinamarca",
+    titles: 0, desc: "El mejor jugador de la historia de Europa. 5 títulos de LEC. Apodado 'Craps' por sus plays arriesgadas que siempre funcionan.", champId: "Yasuo", years: "2017 - presente" },
+  { name: "ShowMaker", team: "DRX / DAMWON", role: "Mid Lane", country: "🇰🇷 Corea del Sur",
+    titles: 1, desc: "Campeón mundial 2020. Considerado el heredero natural de Faker. Mecánica extraordinaria en campeones de control de masas.", champId: "Twisted Fate", years: "2019 - presente" },
+  { name: "TheShy", team: "Invictus Gaming", role: "Top Lane", country: "🇰🇷 Corea del Sur",
+    titles: 1, desc: "Campeón mundial 2018. El top laner más agresivo del mundo. Conocido por jugar todos los campeones de forma carry.", champId: "Fiora", years: "2016 - presente" },
+  { name: "Ruler", team: "Samsung / JDG", role: "ADC", country: "🇰🇷 Corea del Sur",
+    titles: 1, desc: "Campeón mundial 2017. Un ADC técnicamente impecable conocido por su consistencia absoluta en el juego.", champId: "Miss Fortune", years: "2016 - presente" }
+];
+
+const WORLDS_HISTORY = [
+  { year: 2011, champion: "Fnatic", region: "EU", location: "Suecia (DreamHack)", score: "3-0", runner: "aAa", prize: "$50K" },
+  { year: 2012, champion: "Taipei Assassins", region: "APAC", location: "Los Ángeles, USA", score: "3-1", runner: "Azubu Frost", prize: "$200K" },
+  { year: 2013, champion: "SK Telecom T1", region: "LCK", location: "Los Ángeles, USA", score: "3-0", runner: "Royal Club", prize: "$1M" },
+  { year: 2014, champion: "Samsung White", region: "LCK", location: "Seúl, Corea", score: "3-1", runner: "Star Horn Royal Club", prize: "$1M" },
+  { year: 2015, champion: "SK Telecom T1", region: "LCK", location: "Bruselas, Bélgica", score: "3-1", runner: "KOO Tigers", prize: "$1M" },
+  { year: 2016, champion: "SK Telecom T1", region: "LCK", location: "Los Ángeles, USA", score: "3-2", runner: "Samsung Galaxy", prize: "$2M" },
+  { year: 2017, champion: "Samsung Galaxy", region: "LCK", location: "Beijing, China", score: "3-0", runner: "SK Telecom T1", prize: "$2M" },
+  { year: 2018, champion: "Invictus Gaming", region: "LPL", location: "Incheon, Corea", score: "3-0", runner: "Fnatic", prize: "$2.4M" },
+  { year: 2019, champion: "FunPlus Phoenix", region: "LPL", location: "París, Francia", score: "3-0", runner: "G2 Esports", prize: "$2.25M" },
+  { year: 2020, champion: "DAMWON Gaming", region: "LCK", location: "Online (COVID)", score: "3-1", runner: "Suning", prize: "$2.25M" },
+  { year: 2021, champion: "EDward Gaming", region: "LPL", location: "Reikiavik, Islandia", score: "3-2", runner: "DAMWON KIA", prize: "$2.25M" },
+  { year: 2022, champion: "T1", region: "LCK", location: "San Francisco, USA", score: "3-2", runner: "DRX", prize: "$2.25M" },
+  { year: 2023, champion: "Weibo Gaming", region: "LPL", location: "Seúl, Corea", score: "3-2", runner: "T1", prize: "$2.25M" },
+  { year: 2024, champion: "T1", region: "LCK", location: "Londres, UK", score: "3-1", runner: "Bilibili Gaming", prize: "$2.25M" }
+];
+```
+
+---
+
+## 🌍 REGIONES — `/regiones` y `/region/:id`
+
+### Mapa interactivo de Runeterra:
+```jsx
+// Usar imagen:
+// https://static.wikia.nocookie.net/leagueoflegends/images/f/fd/Runeterra_map.jpg
+// Con puntos SVG superpuestos que al hover muestran el nombre de la región
+// Al click: navegan a /region/:id
+
+const REGION_POINTS = {
+  demacia:       { x: "28%", y: "38%", color: "#1E90FF" },
+  noxus:         { x: "42%", y: "32%", color: "#C8542A" },
+  ionia:         { x: "72%", y: "38%", color: "#9B5CD4" },
+  freljord:      { x: "35%", y: "15%", color: "#87CEEB" },
+  piltover:      { x: "38%", y: "48%", color: "#F0C040" },
+  zaun:          { x: "39%", y: "52%", color: "#2E8B57" },
+  shurima:       { x: "52%", y: "62%", color: "#DAA520" },
+  islasSombras:  { x: "60%", y: "28%", color: "#2E4057" },
+  targon:        { x: "46%", y: "55%", color: "#FF8C00" },
+  bilgewater:    { x: "30%", y: "62%", color: "#008B8B" },
+  void:          { x: "55%", y: "75%", color: "#6A0DAD" },
+  ixtal:         { x: "42%", y: "72%", color: "#228B22" },
+  bandle:        { x: "22%", y: "52%", color: "#FFD700" }
+};
+```
+
+### Datos de cada región (implementar como objeto en código):
+```javascript
+const REGIONS_DATA = {
+  demacia: {
+    name: "Demacia",
+    subtitle: "El Reino del Honor y la Justicia",
+    color: "#1E90FF",
+    description: "Un reino poderoso y orgulloso que odia la magia. Construido con piedra pétrima que suprime hechizos. Fundado por refugiados de guerras mágicas. Actualmente en tensión interna por la persecución de magos.",
+    champions: ["Garen","Lux","JarvanIV","Fiora","Galio","Poppy","Quinn","Shyvana","Vayne","XinZhao"],
+    conflicts: ["Guerra centenaria con Noxus","Persecución interna de magos","Revuelta de los Liberados"],
+    facts: ["La piedra pétrima suprime activamente la magia","Garen y Lux son hermanos de la familia Crownguard","Jarvan IV es el príncipe heredero del trono"]
+  },
+  noxus: {
+    name: "Noxus",
+    subtitle: "El Imperio Sin Límites",
+    color: "#C8542A",
+    description: "El imperio más expansionista de Runeterra. Filosofía central: solo el poder importa. Cualquiera puede ascender sin importar origen. Abarca docenas de naciones conquistadas.",
+    champions: ["Darius","Katarina","Draven","Swain","Riven","Talon","Vladimir","Kled","Mordekaiser","Cassiopeia"],
+    conflicts: ["Invasión de Ionia","Guerra con Demacia","Luchas por el Trifarí"],
+    facts: ["Swain tomó el control de Noxus en un golpe de estado","El Trifarí es la cúpula de 3 gobernantes","Darius y Draven son hermanos"]
+  },
+  ionia: {
+    name: "Ionia",
+    subtitle: "El Primer Continente — Tierra del Espíritu",
+    color: "#9B5CD4",
+    description: "La región más mágicamente dotada de Runeterra. Sus habitantes viven en armonía con el Espíritu de Runeterra. Fue invadida por Noxus dejando cicatrices profundas que aún no sanan.",
+    champions: ["Yasuo","Yone","Ahri","Zed","LeeSin","Karma","Kennen","Akali","Irelia","MasterYi","Shen","Wukong","Jhin"],
+    conflicts: ["Secuelas de la invasión noxiana","Orden de las Sombras vs Ojo de Twilight","El desequilibrio espiritual"],
+    facts: ["Ionia es un archipiélago conectado por magia","El ki (energía vital) es real y manipulable aquí","Yasuo y Yone son hermanos de Ionia"]
+  },
+  freljord: {
+    name: "Freljord",
+    subtitle: "Las Tierras Eternas del Hielo",
+    color: "#87CEEB",
+    description: "Una vasta extensión helada al norte. Solo los más fuertes sobreviven. Tres tribus en guerra: Avarosa (Ashe), Inuit de la Tormenta (Sejuani) y Espíritus de las Nieves (Lissandra).",
+    champions: ["Ashe","Tryndamere","Sejuani","Lissandra","Braum","NunuWillump","Olaf","Volibear","Anivia","Gnar"],
+    conflicts: ["Guerra de las Tres Tribus","Los Watchers bajo el hielo del Vacío","Volibear vs la civilización humana"],
+    facts: ["Ashe y Tryndamere están casados en el lore","Los Watchers son seres del Vacío bajo el hielo","Braum es el héroe más querido del Freljord"]
+  },
+  piltover: {
+    name: "Piltóver",
+    subtitle: "La Ciudad del Progreso",
+    color: "#F0C040",
+    description: "La ciudad más tecnológicamente avanzada de Runeterra. Hogar de la tecnología hextech que fusiona magia con ciencia. La mitad brillante de una ciudad con dos caras.",
+    champions: ["Caitlyn","Vi","Ezreal","Heimerdinger","Jayce","Viktor","Jinx","Ekko","Camille","Orianna","Seraphine"],
+    conflicts: ["Tensión con Zaun","Control del hextech","Criminalidad organizada"],
+    facts: ["Piltóver está literalmente construida sobre Zaun","Arcane de Netflix se sitúa aquí","El hextech es magia cristalizada en tecnología"]
+  },
+  shurima: {
+    name: "Shurima",
+    subtitle: "El Imperio Perdido de las Arenas",
+    color: "#DAA520",
+    description: "El mayor imperio del mundo hace miles de años. Cayó por traición. Sus ciudades sepultadas bajo la arena. El Dios Solar Azir ha resucitado para restaurarlo.",
+    champions: ["Azir","Nasus","Renekton","Xerath","Sivir","Taliyah","Amumu","Rammus","Skarner"],
+    conflicts: ["Azir vs Xerath","Los Ascendidos corrompidos","El retorno del Imperio"],
+    facts: ["Los Ascendidos son humanos transformados en semidioses","Nasus y Renekton son hermanos Ascendidos","Shurima fue destruida por la traición de Xerath"]
+  },
+  islasSombras: {
+    name: "Islas de las Sombras",
+    subtitle: "Tierra de Muerte y Almas Condenadas",
+    color: "#2E4057",
+    description: "Antes las Islas Doradas, el lugar más sagrado de Runeterra. Un ritual fallido desató La Ruina, convirtiendo toda vida en muerte. La Bruma Negra mata todo lo vivo.",
+    champions: ["Thresh","Hecarim","Yorick","Kalista","Mordekaiser","Viego","Gwen","Senna","Lucian"],
+    conflicts: ["La Ruina que se extiende","El Rey Arruinado Viego","Los espíritus atrapados"],
+    facts: ["Senna estuvo décadas atrapada en la linterna de Thresh","Viego perdió su mente buscando resucitar a su esposa","Thresh colecciona almas activamente"]
+  },
+  targon: {
+    name: "Monte Targón",
+    subtitle: "La Cima del Mundo — Hogar Celestial",
+    color: "#FF8C00",
+    description: "La montaña más alta de Runeterra. En su cima habitan los Aspectos: seres celestiales que habitan cuerpos mortales. Pocos sobreviven el ascenso. Los que lo logran son juzgados.",
+    champions: ["Pantheon","Leona","Diana","Soraka","Taric","AurelionSol","Aphelios"],
+    conflicts: ["Aspectos de Luz vs Luna","La amenaza del Vacío cósmico","El libre albedrío de los mortales vs los Celestiales"],
+    facts: ["Aurelion Sol fue esclavizado por Targón mediante una trampa","Pantheon es el Aspecto de la Guerra que tomó el cuerpo de Atreus","Aphelios y su hermana Alune comparten un vínculo espiritual único"]
+  },
+  bilgewater: {
+    name: "Bilgewater",
+    subtitle: "Puerto de Piratas y Monstruos Marinos",
+    color: "#008B8B",
+    description: "El puerto sin ley más grande del mundo. Sin gobierno estable. Piratas, mercenarios, cazadores y comerciantes sin escrúpulos. El Mar de Camacho oculta civilizaciones perdidas.",
+    champions: ["Gangplank","MissFortune","TwistedFate","Graves","Nautilus","Fizz","Nami","Pyke","Illaoi"],
+    conflicts: ["Control del puerto tras la caída de Gangplank","El culto de Nagakabouros","Pyke cazando a todos sus traidores"],
+    facts: ["Miss Fortune vengó a su madre asesinada por Gangplank","Pyke es un fantasma vengativo que asesina a sus traidores","Bilgewater nunca duerme"]
+  },
+  void: {
+    name: "El Vacío",
+    subtitle: "La Nada que Todo lo Devora",
+    color: "#6A0DAD",
+    description: "No es un lugar: es la ausencia de existencia. Una dimensión que existía antes de Runeterra. Sus criaturas desean consumir y borrar toda realidad. Amenaza existencial permanente.",
+    champions: ["Kassadin","Kaisa","KogMaw","Chogath","RekSai","VelKoz","Malzahar","Belveth"],
+    conflicts: ["Invasión constante al mundo real","Kassadin busca a su hija Kai'Sa","Bel'Veth quiere reemplazar Runeterra"],
+    facts: ["Kai'Sa sobrevivió dentro del Vacío desde los 10 años de edad","Kassadin entró al Vacío para buscar a su hija","El Vacío existía antes que la humanidad y la vida"]
+  }
+};
+```
+
+---
+
+## 🎬 SISTEMA DE ANIMACIONES — NIVEL MÁXIMO
+
+### CSS Glitch en el Hero:
+```css
+@keyframes glitch-main {
+  0%,100% { text-shadow: 0 0 0 transparent; }
+  92% { text-shadow: 0 0 0 transparent; clip-path: none; }
+  93% { text-shadow: 3px 0 0 #ff0040, -3px 0 0 #00ffff; clip-path: polygon(0 15%, 100% 15%, 100% 40%, 0 40%); }
+  94% { text-shadow: -3px 0 0 #ff0040, 3px 0 0 #00ffff; clip-path: polygon(0 60%, 100% 60%, 100% 80%, 0 80%); }
+  95% { text-shadow: 0 0 0 transparent; clip-path: none; }
+}
+.hero-title { animation: glitch-main 6s infinite; }
+```
+
+### Cursor Custom (reemplaza el cursor del sistema):
+```jsx
+const CustomCursor = () => {
+  const cursorDot = useRef(null);
+  const cursorRing = useRef(null);
+  
+  useEffect(() => {
+    const moveCursor = (e) => {
+      cursorDot.current.style.left = e.clientX + 'px';
+      cursorDot.current.style.top = e.clientY + 'px';
+      gsap.to(cursorRing.current, { left: e.clientX, top: e.clientY, duration: 0.15 });
+    };
+    window.addEventListener('mousemove', moveCursor);
+    return () => window.removeEventListener('mousemove', moveCursor);
+  }, []);
+  
+  return (
+    <>
+      {/* Punto dorado pequeño — instantáneo */}
+      <div ref={cursorDot} style={{
+        position: 'fixed', width: 6, height: 6, borderRadius: '50%',
+        background: '#C8AA6E', pointerEvents: 'none', zIndex: 9999,
+        transform: 'translate(-50%, -50%)'
+      }}/>
+      {/* Anillo que sigue con delay */}
+      <div ref={cursorRing} style={{
+        position: 'fixed', width: 28, height: 28, borderRadius: '50%',
+        border: '1.5px solid #C8AA6E', pointerEvents: 'none', zIndex: 9998,
+        transform: 'translate(-50%, -50%)', opacity: 0.6
+      }}/>
+    </>
+  );
+};
+```
+
+### Scroll Reveal con Intersection Observer:
+```jsx
+// Aplicar a TODOS los elementos de sección con este patrón:
+const { ref, inView } = useInView({ threshold: 0.1, triggerOnce: true });
+<motion.div
+  ref={ref}
+  initial={{ opacity: 0, y: 50 }}
+  animate={inView ? { opacity: 1, y: 0 } : {}}
+  transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
+>
+```
+
+### Page Transitions (en App.jsx con AnimatePresence):
+```jsx
+const pageVariants = {
+  initial: { opacity: 0, y: 20, filter: 'blur(4px)' },
+  enter:   { opacity: 1, y: 0,  filter: 'blur(0px)', transition: { duration: 0.5, ease: [0.23, 1, 0.32, 1] } },
+  exit:    { opacity: 0, y: -20, filter: 'blur(4px)', transition: { duration: 0.3 } }
+};
+<AnimatePresence mode="wait">
+  <motion.div key={location.pathname} variants={pageVariants} initial="initial" animate="enter" exit="exit">
+    <Routes location={location}>...</Routes>
+  </motion.div>
+</AnimatePresence>
+```
+
+### Partículas en el Hero:
+```jsx
+const particlesConfig = {
+  particles: {
+    number: { value: 60, density: { enable: true, area: 800 } },
+    color: { value: ["#C8AA6E", "#F0E6D3", "#0BC4E3"] },
+    opacity: { value: { min: 0.05, max: 0.4 } },
+    size: { value: { min: 1, max: 2.5 } },
+    move: { enable: true, speed: 0.6, direction: "top", random: true, drift: 0.5 },
+    links: { enable: false }
+  },
+  background: { color: "transparent" }
+};
+```
+
+### Barra de Stats Animada (en perfil de campeón):
+```jsx
+const StatBar = ({ label, value, max = 10, color = '#C8AA6E' }) => {
+  const { ref, inView } = useInView({ triggerOnce: true });
+  return (
+    <div ref={ref} style={{ marginBottom: '0.75rem' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
+        <span style={{ fontFamily: 'Rajdhani', fontSize: '0.85rem', color: '#F0E6D3' }}>{label}</span>
+        <span style={{ color: '#C8AA6E', fontSize: '0.85rem' }}>{value}/{max}</span>
+      </div>
+      <div style={{ height: 4, background: 'rgba(200,170,110,0.15)', borderRadius: 2 }}>
+        <motion.div
+          initial={{ width: 0 }}
+          animate={inView ? { width: `${(value / max) * 100}%` } : {}}
+          transition={{ duration: 1.2, delay: 0.3, ease: [0.23, 1, 0.32, 1] }}
+          style={{ height: '100%', background: color, borderRadius: 2,
+                   boxShadow: `0 0 8px ${color}` }}
+        />
+      </div>
+    </div>
+  );
+};
+```
+
+---
+
+## 🖼️ SISTEMA DE IMÁGENES — URLs EXACTAS
+
+```javascript
+// VERSIÓN ACTUAL (fetchar siempre antes de usar):
+const VERSION = await fetch('https://ddragon.leagueoflegends.com/api/versions.json')
+  .then(r => r.json()).then(v => v[0]);
+
+// LOADING SCREEN ART — USAR PARA CARDS (composición vertical perfecta):
+`https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${champId}_0.jpg`
+// Skins: _1.jpg, _2.jpg, _3.jpg etc.
+
+// SPLASH ART COMPLETO — USAR PARA HEROES Y MODALES (horizontal, alta resolución):
+`https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${champId}_0.jpg`
+
+// ÍCONO CUADRADO DEL CAMPEÓN:
+`https://ddragon.leagueoflegends.com/cdn/${VERSION}/img/champion/${champId}.png`
+
+// ÍCONO DE HABILIDAD:
+`https://ddragon.leagueoflegends.com/cdn/${VERSION}/img/spell/${spellImageFull}`
+
+// ÍCONO DE PASIVA:
+`https://ddragon.leagueoflegends.com/cdn/${VERSION}/img/passive/${passiveImageFull}`
+
+// ÍCONO DE ITEM:
+`https://ddragon.leagueoflegends.com/cdn/${VERSION}/img/item/${itemId}.png`
+
+// JSON TODOS LOS CAMPEONES:
+`https://ddragon.leagueoflegends.com/cdn/${VERSION}/data/en_US/champion.json`
+
+// JSON DETALLE CAMPEÓN (con skins, habilidades, lore):
+`https://ddragon.leagueoflegends.com/cdn/${VERSION}/data/en_US/champion/${champId}.json`
+
+// COMMUNITYDRAGON — Imágenes en mayor resolución (alternativa):
+const CDN_CD = 'https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default';
+`${CDN_CD}/assets/characters/${champIdLower}/skins/base/images/${champIdLower}_splash_centered_0.jpg`
+```
+
+---
+
+## 💎 DISEÑO CSS — ESTÉTICA EXACTA DEL JUEGO
+
+```css
+/* Separadores dorados entre secciones (exactos del cliente de LoL) */
+.section-divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(to right, transparent, #C8AA6E 20%, #F0E6D3 50%, #C8AA6E 80%, transparent);
+  margin: 4rem 0;
+}
+
+/* Títulos de sección */
+.section-title {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: linear-gradient(180deg, #F0E6D3 0%, #C8AA6E 60%, #785A28 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+/* Línea decorativa bajo el título */
+.section-title::after {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 2px;
+  background: #C8AA6E;
+  margin: 0.75rem auto 0;
+}
+
+/* Botón primario */
+.btn-primary {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #050E1A;
+  background: linear-gradient(180deg, #F0E6D3 0%, #C8AA6E 50%, #785A28 100%);
+  border: none;
+  padding: 0.75rem 2rem;
+  clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
+  cursor: pointer;
+  transition: filter 0.2s, transform 0.2s;
+}
+.btn-primary:hover {
+  filter: brightness(1.2);
+  transform: translateY(-2px);
+}
+
+/* Card base con estética del cliente */
+.lol-card {
+  background: linear-gradient(135deg, rgba(9,20,40,0.95), rgba(5,14,26,0.98));
+  border: 1px solid rgba(200,170,110,0.15);
+  position: relative;
+  overflow: hidden;
+}
+.lol-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, #C8AA6E 30%, #C8AA6E 70%, transparent);
+}
+
+/* Badge de rol */
+.role-badge {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 0.15rem 0.6rem;
+  clip-path: polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
+}
+.role-asesino  { background: #8B0000; color: #FFB3B3; }
+.role-mago     { background: #4B0082; color: #D4AAFF; }
+.role-tirador  { background: #8B4513; color: #FFD4AA; }
+.role-soporte  { background: #006400; color: #AAFFAA; }
+.role-tanque   { background: #00008B; color: #AAAAFF; }
+.role-luchador { background: #8B6914; color: #FFE4AA; }
+
+/* Scrollbar estilo LoL */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #050E1A; }
+::-webkit-scrollbar-thumb { background: #785A28; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #C8AA6E; }
+```
+
+---
+
+## ✅ CHECKLIST COMPLETO — VERIFICAR ANTES DE TERMINAR
+
+### Nombres (CRÍTICO):
+- [ ] NUNCA se muestra "Hendido" — siempre "Riven"
+- [ ] NUNCA se muestra "Tonterías" — siempre "Fiddlesticks"
+- [ ] Todos los nombres salen de `getChampionName(id)` del mapa arriba
+- [ ] La API se consulta en `en_US` para nombres, en `es_ES` solo para lore/descripción
+
+### Música (CRÍTICO):
+- [ ] K/DA: Ahri, Akali, Evelynn, Kai'Sa — con skins _9, _8, _5, _2
+- [ ] Pentakill: Mordekaiser, Karthus, Yorick, Sona, Olaf, Kayle — nunca traducir "Pentakill"
+- [ ] True Damage: Ekko, Qiyana, Senna, Yasuo, Akali
+- [ ] Heartsteel escrito en inglés — nunca "Acero del Corazón"
+- [ ] Heartsteel: Sett, Yone, Kayn, Aphelios, Ezreal, K'Sante
+- [ ] Star Guardian: Lux, Jinx, Janna, Lulu, Poppy
+- [ ] Debajo de cada imagen: nombre del campeón + nombre exacto de skin
+
+### Imágenes:
+- [ ] Cards de campeones usan LOADING SCREEN art (_0.jpg de /loading/)
+- [ ] `object-position: center 15%` en todas las cards
+- [ ] Perfiles de campeón usan SPLASH ART (_0.jpg de /splash/)
+- [ ] Modal de skins usa splash art en alta resolución
+- [ ] Lazy loading en TODAS las imágenes
+
+### Modos de juego:
+- [ ] La Grieta del Invocador muestra el SVG del mapa verde con 3 carriles
+- [ ] El Abismo de los Lamentos muestra el SVG del puente único
+- [ ] TFT muestra el tablero hexagonal SVG
+- [ ] Arena muestra SVG de arena circular
+- [ ] NINGÚN modo muestra imágenes de personajes como representación del modo
+
+### Animaciones:
+- [ ] Cursor custom dorado funcionando en desktop
+- [ ] Partículas en el hero
+- [ ] Scroll reveal en todos los elementos de sección
+- [ ] Page transitions entre rutas (AnimatePresence)
+- [ ] Modal de skins con shared element (layoutId)
+- [ ] Efecto 3D tilt en cards al hover
+- [ ] Glitch en el título del hero
+- [ ] Barras de stats animadas en perfiles de campeón
+- [ ] Loading screen al entrar a perfil de campeón
+
+### General:
+- [ ] Responsive: funciona en mobile (< 768px), tablet, desktop
+- [ ] Scrollbar estilizada con colores del juego
+- [ ] Todas las fuentes cargadas (Cinzel + Rajdhani)
+- [ ] Error boundaries en cada página para manejar fallos de API
+- [ ] Versión de DataDragon se obtiene dinámicamente (no hardcodeada)
+
+---
+
+## 🔥 INSTRUCCIÓN FINAL A REPLIT AGENT
+
+```
+Construye este sitio web completo de League of Legends con TODO el contenido,
+datos, animaciones y diseño descritos en este prompt. 
+
+REGLAS NO NEGOCIABLES:
+1. Los nombres de campeones SIEMPRE desde el mapa CHAMPION_NAMES. Nunca de la API en español.
+2. Las cards de campeones SIEMPRE usan loading screen art (/loading/), no splash art.
+3. Los modos de juego SIEMPRE muestran mapas SVG, nunca imágenes de personajes.
+4. Los nombres de grupos musicales (K/DA, Pentakill, True Damage, Heartsteel, Star Guardian) NUNCA se traducen.
+5. Cada imagen de grupo musical muestra la skin ESPECÍFICA del grupo (ver números de skinNum en el prompt).
+6. El cursor del sistema se oculta y se usa el cursor custom dorado.
+7. Todas las transiciones de página usan AnimatePresence de Framer Motion.
+8. La versión de DataDragon se obtiene dinámicamente de /api/versions.json.
+
+Empieza construyendo en este orden:
+1. Setup (Vite + React + dependencias + CSS global + fuentes)
+2. CustomCursor + Layout (Nav + Footer)
+3. Home page completa
+4. Página de Campeones con filtros
+5. Perfil de campeón con tabs
+6. Página de Música con los 5 grupos
+7. Página de Modos con mapas SVG
+8. Historia con timeline
+9. Esports
+10. Regiones
+
+Toma un screenshot después de cada página y confirma que se ve correctamente antes de continuar.
+```
+
+---
+
+*MEGA PROMPT FINAL DEFINITIVO — League of Legends Fan Site*
+*Versión 4.0 — La versión que lo termina todo*
+*Todo lo aprendido de V1, V2, V3 y las instrucciones directas — en un solo prompt*

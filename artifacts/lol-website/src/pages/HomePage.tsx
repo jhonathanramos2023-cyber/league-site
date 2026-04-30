@@ -151,18 +151,17 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.8 }}
-            className="font-serif font-black uppercase leading-none mb-6"
+            className="font-serif font-black uppercase leading-none mb-6 hero-glitch"
             style={{
-              fontSize: "clamp(3rem, 10vw, 8rem)",
+              fontSize: "clamp(2.8rem, 9vw, 7.5rem)",
               background: "linear-gradient(135deg, #C8AA6E 0%, #F0E6D3 40%, #C8AA6E 60%, #785A28 100%)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundSize: "200% auto",
-              animation: "shimmer 4s linear infinite",
-              textShadow: "none",
+              animation: "shimmer 4s linear infinite, glitch-main 7s infinite",
             }}
           >
-            Entra al Campo de Batalla
+            Domina el Campo de Batalla
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}

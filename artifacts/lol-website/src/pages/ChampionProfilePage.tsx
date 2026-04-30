@@ -76,6 +76,7 @@ export default function ChampionProfilePage() {
 
   const [champ, setChamp] = useState<ChampDetail | null>(null);
   const [loading, setLoading] = useState(true);
+  const [showIntro, setShowIntro] = useState(true);
   const [tab, setTab] = useState<"habilidades" | "lore" | "skins" | "curiosidades">("habilidades");
   const [activeSpell, setActiveSpell] = useState<number | null>(null);
   const [skinModal, setSkinModal] = useState<Skin | null>(null);
@@ -83,9 +84,11 @@ export default function ChampionProfilePage() {
   useEffect(() => {
     if (!champId) return;
     setLoading(true);
+    setShowIntro(true);
     setSkinModal(null);
     setTab("habilidades");
     setActiveSpell(null);
+    const introTimer = setTimeout(() => setShowIntro(false), 1600);
     fetch(`https://ddragon.leagueoflegends.com/cdn/${DDV}/data/es_ES/champion/${champId}.json`)
       .then((r) => r.json())
       .then((data) => {
@@ -94,14 +97,35 @@ export default function ChampionProfilePage() {
         setLoading(false);
       })
       .catch(() => setLoading(false));
+    return () => clearTimeout(introTimer);
   }, [champId]);
 
-  if (loading) {
+  if (showIntro || loading) {
     return (
-      <div className="min-h-screen bg-[#050E1A] pt-20 flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-16 h-16 border-2 border-[#C8AA6E]/30 border-t-[#C8AA6E] rounded-full animate-spin mx-auto mb-4" />
-          <p className="font-sans text-[#C8AA6E] tracking-widest uppercase text-sm">Cargando campeón...</p>
+      <div
+        className="relative min-h-screen flex flex-col items-start justify-end overflow-hidden"
+        style={{ background: "#000" }}
+      >
+        <img
+          src={`https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${champId}_0.jpg`}
+          alt={champId}
+          className="absolute inset-0 w-full h-full object-cover object-top opacity-60"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+        <div className="relative z-10 w-full p-8 md:p-16 pb-16">
+          <p className="font-sans text-[#C8AA6E] text-xs tracking-[0.5em] uppercase mb-2">Cargando</p>
+          <p className="font-serif text-[#F0E6D3] text-4xl md:text-6xl font-black uppercase mb-8">
+            {getChampionName(champId ?? "")}
+          </p>
+          <div className="w-full max-w-md h-[3px] bg-[#C8AA6E]/15 rounded-full overflow-hidden">
+            <motion.div
+              initial={{ width: "0%" }}
+              animate={{ width: "100%" }}
+              transition={{ duration: 1.4, ease: [0.23, 1, 0.32, 1] }}
+              className="h-full rounded-full"
+              style={{ background: "linear-gradient(90deg, #785A28, #C8AA6E, #F0E6D3)" }}
+            />
+          </div>
         </div>
       </div>
     );

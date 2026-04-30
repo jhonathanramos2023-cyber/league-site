@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { motion } from "framer-motion";
 import { Link } from "wouter";
 import { getChampionName } from "@/data/championNames";
@@ -30,15 +31,33 @@ const TAG_COLORS: Record<string, string> = {
 export function ChampionCard({ id, title, tags, index = 0 }: ChampionCardProps) {
   const name = getChampionName(id);
   const loadingUrl = `https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${id}_0.jpg`;
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const el = cardRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    el.style.transform = `perspective(900px) rotateY(${x * 12}deg) rotateX(${-y * 12}deg) translateZ(8px) scale(1.03)`;
+  };
+
+  const handleMouseLeave = () => {
+    if (cardRef.current) {
+      cardRef.current.style.transform = "perspective(900px) rotateY(0deg) rotateX(0deg) translateZ(0px) scale(1)";
+    }
+  };
 
   return (
     <motion.div
+      ref={cardRef}
       initial={{ opacity: 0, y: 30, scale: 0.95 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.4, delay: index * 0.04, ease: "easeOut" }}
-      whileHover={{ y: -8, scale: 1.03 }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
       className="group relative cursor-pointer overflow-hidden"
-      style={{ aspectRatio: "2/3" }}
+      style={{ aspectRatio: "2/3", transformStyle: "preserve-3d", transition: "transform 0.15s ease" }}
     >
       <Link to={`/campeon/${id}`} className="block w-full h-full">
         <div className="absolute inset-0 bg-[#091428]">
