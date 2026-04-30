@@ -1,0 +1,769 @@
+# 🏆 MEGA PROMPT V3 — PARCHE DE CORRECCIONES EXACTAS
+## Aplica estos cambios sobre el sitio ya construido
+
+---
+
+## 🚨 CORRECCIÓN CRÍTICA #1 — NOMBRES DE CAMPEONES MAL TRADUCIDOS
+
+El juego tiene campeones con nombres propios que NO se traducen. La API de DataDragon en español (es_ES) a veces traduce nombres que deben mantenerse en inglés o en su forma oficial. Aquí la lista de todos los que están mal y cómo deben quedar:
+
+```javascript
+// MAPA DE CORRECCIÓN — clave: nombre_incorrecto → valor: nombre_correcto_oficial
+const nameFixMap = {
+  // ❌ MAL → ✅ BIEN
+  "Hendido": "Riven",
+  "Tonterías": "Fiddlesticks",         // ¡Tonterías! en español es Fiddlesticks
+  "Efervescencia": "Fizz",
+  "Pasarela": "Gangplank",
+  "Tumbas": "Graves",
+  "Parientes": "Kindred",
+  "Gafe": "Jinx",                      // "La Bala Perdida" es el título, no el nombre
+  "Amapola": "Poppy",
+  "Zagal": "Swain",
+  "Garra": "Talon",
+  "Trillar": "Thresh",
+  "Rodar": "Trundle",
+  "Destino retorcido": "Twisted Fate",
+  "Contracción nerviosa": "Twitch",
+  "Varo": "Varus",
+  "Vejar": "Vex",
+  "Viejo": "Viego",
+  "Chamuscado": "Singed",
+  "Retumbar": "Rumble",
+  "Nautilo": "Nautilus",
+  "Luciano": "Lucian",
+  "Casiopea": "Cassiopeia",
+  "Darío": "Darius",
+  "Eszreal": "Ezreal",
+  "Señorita Fortuna": "Miss Fortune",
+  "Nocturno": "Nocturne",
+  "Panteón": "Pantheon",
+  "Arder sin llama": "Smolder",
+  "Wu Kong": "Wukong",
+  "Sión": "Sion",
+  "Marca": "Brand",
+  "Hécarim": "Hecarim",
+  "Maestro Yi": "Master Yi",           // debe ser capitalizado correctamente
+  "Malphite": "Malphite",              // este está bien
+  "Hendido": "Riven",                  // PRIORIDAD — este es el más visible
+  "Brezo": "Briar",
+  "Nidalee": "Nidalee",               // correcto
+  "Zilean": "Zilean",                 // correcto
+};
+
+// INSTRUCCIÓN: En el componente de campeones, NUNCA usar el campo `name` directo
+// de la API en español. Usar el ID del campeón (que siempre está en inglés) y
+// mostrar el nombre desde un mapa propio, o usar la API en inglés (en_US) para
+// los nombres y la API en español solo para descripciones/lore.
+
+// SOLUCIÓN TÉCNICA:
+// Obtener nombres desde: https://ddragon.leagueoflegends.com/cdn/{version}/data/en_US/champion.json
+// Y lore/descripción desde: https://ddragon.leagueoflegends.com/cdn/{version}/data/es_ES/champion.json
+// Combinar ambas: nombre en inglés (oficial) + descripción en español
+```
+
+### Lista completa de nombres CORRECTOS (como aparecen en el juego oficial):
+
+```javascript
+const CORRECT_CHAMPION_NAMES = {
+  // Estos nombres NUNCA cambian, son nombres propios:
+  "Aatrox": "Aatrox",
+  "Ahri": "Ahri",
+  "Akali": "Akali",
+  "Akshan": "Akshan",
+  "Alistar": "Alistar",
+  "Ambessa": "Ambessa",
+  "Amumu": "Amumu",
+  "Anivia": "Anivia",
+  "Annie": "Annie",
+  "Aphelios": "Aphelios",
+  "Ashe": "Ashe",
+  "AurelionSol": "Aurelion Sol",
+  "Aurora": "Aurora",
+  "Azir": "Azir",
+  "Bard": "Bard",
+  "Belveth": "Bel'Veth",
+  "Blitzcrank": "Blitzcrank",
+  "Brand": "Brand",
+  "Braum": "Braum",
+  "Briar": "Briar",
+  "Caitlyn": "Caitlyn",
+  "Camille": "Camille",
+  "Cassiopeia": "Cassiopeia",
+  "Chogath": "Cho'Gath",
+  "Corki": "Corki",
+  "Darius": "Darius",
+  "Diana": "Diana",
+  "DrMundo": "Dr. Mundo",
+  "Draven": "Draven",
+  "Ekko": "Ekko",
+  "Elise": "Elise",
+  "Evelynn": "Evelynn",
+  "Ezreal": "Ezreal",
+  "Fiddlesticks": "Fiddlesticks",
+  "Fiora": "Fiora",
+  "Fizz": "Fizz",
+  "Galio": "Galio",
+  "Gangplank": "Gangplank",
+  "Garen": "Garen",
+  "Gnar": "Gnar",
+  "Gragas": "Gragas",
+  "Graves": "Graves",
+  "Gwen": "Gwen",
+  "Hecarim": "Hecarim",
+  "Heimerdinger": "Heimerdinger",
+  "Hwei": "Hwei",
+  "Illaoi": "Illaoi",
+  "Irelia": "Irelia",
+  "Ivern": "Ivern",
+  "Janna": "Janna",
+  "JarvanIV": "Jarvan IV",
+  "Jax": "Jax",
+  "Jayce": "Jayce",
+  "Jhin": "Jhin",
+  "Jinx": "Jinx",
+  "KSante": "K'Sante",
+  "Kaisa": "Kai'Sa",
+  "Kalista": "Kalista",
+  "Karma": "Karma",
+  "Karthus": "Karthus",
+  "Kassadin": "Kassadin",
+  "Katarina": "Katarina",
+  "Kayle": "Kayle",
+  "Kayn": "Kayn",
+  "Kennen": "Kennen",
+  "Khazix": "Kha'Zix",
+  "Kindred": "Kindred",
+  "Kled": "Kled",
+  "KogMaw": "Kog'Maw",
+  "Leblanc": "LeBlanc",
+  "LeeSin": "Lee Sin",
+  "Leona": "Leona",
+  "Lillia": "Lillia",
+  "Lissandra": "Lissandra",
+  "Lucian": "Lucian",
+  "Lulu": "Lulu",
+  "Lux": "Lux",
+  "Malphite": "Malphite",
+  "Malzahar": "Malzahar",
+  "Maokai": "Maokai",
+  "MasterYi": "Master Yi",
+  "Mel": "Mel",
+  "Milio": "Milio",
+  "MissFortune": "Miss Fortune",
+  "Mordekaiser": "Mordekaiser",
+  "Morgana": "Morgana",
+  "Naafiri": "Naafiri",
+  "Nami": "Nami",
+  "Nasus": "Nasus",
+  "Nautilus": "Nautilus",
+  "Neeko": "Neeko",
+  "Nidalee": "Nidalee",
+  "Nilah": "Nilah",
+  "Nocturne": "Nocturne",
+  "NunuWillump": "Nunu & Willump",
+  "Olaf": "Olaf",
+  "Orianna": "Orianna",
+  "Ornn": "Ornn",
+  "Pantheon": "Pantheon",
+  "Poppy": "Poppy",
+  "Pyke": "Pyke",
+  "Qiyana": "Qiyana",
+  "Quinn": "Quinn",
+  "Rakan": "Rakan",
+  "Rammus": "Rammus",
+  "RekSai": "Rek'Sai",
+  "Rell": "Rell",
+  "Renata": "Renata Glasc",
+  "Renekton": "Renekton",
+  "Rengar": "Rengar",
+  "Riven": "Riven",                  // ← LA MÁS IMPORTANTE, jamás traducir
+  "Rumble": "Rumble",
+  "Ryze": "Ryze",
+  "Samira": "Samira",
+  "Sejuani": "Sejuani",
+  "Senna": "Senna",
+  "Seraphine": "Seraphine",
+  "Sett": "Sett",
+  "Shaco": "Shaco",
+  "Shen": "Shen",
+  "Shyvana": "Shyvana",
+  "Singed": "Singed",
+  "Sion": "Sion",
+  "Sivir": "Sivir",
+  "Skarner": "Skarner",
+  "Smolder": "Smolder",
+  "Sona": "Sona",
+  "Soraka": "Soraka",
+  "Swain": "Swain",
+  "Sylas": "Sylas",
+  "Syndra": "Syndra",
+  "TahmKench": "Tahm Kench",
+  "Taliyah": "Taliyah",
+  "Talon": "Talon",
+  "Taric": "Taric",
+  "Teemo": "Teemo",
+  "Thresh": "Thresh",
+  "Tristana": "Tristana",
+  "Trundle": "Trundle",
+  "Tryndamere": "Tryndamere",
+  "TwistedFate": "Twisted Fate",
+  "Twitch": "Twitch",
+  "Udyr": "Udyr",
+  "Urgot": "Urgot",
+  "Varus": "Varus",
+  "Vayne": "Vayne",
+  "Veigar": "Veigar",
+  "VelKoz": "Vel'Koz",
+  "Vex": "Vex",
+  "Vi": "Vi",
+  "Viego": "Viego",
+  "Viktor": "Viktor",
+  "Vladimir": "Vladimir",
+  "Volibear": "Volibear",
+  "Warwick": "Warwick",
+  "Wukong": "Wukong",
+  "Xayah": "Xayah",
+  "Xerath": "Xerath",
+  "XinZhao": "Xin Zhao",
+  "Yasuo": "Yasuo",
+  "Yone": "Yone",
+  "Yorick": "Yorick",
+  "Yuumi": "Yuumi",
+  "Zac": "Zac",
+  "Zed": "Zed",
+  "Zeri": "Zeri",
+  "Ziggs": "Ziggs",
+  "Zilean": "Zilean",
+  "Zoe": "Zoe",
+  "Zyra": "Zyra",
+};
+
+// IMPLEMENTACIÓN:
+const getChampionName = (champId) => CORRECT_CHAMPION_NAMES[champId] || champId;
+```
+
+---
+
+## 🚨 CORRECCIÓN CRÍTICA #2 — NOMBRES DE SKINS MUSICALES EXACTOS
+
+Los nombres de las skins deben ser EXACTAMENTE como aparecen en el juego. No traducir, no interpretar.
+
+### K/DA — Skins exactas:
+
+```javascript
+const KDA_SKINS = {
+  // Formato: NombreDelJuego (número de skin en DataDragon)
+  members: [
+    {
+      champion: "KaiSa",           // ID en DataDragon
+      championName: "Kai'Sa",
+      skinName: "K/DA Kai'Sa",    // nombre exacto
+      skinNum: 2,
+      splashURL: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Kaisa_2.jpg"
+    },
+    {
+      champion: "Evelynn",
+      championName: "Evelynn",
+      skinName: "K/DA Evelynn",
+      skinNum: 5,
+      splashURL: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Evelynn_5.jpg"
+    },
+    {
+      champion: "Ahri",
+      championName: "Ahri",
+      skinName: "K/DA Ahri",
+      skinNum: 9,
+      splashURL: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Ahri_9.jpg"
+    },
+    {
+      champion: "Akali",
+      championName: "Akali",
+      skinName: "K/DA Akali",
+      skinNum: 8,
+      splashURL: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Akali_8.jpg"
+    }
+    // NOTA: El usuario menciona "SONA KDA" — en el juego existe como variante
+    // En realidad Sona no es miembro de K/DA, sus miembros son Ahri, Akali, Evelynn y Kai'Sa
+    // Si el usuario insiste, puede incluirse Seraphine (que sí tiene skin K/DA)
+  ],
+  // Nombres de skins Prestige de K/DA:
+  prestigeSkins: [
+    { champion: "Ahri", skinName: "K/DA Ahri Prestigio", skinNum: 10 },
+    { champion: "Akali", skinName: "K/DA Akali Prestigio", skinNum: 9 },
+    { champion: "KaiSa", skinName: "K/DA Kai'Sa Prestigio", skinNum: 6 },
+    { champion: "Evelynn", skinName: "K/DA Evelynn Prestigio", skinNum: 6 },
+    { champion: "Seraphine", skinName: "K/DA Seraphine Prestigio", skinNum: 2 }
+  ]
+};
+```
+
+### PENTAKILL — Skins exactas:
+
+```javascript
+const PENTAKILL_SKINS = {
+  members: [
+    {
+      champion: "Mordekaiser",
+      skinName: "Pentakill Mordekaiser",
+      skinNum: 1,
+      splashURL: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Mordekaiser_1.jpg"
+    },
+    {
+      champion: "Karthus",
+      skinName: "Pentakill Karthus",
+      skinNum: 4,
+      splashURL: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Karthus_4.jpg"
+    },
+    {
+      champion: "Yorick",
+      skinName: "Pentakill Yorick",
+      skinNum: 1,
+      splashURL: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Yorick_1.jpg"
+    },
+    {
+      champion: "Sona",
+      skinName: "Pentakill Sona",
+      skinNum: 4,
+      splashURL: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Sona_4.jpg"
+    },
+    {
+      champion: "Olaf",
+      skinName: "Pentakill Olaf",
+      skinNum: 1,
+      splashURL: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Olaf_1.jpg"
+    },
+    {
+      champion: "Kayle",
+      skinName: "Pentakill Kayle",
+      skinNum: 3,
+      splashURL: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Kayle_3.jpg"
+    }
+  ]
+};
+```
+
+### TRUE DAMAGE — Skins exactas:
+
+```javascript
+const TRUE_DAMAGE_SKINS = {
+  members: [
+    {
+      champion: "Ekko",
+      skinName: "True Damage Ekko",
+      skinNum: 4,
+      splashURL: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Ekko_4.jpg"
+    },
+    {
+      champion: "Qiyana",
+      skinName: "True Damage Qiyana",     // nombre exacto del juego
+      skinNum: 1,
+      splashURL: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Qiyana_1.jpg"
+    },
+    {
+      champion: "Senna",
+      skinName: "True Damage Senna",
+      skinNum: 1,
+      splashURL: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Senna_1.jpg"
+    },
+    {
+      champion: "Yasuo",
+      skinName: "True Damage Yasuo",
+      skinNum: 5,
+      splashURL: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Yasuo_5.jpg"
+    },
+    {
+      champion: "Akali",
+      skinName: "True Damage Akali",
+      skinNum: 10,
+      splashURL: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Akali_10.jpg"
+    }
+  ],
+  // Prestige True Damage:
+  prestigeSkins: [
+    { champion: "Ekko", skinName: "True Damage Ekko Prestigio", skinNum: 5 },
+    { champion: "Qiyana", skinName: "True Damage Qiyana Prestigio", skinNum: 2 },
+    { champion: "Senna", skinName: "True Damage Senna Prestigio", skinNum: 2 }
+  ]
+};
+```
+
+### HEARTSTEEL — Nombre correcto y skins exactas:
+
+```javascript
+// ⚠️ IMPORTANTE: El nombre del grupo es "Heartsteel" — NO "Acero del Corazón"
+// Mantener el nombre en inglés exactamente como aparece en el juego
+
+const HEARTSTEEL_SKINS = {
+  groupName: "Heartsteel",  // ← SIEMPRE en inglés, nunca traducir
+  color: "#E91E63",
+  members: [
+    {
+      champion: "Sett",
+      skinName: "Heartsteel Sett",          // formato: "Heartsteel [Nombre]"
+      skinNum: 5,
+      splashURL: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Sett_5.jpg"
+    },
+    {
+      champion: "Yone",
+      skinName: "Heartsteel Yone",
+      skinNum: 4,
+      splashURL: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Yone_4.jpg"
+    },
+    {
+      champion: "Kayn",
+      skinName: "Heartsteel Kayn",
+      skinNum: 4,
+      splashURL: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Kayn_4.jpg"
+    },
+    {
+      champion: "Aphelios",
+      skinName: "Heartsteel Aphelios",
+      skinNum: 3,
+      splashURL: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Aphelios_3.jpg"
+    },
+    {
+      champion: "Ezreal",
+      skinName: "Heartsteel Ezreal",
+      skinNum: 14,
+      splashURL: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Ezreal_14.jpg"
+    },
+    {
+      champion: "KSante",
+      skinName: "Heartsteel K'Sante",
+      skinNum: 1,
+      splashURL: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/KSante_1.jpg"
+    }
+  ]
+};
+```
+
+---
+
+## 🚨 CORRECCIÓN CRÍTICA #3 — CARDS DE CAMPEONES: IMAGEN COMPLETA
+
+### El problema visual:
+Las cards actuales recortan la imagen (ves solo parte del personaje). La solución es mostrar la imagen completa con aspect-ratio más alto y `object-fit: contain`.
+
+### Solución CSS exacta:
+```css
+/* Card container — más alta, como las del sitio oficial de Riot */
+.champion-card {
+  position: relative;
+  aspect-ratio: 2 / 3;          /* proporción más vertical */
+  overflow: hidden;
+  border-radius: 4px;
+  cursor: pointer;
+  background: #050E1A;          /* fondo oscuro para cuando la imagen no llena */
+  transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Imagen — mostrar el torso/cara del personaje */
+.champion-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 15%;  /* sube el encuadre: muestra cara y torso */
+  transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Hover: zoom sutil y desplazamiento */
+.champion-card:hover img {
+  transform: scale(1.06);
+  object-position: center 10%;  /* al hover sube un poco más */
+}
+
+/* Gradiente inferior para el nombre */
+.champion-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 60%;
+  background: linear-gradient(
+    to top,
+    rgba(5, 14, 26, 0.95) 0%,
+    rgba(5, 14, 26, 0.6) 50%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+```
+
+### En React/JSX:
+```jsx
+const ChampionCard = ({ champion }) => {
+  // Usar loading screen art — está mejor centrada en el torso que el splash art
+  const imageURL = `https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${champion.id}_0.jpg`;
+  // Loading screen art tiene mejor composición: muestra cara + torso centrado
+  
+  return (
+    <motion.div
+      className="champion-card"
+      whileHover={{ y: -8, scale: 1.02 }}
+      transition={{ type: "spring", stiffness: 300, damping: 20 }}
+    >
+      <img
+        src={imageURL}
+        alt={champion.name}
+        loading="lazy"
+        style={{
+          objectPosition: 'center 15%'
+          // Loading screen arts están diseñadas para verse bien en formato vertical
+          // No necesitan tanto ajuste como los splash arts horizontales
+        }}
+      />
+      
+      {/* Overlay gradiente */}
+      <div className="card-overlay" />
+      
+      {/* Info del campeón */}
+      <div className="card-info">
+        <div className="card-roles">
+          {champion.roles.map(role => (
+            <span key={role} className={`role-badge role-${role.toLowerCase()}`}>
+              {role}
+            </span>
+          ))}
+        </div>
+        <h3 className="card-name">{getChampionName(champion.id)}</h3>
+        <p className="card-title">{champion.title}</p>
+      </div>
+    </motion.div>
+  );
+};
+```
+
+### Por qué usar Loading Screen en vez de Splash Art:
+```
+Splash Art (splash/{name}_0.jpg):
+→ Imagen horizontal (~1215x717px)
+→ Composición diseñada para verse en panorámico
+→ En cards verticales se recorta MUCHO
+
+Loading Screen (loading/{name}_0.jpg):  ← USAR ESTA
+→ Imagen vertical (~308x560px)
+→ Composición perfecta para cards verticales
+→ Muestra al personaje de cuerpo completo o torso
+→ Es exactamente lo que usa el cliente del juego en la pantalla de carga
+```
+
+---
+
+## 🚨 CORRECCIÓN CRÍTICA #4 — VIBRA DEL JUEGO EN MÚSICA
+
+Cada grupo musical debe sentirse como si estuvieras en el cliente del juego. Diseño específico:
+
+### Diseño de tarjeta de grupo musical — estilo cliente LoL:
+
+```jsx
+const MusicGroupCard = ({ group }) => {
+  return (
+    <div className="music-group" style={{ '--group-color': group.color }}>
+      {/* Header con el nombre del grupo en estilo exacto del juego */}
+      <div className="group-header">
+        <span className="group-genre-badge">{group.genre}</span>
+        <h2 className="group-name"
+            style={{ fontFamily: 'Beaufort for LOL, Cinzel, serif' }}>
+          {group.name}
+          {/* K/DA, Pentakill, True Damage, Heartsteel — NUNCA traducir */}
+        </h2>
+      </div>
+      
+      {/* Grid de miembros con sus skins exactas */}
+      <div className="members-grid">
+        {group.members.map(member => (
+          <div key={member.champion} className="member-card">
+            <img
+              src={member.splashURL}
+              alt={`${member.skinName}`}
+              title={member.skinName}  // tooltip con nombre exacto de skin
+            />
+            <div className="member-info">
+              <span className="champion-name">{member.championName}</span>
+              <span className="skin-name">{member.skinName}</span>
+              {/* Ejemplo: "Heartsteel Sett", "K/DA Ahri", etc. */}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+```
+
+### CSS con vibra del cliente de LoL:
+```css
+/* Estilo exacto del lobby y cliente del juego */
+.music-group {
+  background: linear-gradient(135deg,
+    rgba(5, 14, 26, 0.98) 0%,
+    rgba(9, 20, 40, 0.95) 100%
+  );
+  border: 1px solid rgba(200, 170, 110, 0.2);
+  border-top: 2px solid var(--group-color);
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Efecto de brillo en la esquina superior (como el cliente) */
+.music-group::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle,
+    var(--group-color) 0%,
+    transparent 70%
+  );
+  opacity: 0.06;
+  pointer-events: none;
+}
+
+/* Nombre del grupo — fuente exacta del juego */
+.group-name {
+  font-family: 'Beaufort for LOL', 'Cinzel', serif;
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--group-color);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  line-height: 1;
+  margin: 0.5rem 0;
+  text-shadow: 0 0 40px var(--group-color);
+}
+
+/* Badge de género */
+.group-genre-badge {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: white;
+  background: var(--group-color);
+  padding: 0.25rem 0.75rem;
+  clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+}
+
+/* Grid de miembros */
+.members-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+/* Card de miembro — como las cards de skins del cliente */
+.member-card {
+  position: relative;
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid rgba(200, 170, 110, 0.1);
+  transition: all 0.3s;
+}
+
+.member-card:hover {
+  border-color: var(--group-color);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.member-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 15%;
+  transition: transform 0.4s;
+}
+
+.member-card:hover img {
+  transform: scale(1.06);
+}
+
+.member-info {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 0.75rem;
+  background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+}
+
+.champion-name {
+  display: block;
+  font-family: 'Cinzel', serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #C8AA6E;
+}
+
+.skin-name {
+  display: block;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.65rem;
+  color: rgba(240, 230, 211, 0.5);
+  letter-spacing: 0.05em;
+}
+```
+
+---
+
+## 🎨 COLORES EXACTOS POR GRUPO MUSICAL
+
+```javascript
+const GROUP_COLORS = {
+  "K/DA":         "#9B5CD4",   // Púrpura K/DA
+  "Pentakill":    "#8B0000",   // Rojo sangre oscuro
+  "True Damage":  "#C8AA6E",   // Dorado brillante
+  "Heartsteel":   "#FF1493",   // Rosa fucsia/magenta (color oficial del grupo)
+  "Star Guardian":"#FF69B4",   // Rosa claro Star Guardian
+};
+```
+
+---
+
+## 🎮 VIBRA DEL JUEGO — Fuentes y tipografía exacta
+
+### La fuente oficial de League of Legends:
+```css
+/* Fuente oficial: "Beaufort for LOL" (no disponible en Google Fonts gratis)
+   Usar esta cascada de fuentes para aproximarse al estilo oficial: */
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&family=IM+Fell+English:ital@0;1&display=swap');
+
+:root {
+  --font-display: 'Cinzel', 'IM Fell English', serif;   /* Para títulos tipo Beaufort */
+  --font-ui: 'Rajdhani', sans-serif;                     /* Para texto de UI */
+}
+
+/* Los títulos de campeones van en mayúsculas y Cinzel:
+   "RIVEN" no "Riven" ni "Hendido" */
+.champion-hero-name {
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 8vw, 8rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: #F0E6D3;
+}
+```
+
+---
+
+## ✅ CHECKLIST DE ESTA ACTUALIZACIÓN
+
+- [ ] "Riven" aparece como "Riven" (no "Hendido")
+- [ ] Todos los nombres del mapa `nameFixMap` corregidos
+- [ ] K/DA muestra: Kai'Sa K/DA, Evelynn K/DA, Ahri K/DA, Akali K/DA
+- [ ] Pentakill muestra: Mordekaiser Pentakill, Karthus Pentakill, Yorick Pentakill, Sona Pentakill, Olaf Pentakill, Kayle Pentakill
+- [ ] True Damage muestra: Ekko True Damage, Qiyana True Damage, Senna True Damage, Yasuo True Damage, Akali True Damage
+- [ ] El grupo se llama "Heartsteel" (NO "Acero del Corazón")
+- [ ] Heartsteel muestra: Kayn Heartsteel, K'Sante Heartsteel, Sett Heartsteel, Yone Heartsteel, Aphelios Heartsteel, Ezreal Heartsteel
+- [ ] Cards de campeones usan LOADING SCREEN art (no splash art) para mejor composición vertical
+- [ ] `object-position: center 15%` en todas las imágenes de cards
+- [ ] Nombres de skins muestran el nombre exacto del juego como tooltip/label
+- [ ] Cada grupo musical tiene su color oficial aplicado
+
+---
+
+*V3 — Parche de correcciones exactas de nombres y skins*

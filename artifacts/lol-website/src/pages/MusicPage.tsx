@@ -2,6 +2,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { SectionReveal } from "@/components/SectionReveal";
 import { GoldDivider } from "@/components/GoldDivider";
+import { getChampionName } from "@/data/championNames";
 
 interface Member { champ: string; role: string; skinNum: number; }
 interface Song { title: string; year: string; desc: string; }
@@ -189,15 +190,17 @@ export default function MusicPage() {
                       >
                         <img
                           src={`https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${m.champ}_${m.skinNum}.jpg`}
-                          alt={`${g.name} ${m.champ}`}
+                          alt={`${g.name} ${getChampionName(m.champ)}`}
+                          title={`${g.name} ${getChampionName(m.champ)}`}
                           loading="lazy"
                           className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#050E1A] via-transparent to-transparent" />
                         <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity" style={{ boxShadow: `inset 0 0 0 2px ${g.color}` }} />
-                        <div className="absolute bottom-2 left-2 right-2">
-                          <p className="font-serif text-[#F0E6D3] text-sm font-bold leading-tight">{m.champ}</p>
-                          <p className="font-sans text-xs leading-tight" style={{ color: g.color }}>{m.role}</p>
+                        <div className="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-[#050E1A]/95 to-transparent">
+                          <p className="font-serif text-[#C8AA6E] text-xs font-bold leading-tight uppercase tracking-wide">{getChampionName(m.champ)}</p>
+                          <p className="font-sans text-[10px] leading-tight opacity-60 text-[#F0E6D3]">{g.name} {getChampionName(m.champ)}</p>
+                          <p className="font-sans text-[10px] leading-tight mt-0.5" style={{ color: g.color }}>{m.role}</p>
                         </div>
                       </motion.div>
                     );
@@ -218,14 +221,15 @@ export default function MusicPage() {
                         >
                           <img
                             src={`https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${m.champ}_${m.skinNum}.jpg`}
-                            alt={`${g.name} ${m.champ}`}
+                            alt={`${g.name} ${getChampionName(m.champ)}`}
+                            title={`${g.name} ${getChampionName(m.champ)}`}
                             loading="lazy"
                             className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110"
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-[#050E1A] via-transparent to-transparent" />
-                          <div className="absolute bottom-2 left-2 right-2">
-                            <p className="font-serif text-[#F0E6D3] text-sm font-bold leading-tight">{m.champ}</p>
-                            <p className="font-sans text-xs leading-tight" style={{ color: g.color }}>{m.role}</p>
+                          <div className="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-[#050E1A]/95 to-transparent">
+                            <p className="font-serif text-[#C8AA6E] text-xs font-bold leading-tight uppercase tracking-wide">{getChampionName(m.champ)}</p>
+                            <p className="font-sans text-[10px] leading-tight opacity-60 text-[#F0E6D3]">{g.name} {getChampionName(m.champ)}</p>
                           </div>
                         </motion.div>
                       );
@@ -325,8 +329,9 @@ export default function MusicPage() {
                 <p className="font-sans text-xs tracking-[0.4em] uppercase mb-2" style={{ color: modal.group.color }}>
                   {modal.group.name}
                 </p>
-                <h2 className="font-serif text-4xl md:text-6xl font-black text-[#F0E6D3] uppercase">{modal.champ}</h2>
-                <p className="font-sans text-[#F0E6D3]/50 text-sm mt-2">Splash art en máxima resolución</p>
+                <h2 className="font-serif text-4xl md:text-6xl font-black text-[#F0E6D3] uppercase">{getChampionName(modal.champ)}</h2>
+                <p className="font-sans mt-1 text-base font-bold" style={{ color: modal.group.color }}>{modal.group.name} {getChampionName(modal.champ)}</p>
+                <p className="font-sans text-[#F0E6D3]/40 text-sm mt-1">Splash art en máxima resolución</p>
               </div>
               <button
                 onClick={() => setModal(null)}

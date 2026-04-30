@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
 import { ChampionCard } from "@/components/ChampionCard";
+import { getChampionName } from "@/data/championNames";
 
 const DDV = "14.24.1";
 
@@ -49,7 +50,11 @@ export default function ChampionsPage() {
 
   const filtered = useMemo(() => {
     return champions.filter((c) => {
-      const matchSearch = c.name.toLowerCase().includes(search.toLowerCase()) || c.title.toLowerCase().includes(search.toLowerCase());
+      const displayName = getChampionName(c.id);
+      const matchSearch =
+        displayName.toLowerCase().includes(search.toLowerCase()) ||
+        c.id.toLowerCase().includes(search.toLowerCase()) ||
+        c.title.toLowerCase().includes(search.toLowerCase());
       const matchRole = roleFilter === "all" || c.tags.includes(roleFilter);
       let matchDiff = true;
       if (diffFilter === "Fácil") matchDiff = c.info.difficulty <= 3;
@@ -157,7 +162,7 @@ export default function ChampionsPage() {
             {viewMode === "grid" ? (
               <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3">
                 {filtered.map((c, i) => (
-                  <ChampionCard key={c.id} id={c.id} name={c.name} title={c.title} tags={c.tags} index={i % 24} />
+                  <ChampionCard key={c.id} id={c.id} title={c.title} tags={c.tags} index={i % 24} />
                 ))}
               </div>
             ) : (
@@ -178,7 +183,7 @@ export default function ChampionsPage() {
                       loading="lazy"
                     />
                     <div className="flex-1 min-w-0">
-                      <div className="font-serif text-[#F0E6D3] font-bold group-hover:text-[#C8AA6E] transition-colors">{c.name}</div>
+                      <div className="font-serif text-[#F0E6D3] font-bold group-hover:text-[#C8AA6E] transition-colors">{getChampionName(c.id)}</div>
                       <div className="font-sans text-[#F0E6D3]/40 text-xs truncate">{c.title}</div>
                     </div>
                     <div className="flex gap-1 flex-shrink-0">

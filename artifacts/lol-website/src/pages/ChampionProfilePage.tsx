@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, Link } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
 import { CHAMPION_EXTENDED } from "@/data/champions";
+import { getChampionName } from "@/data/championNames";
 
 const DDV = "14.24.1";
 
@@ -159,7 +160,7 @@ export default function ChampionProfilePage() {
           </div>
           <h1 className="font-serif text-6xl md:text-8xl font-black text-[#F0E6D3] uppercase leading-none mb-2"
             style={{ textShadow: "0 0 40px rgba(200,170,110,0.3)" }}>
-            {champ.name}
+            {getChampionName(champ.id)}
           </h1>
           <p className="font-sans text-[#C8AA6E] text-lg md:text-xl tracking-widest uppercase mb-6">{champ.title}</p>
 
@@ -322,7 +323,7 @@ export default function ChampionProfilePage() {
                     <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity" style={{ boxShadow: "inset 0 0 0 2px #C8AA6E80" }} />
                   </div>
                   <div className="p-3 bg-[#091428]/80 border-t border-[#C8AA6E]/10">
-                    <p className="font-serif text-[#F0E6D3] text-sm font-bold">{translateSkinName(s.name, champ.name)}</p>
+                    <p className="font-serif text-[#F0E6D3] text-sm font-bold">{translateSkinName(s.name, getChampionName(champ.id))}</p>
                     {s.name !== "default" && <p className="font-sans text-[#C8AA6E]/50 text-xs mt-0.5">Skin #{s.num}</p>}
                   </div>
                 </motion.div>
@@ -361,7 +362,7 @@ export default function ChampionProfilePage() {
                 </ul>
               </div>
             ) : (
-              <p className="font-sans text-[#F0E6D3]/40">No hay curiosidades especiales registradas para {champ.name}.</p>
+              <p className="font-sans text-[#F0E6D3]/40">No hay curiosidades especiales registradas para {getChampionName(champ.id)}.</p>
             )}
           </div>
         )}
@@ -402,8 +403,8 @@ export default function ChampionProfilePage() {
                 animate={{ opacity: 1, y: 0, transition: { delay: 0.3 } }}
                 className="absolute bottom-0 left-0 right-0 p-6 md:p-8"
               >
-                <p className="font-sans text-xs tracking-[0.4em] uppercase mb-2 text-[#C8AA6E]">{champ.name}</p>
-                <h2 className="font-serif text-3xl md:text-5xl font-black text-[#F0E6D3] uppercase mb-2">{translateSkinName(skinModal.name, champ.name)}</h2>
+                <p className="font-sans text-xs tracking-[0.4em] uppercase mb-2 text-[#C8AA6E]">{getChampionName(champ.id)}</p>
+                <h2 className="font-serif text-3xl md:text-5xl font-black text-[#F0E6D3] uppercase mb-2">{translateSkinName(skinModal.name, getChampionName(champ.id))}</h2>
                 {skinModal.name !== "default" && <p className="font-sans text-[#C8AA6E]/50 text-sm">Skin oficial #{skinModal.num}</p>}
               </motion.div>
               <button

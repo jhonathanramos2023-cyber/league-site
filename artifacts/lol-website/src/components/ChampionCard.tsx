@@ -1,9 +1,9 @@
 import { motion } from "framer-motion";
 import { Link } from "wouter";
+import { getChampionName } from "@/data/championNames";
 
 interface ChampionCardProps {
   id: string;
-  name: string;
   title: string;
   tags: string[];
   index?: number;
@@ -27,8 +27,9 @@ const TAG_COLORS: Record<string, string> = {
   Tank: "#1E90FF",
 };
 
-export function ChampionCard({ id, name, title, tags, index = 0 }: ChampionCardProps) {
-  const splashUrl = `https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${id}_0.jpg`;
+export function ChampionCard({ id, title, tags, index = 0 }: ChampionCardProps) {
+  const name = getChampionName(id);
+  const loadingUrl = `https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${id}_0.jpg`;
 
   return (
     <motion.div
@@ -42,17 +43,15 @@ export function ChampionCard({ id, name, title, tags, index = 0 }: ChampionCardP
       <Link to={`/campeon/${id}`} className="block w-full h-full">
         <div className="absolute inset-0 bg-[#091428]">
           <img
-            src={splashUrl}
+            src={loadingUrl}
             alt={name}
             loading="lazy"
-            className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110"
-            onError={(e) => {
-              (e.target as HTMLImageElement).src = `https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${id}_0.jpg`;
-            }}
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            style={{ objectPosition: "center 15%" }}
           />
         </div>
 
-        <div className="absolute inset-0 bg-gradient-to-t from-[#050E1A] via-[#050E1A]/20 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#050E1A] via-[#050E1A]/10 to-transparent" />
 
         <div
           className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
