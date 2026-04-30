@@ -1,0 +1,208 @@
+# INSTRUCCIONES DIRECTAS PARA REPLIT AGENT
+## Pega esto EXACTAMENTE en el chat de Replit Agent
+
+---
+
+Aplica estos 4 cambios uno por uno. Después de cada cambio, haz un screenshot para confirmar que funcionó. NO continues al siguiente hasta confirmar el anterior.
+
+---
+
+## CAMBIO 1: RIVEN Y NOMBRES CORRECTOS
+
+Abre el archivo donde están los nombres de los campeones. Busca cualquier lugar donde aparezca `"Hendido"` o donde se use la API en español para los nombres. Reemplaza por este mapa y úsalo en TODA la app:
+
+```javascript
+const CHAMPION_NAMES = {
+  Aatrox: "Aatrox", Ahri: "Ahri", Akali: "Akali", Akshan: "Akshan",
+  Alistar: "Alistar", Ambessa: "Ambessa", Amumu: "Amumu", Anivia: "Anivia",
+  Annie: "Annie", Aphelios: "Aphelios", Ashe: "Ashe", AurelionSol: "Aurelion Sol",
+  Aurora: "Aurora", Azir: "Azir", Bard: "Bard", Belveth: "Bel'Veth",
+  Blitzcrank: "Blitzcrank", Brand: "Brand", Braum: "Braum", Briar: "Briar",
+  Caitlyn: "Caitlyn", Camille: "Camille", Cassiopeia: "Cassiopeia",
+  Chogath: "Cho'Gath", Corki: "Corki", Darius: "Darius", Diana: "Diana",
+  DrMundo: "Dr. Mundo", Draven: "Draven", Ekko: "Ekko", Elise: "Elise",
+  Evelynn: "Evelynn", Ezreal: "Ezreal", Fiddlesticks: "Fiddlesticks",
+  Fiora: "Fiora", Fizz: "Fizz", Galio: "Galio", Gangplank: "Gangplank",
+  Garen: "Garen", Gnar: "Gnar", Gragas: "Gragas", Graves: "Graves",
+  Gwen: "Gwen", Hecarim: "Hecarim", Heimerdinger: "Heimerdinger", Hwei: "Hwei",
+  Illaoi: "Illaoi", Irelia: "Irelia", Ivern: "Ivern", Janna: "Janna",
+  JarvanIV: "Jarvan IV", Jax: "Jax", Jayce: "Jayce", Jhin: "Jhin",
+  Jinx: "Jinx", KSante: "K'Sante", Kaisa: "Kai'Sa", Kalista: "Kalista",
+  Karma: "Karma", Karthus: "Karthus", Kassadin: "Kassadin", Katarina: "Katarina",
+  Kayle: "Kayle", Kayn: "Kayn", Kennen: "Kennen", Khazix: "Kha'Zix",
+  Kindred: "Kindred", Kled: "Kled", KogMaw: "Kog'Maw", Leblanc: "LeBlanc",
+  LeeSin: "Lee Sin", Leona: "Leona", Lillia: "Lillia", Lissandra: "Lissandra",
+  Lucian: "Lucian", Lulu: "Lulu", Lux: "Lux", Malphite: "Malphite",
+  Malzahar: "Malzahar", Maokai: "Maokai", MasterYi: "Master Yi", Milio: "Milio",
+  MissFortune: "Miss Fortune", Mordekaiser: "Mordekaiser", Morgana: "Morgana",
+  Naafiri: "Naafiri", Nami: "Nami", Nasus: "Nasus", Nautilus: "Nautilus",
+  Neeko: "Neeko", Nidalee: "Nidalee", Nilah: "Nilah", Nocturne: "Nocturne",
+  NunuWillump: "Nunu & Willump", Olaf: "Olaf", Orianna: "Orianna", Ornn: "Ornn",
+  Pantheon: "Pantheon", Poppy: "Poppy", Pyke: "Pyke", Qiyana: "Qiyana",
+  Quinn: "Quinn", Rakan: "Rakan", Rammus: "Rammus", RekSai: "Rek'Sai",
+  Rell: "Rell", Renata: "Renata Glasc", Renekton: "Renekton", Rengar: "Rengar",
+  Riven: "Riven", Rumble: "Rumble", Ryze: "Ryze", Samira: "Samira",
+  Sejuani: "Sejuani", Senna: "Senna", Seraphine: "Seraphine", Sett: "Sett",
+  Shaco: "Shaco", Shen: "Shen", Shyvana: "Shyvana", Singed: "Singed",
+  Sion: "Sion", Sivir: "Sivir", Skarner: "Skarner", Smolder: "Smolder",
+  Sona: "Sona", Soraka: "Soraka", Swain: "Swain", Sylas: "Sylas",
+  Syndra: "Syndra", TahmKench: "Tahm Kench", Taliyah: "Taliyah", Talon: "Talon",
+  Taric: "Taric", Teemo: "Teemo", Thresh: "Thresh", Tristana: "Tristana",
+  Trundle: "Trundle", Tryndamere: "Tryndamere", TwistedFate: "Twisted Fate",
+  Twitch: "Twitch", Udyr: "Udyr", Urgot: "Urgot", Varus: "Varus",
+  Vayne: "Vayne", Veigar: "Veigar", VelKoz: "Vel'Koz", Vex: "Vex",
+  Vi: "Vi", Viego: "Viego", Viktor: "Viktor", Vladimir: "Vladimir",
+  Volibear: "Volibear", Warwick: "Warwick", Wukong: "Wukong", Xayah: "Xayah",
+  Xerath: "Xerath", XinZhao: "Xin Zhao", Yasuo: "Yasuo", Yone: "Yone",
+  Yorick: "Yorick", Yuumi: "Yuumi", Zac: "Zac", Zed: "Zed", Zeri: "Zeri",
+  Ziggs: "Ziggs", Zilean: "Zilean", Zoe: "Zoe", Zyra: "Zyra"
+};
+
+export const getChampName = (id) => CHAMPION_NAMES[id] || id;
+```
+
+Donde sea que se muestre el nombre de un campeón, cambia `champion.name` por `getChampName(champion.id)`.
+
+Toma un screenshot. Confirma que en la página de campeones aparece "Riven" y no "Hendido". Confirma que aparece "Fiddlesticks" y no "Tonterías".
+
+---
+
+## CAMBIO 2: CARDS DE CAMPEONES — LOADING SCREEN ART
+
+En el componente ChampionCard (o como se llame), cambia la URL de la imagen de:
+```
+https://ddragon.leagueoflegends.com/cdn/img/champion/splash/{id}_0.jpg
+```
+a:
+```
+https://ddragon.leagueoflegends.com/cdn/img/champion/loading/{id}_0.jpg
+```
+
+Y el CSS de la imagen debe ser:
+```css
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 15%;
+}
+```
+
+El aspect-ratio del card debe ser `2/3` (más vertical).
+
+Toma screenshot. Confirma que los personajes se ven con torso y cara centrados.
+
+---
+
+## CAMBIO 3: MÚSICA — SKINS EXACTAS CON NOMBRES CORRECTOS
+
+En la página de Música (MusicPage), reemplaza completamente los datos de los grupos por estos:
+
+```javascript
+const MUSIC_GROUPS = [
+  {
+    id: "kda",
+    name: "K/DA",
+    genre: "K-Pop / Pop Electrónico",
+    year: 2018,
+    color: "#9B5CD4",
+    description: "K/DA es el grupo pop virtual más exitoso del universo de League of Legends. Conformado por versiones artistas de Ahri, Akali, Evelynn y Kai'Sa, debutaron en 2018 con POP/STARS.",
+    songs: ["POP/STARS", "THE BADDEST", "MORE", "I'LL SHOW YOU"],
+    members: [
+      { champId: "Ahri",    champName: "Ahri",     skinName: "K/DA Ahri",     skinNum: 9  },
+      { champId: "Akali",   champName: "Akali",    skinName: "K/DA Akali",    skinNum: 8  },
+      { champId: "Evelynn", champName: "Evelynn",  skinName: "K/DA Evelynn",  skinNum: 5  },
+      { champId: "Kaisa",   champName: "Kai'Sa",   skinName: "K/DA Kai'Sa",   skinNum: 2  },
+    ]
+  },
+  {
+    id: "pentakill",
+    name: "Pentakill",
+    genre: "Heavy Metal / Power Metal",
+    year: 2014,
+    color: "#8B0000",
+    description: "El primer grupo musical del universo de LoL. Pentakill es una banda de metal formada por campeones no-muertos y guerreros. Su música es brutal y épica.",
+    songs: ["Mortal Reminder", "Lightbringer", "Tear of the Goddess", "Grasp of the Undying"],
+    members: [
+      { champId: "Mordekaiser", champName: "Mordekaiser", skinName: "Pentakill Mordekaiser", skinNum: 1 },
+      { champId: "Karthus",     champName: "Karthus",     skinName: "Pentakill Karthus",     skinNum: 4 },
+      { champId: "Yorick",      champName: "Yorick",      skinName: "Pentakill Yorick",      skinNum: 1 },
+      { champId: "Sona",        champName: "Sona",        skinName: "Pentakill Sona",        skinNum: 4 },
+      { champId: "Olaf",        champName: "Olaf",        skinName: "Pentakill Olaf",        skinNum: 1 },
+      { champId: "Kayle",       champName: "Kayle",       skinName: "Pentakill Kayle",       skinNum: 3 },
+    ]
+  },
+  {
+    id: "truedamage",
+    name: "True Damage",
+    genre: "Hip-Hop / Trap / R&B",
+    year: 2019,
+    color: "#C8AA6E",
+    description: "Un supergrupo de hip-hop presentado en el Mundial 2019 en París. Su única canción GIANTS fue interpretada en vivo durante la ceremonia de apertura.",
+    songs: ["GIANTS"],
+    members: [
+      { champId: "Ekko",    champName: "Ekko",    skinName: "True Damage Ekko",    skinNum: 4  },
+      { champId: "Qiyana",  champName: "Qiyana",  skinName: "True Damage Qiyana",  skinNum: 1  },
+      { champId: "Senna",   champName: "Senna",   skinName: "True Damage Senna",   skinNum: 1  },
+      { champId: "Yasuo",   champName: "Yasuo",   skinName: "True Damage Yasuo",   skinNum: 5  },
+      { champId: "Akali",   champName: "Akali",   skinName: "True Damage Akali",   skinNum: 10 },
+    ]
+  },
+  {
+    id: "heartsteel",
+    name: "Heartsteel",
+    genre: "Pop Alternativo / R&B",
+    year: 2023,
+    color: "#FF1493",
+    description: "El grupo más reciente del universo musical de LoL, lanzado en 2023. Mezcla pop alternativo, R&B y hip-hop con una estética de amor rebelde. PARANOIA fue un hit instantáneo.",
+    songs: ["PARANOIA", "SELF MADE", "ON OUR WAY"],
+    members: [
+      { champId: "Sett",     champName: "Sett",     skinName: "Heartsteel Sett",     skinNum: 5  },
+      { champId: "Yone",     champName: "Yone",     skinName: "Heartsteel Yone",     skinNum: 4  },
+      { champId: "Kayn",     champName: "Kayn",     skinName: "Heartsteel Kayn",     skinNum: 4  },
+      { champId: "Aphelios", champName: "Aphelios", skinName: "Heartsteel Aphelios", skinNum: 3  },
+      { champId: "Ezreal",   champName: "Ezreal",   skinName: "Heartsteel Ezreal",   skinNum: 14 },
+      { champId: "KSante",   champName: "K'Sante",  skinName: "Heartsteel K'Sante",  skinNum: 1  },
+    ]
+  },
+  {
+    id: "starguardian",
+    name: "Star Guardian",
+    genre: "J-Pop / Electro Pop",
+    year: 2017,
+    color: "#FF69B4",
+    description: "Un universo alternativo donde las campeonas son guerreras mágicas. La música es luminosa y heroica, perfecta para el universo de fantasía mágica.",
+    songs: ["Feel Alive", "Everything Goes", "Still Here"],
+    members: [
+      { champId: "Lux",   champName: "Lux",   skinName: "Star Guardian Lux",   skinNum: 7 },
+      { champId: "Jinx",  champName: "Jinx",  skinName: "Star Guardian Jinx",  skinNum: 4 },
+      { champId: "Janna", champName: "Janna", skinName: "Star Guardian Janna", skinNum: 4 },
+      { champId: "Lulu",  champName: "Lulu",  skinName: "Star Guardian Lulu",  skinNum: 4 },
+      { champId: "Poppy", champName: "Poppy", skinName: "Star Guardian Poppy", skinNum: 5 },
+    ]
+  }
+];
+```
+
+Cada member card debe mostrar la imagen así:
+```javascript
+const imgURL = `https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${member.champId}_${member.skinNum}.jpg`;
+```
+
+Debajo de cada imagen mostrar:
+- Nombre del campeón (ej: "Ahri") en dorado
+- Nombre de la skin (ej: "K/DA Ahri") en gris claro pequeño
+
+Toma screenshot. Confirma que K/DA muestra "K/DA Ahri", "K/DA Akali", etc. Confirma que Heartsteel dice "Heartsteel" (en inglés, no traducido).
+
+---
+
+## CAMBIO 4: VERIFICACIÓN FINAL
+
+Toma screenshots de:
+1. Página /campeones — confirma que "Riven" aparece correctamente
+2. Página /musica — confirma los 5 grupos con nombres de skins correctos
+3. Perfil de Riven — confirma que el hero dice "RIVEN" en grande
+4. Perfil de Fiddlesticks — confirma que dice "FIDDLESTICKS" no "TONTERÍAS"
+
+Si alguno falla, arréglalo antes de continuar.
