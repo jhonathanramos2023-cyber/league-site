@@ -73,5 +73,55 @@ export const CHAMPION_EXTENDED: Record<string, { region: string, curiosidades: s
     region: "Piltóver",
     curiosidades: ["Caitlyn y Vi son la pareja más famosa de LoL","Su sombrero policial es icónico","Tiene el mayor rango de ataque básico de todos los ADC"],
     frases: ["Un disparo. Una victoria.","En Piltóver, la ley siempre alcanza al culpable."]
+  },
+  Smolder: {
+    region: "Noxus",
+    curiosidades: ["Es un dragón joven adoptado por nobles noxianos","Su Q gana stacks permanentes con kills, escalando a infinito","Su R es un misil que se vuelve devastador con muchos stacks","Lanzado en febrero de 2024"],
+    frases: ["¡Mira lo que puedo hacer!","¡Bum, bum, bum!"]
+  },
+  Aurora: {
+    region: "Freljord",
+    curiosidades: ["Es una vasna (yordle-like) del Freljord","Puede moverse entre el mundo real y el espiritual","Lanzada en julio de 2024","Fue exiliada por su tribu por sus poderes"],
+    frases: ["Los espíritus me hablan.","Entre dos mundos, encuentro mi camino."]
+  },
+  Ambessa: {
+    region: "Noxus",
+    curiosidades: ["Es la madre de Mel Medarda en Arcane","General de las legiones noxianas más poderosas","Lanzada en noviembre de 2024 junto al estreno de Arcane T2","Brutal, calculadora e implacable"],
+    frases: ["La fuerza es la única verdad.","Noxus reclamará todo lo que es suyo."]
+  },
+  Mel: {
+    region: "Noxus / Piltóver",
+    curiosidades: ["Hija de Ambessa Medarda","Miembro del Consejo de Piltóver en Arcane","Puede reflejar magia y energía","Protagonista de Arcane Temporada 2"],
+    frases: ["El poder no se hereda. Se conquista.","Hay más en mí de lo que jamás imaginé."]
+  },
+  Hwei: {
+    region: "Ionia",
+    curiosidades: ["Sus pinturas cobran vida literal","Fue manipulado por Jhin para crear arte de terror","Tiene 10 habilidades en total (3 sets de pintura)","Lanzado en diciembre de 2023"],
+    frases: ["Mi arte... ¿qué he creado?","Cada pincelada es una verdad escondida."]
+  },
+  Briar: {
+    region: "Noxus",
+    curiosidades: ["Una joven vampírica creada por un grupo noxiano secreto","Necesita un casco para controlar su sed de sangre","Cuando entra en frenesí, no diferencia amigos de enemigos","Lanzada en septiembre de 2023"],
+    frases: ["¡Tengo HAMBRE!","¿Comer? ¿Pelear? ¿AMBOS?"]
+  },
+  Naafiri: {
+    region: "Shurima",
+    curiosidades: ["Es una Darkin atrapada en el cuerpo de una perra","Tiene una manada de lobos que la siguen","La primera Darkin que recuerda quién era","Lanzada en julio de 2023"],
+    frases: ["La manada es eterna.","Los Darkin volveremos a reinar."]
+  },
+  Milio: {
+    region: "Ixtal",
+    curiosidades: ["Su llama cura en vez de quemar","Es uno de los soportes más versátiles del juego","Su R remueve TODO control de masas (stuns, raíces, silencios)","Lanzado en marzo de 2023"],
+    frases: ["¡Mi familia recuperará su honor!","¡La llama amistosa siempre brilla!"]
+  },
+  KSante: {
+    region: "Shurima",
+    curiosidades: ["Cazador de monstruos de Nazumah, ciudad-estado independiente de Shurima","Sus armas (ntofos) pueden transformarse para distintos roles","Primer campeón LGBTQ+ del roster de Heartsteel","Lanzado en noviembre de 2022"],
+    frases: ["¡Por Nazumah!","Soy el orgullo de mi pueblo."]
+  },
+  Nilah: {
+    region: "Toda Runeterra",
+    curiosidades: ["Asceta del agua bendecida (o maldecida) por una deidad del júbilo","Se vuelve más fuerte con la felicidad de sus aliados","Comparte vida y experiencia con su soporte","Lanzada en julio de 2022"],
+    frases: ["¡La alegría es mi arma!","¡Cada batalla es un regalo!"]
   }
 };

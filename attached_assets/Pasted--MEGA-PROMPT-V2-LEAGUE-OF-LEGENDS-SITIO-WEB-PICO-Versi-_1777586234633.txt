@@ -1,0 +1,1088 @@
+# 🏆 MEGA PROMPT V2 — LEAGUE OF LEGENDS SITIO WEB ÉPICO
+## Versión actualizada con correcciones visuales, animaciones God-tier y APIs en 4K
+### Para usar en Replit Agent / Cursor / v0 / Bolt
+
+---
+
+> **INSTRUCCIÓN GENERAL:** Este es el prompt de ACTUALIZACIÓN y MEJORA de un sitio web de League of Legends ya construido. Aplica TODAS las mejoras listadas aquí sin romper lo que ya funciona. El objetivo es llevar el sitio de 7/10 a 10/10 en animaciones, imágenes en alta resolución, interactividad y precisión de datos.
+
+---
+
+## 🚨 PROBLEMAS DETECTADOS QUE DEBES CORREGIR
+
+### PROBLEMA 1 — Skins: Falta el efecto lightbox/modal al hacer click
+**Lo que hay:** Las skins se muestran en grid como tarjetas estáticas.
+**Lo que debe pasar:** Al hacer click en cualquier skin, debe abrirse un **modal/lightbox cinematográfico** que muestre:
+- La imagen de la skin en MÁXIMA resolución (splash art completo)
+- Nombre de la skin en grande
+- Precio en RP si está disponible
+- Botón de cerrar con animación
+- Transición de entrada: la imagen hace zoom-in desde la card original (shared element transition con Framer Motion)
+- Fondo: overlay negro 90% de opacidad con blur
+- Click fuera del modal → cierra con animación de zoom-out
+
+```jsx
+// Implementar con Framer Motion AnimatePresence
+import { AnimatePresence, motion } from 'framer-motion';
+
+// El modal debe usar layoutId para conectar la card con el modal (shared element)
+<motion.div layoutId={`skin-${skin.id}`}>
+  <img src={skinImageHD} alt={skin.name} />
+</motion.div>
+```
+
+---
+
+### PROBLEMA 2 — Modos de juego: Imágenes incorrectas
+**Lo que hay:** Las secciones de modos de juego muestran imágenes de campeones (ej: Jinx en la Grieta del Invocador).
+**Lo que debe pasar:** Cada modo debe mostrar la imagen OFICIAL del mapa o modo, no personajes.
+
+**URLs correctas para las imágenes de mapas:**
+```
+Grieta del Invocador (Summoner's Rift):
+https://www.leagueoflegends.com/page-data/en-us/how-to-play/page-data.json
+→ Usar esta imagen estática alternativa del mapa:
+https://static.wikia.nocookie.net/leagueoflegends/images/6/6e/Summoner%27s_Rift_Update_Map.jpg
+
+Abismo de los Lamentos (ARAM - Howling Abyss):
+https://static.wikia.nocookie.net/leagueoflegends/images/d/db/Howling_Abyss_Map.jpg
+
+Teamfight Tactics (TFT):
+https://static.wikia.nocookie.net/leagueoflegends/images/9/9a/Teamfight_Tactics_icon.png
+
+Arena (2v2v2v2):
+https://static.wikia.nocookie.net/leagueoflegends/images/thumb/Arena_Map.jpg
+
+→ ALTERNATIVA SEGURA: Generar ilustraciones SVG de cada mapa directamente en código.
+   El mapa de la Grieta tiene 3 carriles claramente definidos que se pueden dibujar en SVG.
+```
+
+**Diseño correcto de la sección Modos:**
+```
+- Grieta del Invocador → Ilustración/imagen del mapa verde con 3 carriles
+- Abismo de los Lamentos → Imagen del puente helado azul/blanco
+- TFT → Tablero hexagonal de TFT
+- Arena → Arena circular de combate
+```
+
+---
+
+### PROBLEMA 3 — Nombres de skins incorrectos o en inglés
+**Lo que hay:** Algunas skins aparecen con nombres en inglés o nombres incorrectos.
+**Lo que debe pasar:** Todos los nombres de skins deben estar en español cuando sea posible.
+
+**Traducciones correctas de skins famosas:**
+```javascript
+const skinTranslations = {
+  "Classic": "Clásico",
+  "Prestige": "Prestigio",
+  "Legendary": "Legendaria",
+  "Ultimate": "Última",
+  "Bloodmoon": "Luna de Sangre",
+  "High Noon": "Mediodía",
+  "PROJECT": "PROYECTO",
+  "Star Guardian": "Guardianas Estelares",
+  "Battle Academia": "Academia de Batalla",
+  "K/DA": "K/DA",
+  "Arcane": "Arcane",
+  "Championship": "Campeonato",
+  "Worlds": "Mundiales",
+  "PsyOps": "PsiOps",
+  "Spirit Blossom": "Flor del Espíritu",
+  "Dark Star": "Estrella Oscura",
+  "Cosmic": "Cósmico",
+  "Elderwood": "Bosque Antiguo",
+  "Coven": "Aquelarre",
+  "Crime City": "Ciudad del Crimen",
+  "Pool Party": "Fiesta en la Piscina",
+  "Odyssey": "Odisea",
+  "Pulsefire": "Pulso de Fuego",
+  "Dawnbringer": "Portadora del Alba",
+  "Nightbringer": "Portador de la Noche",
+  "Sentinel": "Centinela",
+  "Ruined": "Arruinado"
+};
+```
+
+---
+
+### PROBLEMA 4 — Música: Falta imagen de cada artista en el grupo
+**Lo que hay:** K/DA muestra 4 imágenes pero son genéricas o no corresponden correctamente.
+**Lo que debe pasar:** Cada grupo musical debe mostrar la skin ESPECÍFICA del universo musical de cada campeón.
+
+**URLs correctas de imágenes para grupos musicales (splash arts de skins):**
+```javascript
+const musicSkinImages = {
+  "KDA": {
+    Ahri: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Ahri_9.jpg",       // K/DA Ahri
+    Akali: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Akali_8.jpg",     // K/DA Akali
+    Evelynn: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Evelynn_5.jpg", // K/DA Evelynn
+    KaiSa: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Kaisa_2.jpg",    // K/DA Kai'Sa
+    // Prestige versions:
+    AhriPrestige: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Ahri_10.jpg",
+    AkaliPrestige: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Akali_9.jpg"
+  },
+  "Pentakill": {
+    Mordekaiser: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Mordekaiser_1.jpg",
+    Karthus: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Karthus_4.jpg",
+    Yorick: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Yorick_1.jpg",
+    Sona: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Sona_4.jpg",
+    Olaf: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Olaf_1.jpg",
+    Kayle: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Kayle_3.jpg"
+  },
+  "TrueDamage": {
+    Ekko: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Ekko_4.jpg",
+    Qiyana: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Qiyana_1.jpg",
+    Senna: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Senna_1.jpg",
+    Yasuo: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Yasuo_5.jpg",
+    Akali: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Akali_10.jpg"
+  },
+  "StarGuardian": {
+    Lux: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Lux_7.jpg",
+    Jinx: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Jinx_4.jpg",
+    Janna: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Janna_4.jpg",
+    Lulu: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Lulu_4.jpg",
+    Poppy: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Poppy_5.jpg"
+  },
+  "Heartsteel": {
+    Sett: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Sett_5.jpg",
+    Yone: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Yone_4.jpg",
+    Kayn: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Kayn_4.jpg",
+    Aphelios: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Aphelios_3.jpg",
+    Ezreal: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Ezreal_14.jpg",
+    KSante: "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/KSante_1.jpg"
+  }
+};
+```
+
+**NOTA IMPORTANTE — Grupo Heartsteel (FALTABA EN V1):**
+Heartsteel es un grupo musical de 2023 que no estaba en el prompt anterior. Añadirlo:
+```javascript
+{
+  nombre: "Heartsteel",
+  genero: "Pop alternativo, R&B, Hip-Hop",
+  año: 2023,
+  miembros: ["Sett", "Yone", "Kayn", "Aphelios", "Ezreal", "K'Sante"],
+  canciones: ["PARANOIA", "SELF MADE", "ON OUR WAY"],
+  descripcion: "El grupo más reciente del universo musical de LoL. Lanzado en 2023 como parte de la línea de skins Heartsteel, el grupo mezcla pop alternativo, R&B y hip-hop con una estética de amor rebelde. La canción PARANOIA fue un hit instantáneo."
+}
+```
+
+---
+
+## 📅 HISTORIA COMPLETA DE LEAGUE OF LEGENDS (desde el inicio)
+
+### Línea de tiempo real del juego:
+
+```javascript
+const lolHistory = [
+  {
+    año: 2006,
+    titulo: "El origen en DotA",
+    descripcion: "Brandon 'Ryze' Beck y Marc 'Tryndamere' Merrill se conocen jugando Defense of the Ancients (DotA), un mod de Warcraft III. Frustrados por las limitaciones del mod, deciden crear su propio juego."
+  },
+  {
+    año: 2006,
+    titulo: "Fundación de Riot Games",
+    descripcion: "Se funda Riot Games en Los Ángeles, California. El equipo inicial era de apenas 4 personas con el sueño de crear el sucesor de DotA."
+  },
+  {
+    año: 2008,
+    titulo: "Primeras betas",
+    descripcion: "League of Legends entra en fase beta cerrada. Los primeros campeones incluían a Annie, Ashe, Fiddlesticks, Kayle, Master Yi, Morgana, Nunu, Ryze, Sion, Sivir, Soraka, Teemo, Tristana, Twisted Fate, Veigar y Warwick."
+  },
+  {
+    año: 2009,
+    titulo: "Lanzamiento oficial — 27 de octubre de 2009",
+    descripcion: "League of Legends se lanza oficialmente para PC de forma gratuita. Al lanzamiento había 40 campeones disponibles. El modelo free-to-play con skins cosméticas revolucionó la industria."
+  },
+  {
+    año: 2011,
+    titulo: "Primer Campeonato Mundial (Season 1)",
+    descripcion: "El primer World Championship se celebra en DreamHack en Suecia. El equipo Fnatic gana el primer título mundial. El prize pool era de 50,000 dólares — pequeño para los estándares actuales."
+  },
+  {
+    año: 2012,
+    titulo: "Explosión global",
+    descripcion: "LoL se convierte en el juego más jugado del mundo con más de 32 millones de jugadores registrados. Los servidores colapsan repetidamente por el crecimiento explosivo."
+  },
+  {
+    año: 2012,
+    titulo: "Season 2 World Championship",
+    descripcion: "El Campeonato se celebra en el USC Galen Center en Los Ángeles. Taipei Assassins (TPA) vence a Azubu Frost en la gran final. 8,000 personas en el estadio, millones en streaming."
+  },
+  {
+    año: 2013,
+    titulo: "SKT T1 domina el mundo",
+    descripcion: "El primer año de Faker en el escenario profesional. SKT T1 gana el Campeonato Mundial Season 3 en Staples Center, Los Ángeles. Faker es reconocido como el mejor jugador del mundo. Prize pool: 2 millones de dólares."
+  },
+  {
+    año: 2014,
+    titulo: "150 millones de jugadores registrados",
+    descripcion: "LoL alcanza 150 millones de cuentas registradas. 67 millones de jugadores activos mensualmente. Se convierte en el juego más jugado en PC del planeta, superando a todos sus competidores."
+  },
+  {
+    año: 2015,
+    titulo: "SKT T1 vuelve a ganar — Faker hace historia",
+    descripcion: "SKT T1 gana su segundo Mundial. Faker se consolida como el mejor jugador de todos los tiempos. El torneo en Bruselas atrae 36 millones de espectadores simultáneos."
+  },
+  {
+    año: 2016,
+    titulo: "SKT T1 — Tres títulos mundiales",
+    descripcion: "SKT T1 gana su tercer campeonato mundial, convirtiéndose en el único equipo tricampeón hasta ese momento. La final en el Staples Center bate records de audiencia para un evento esportivo."
+  },
+  {
+    año: 2017,
+    titulo: "Samsung Galaxy rompe la dinastía",
+    descripcion: "Samsung Galaxy derrota a SKT T1 en una final épica 3-0. Es el fin de la era de dominio coreano absoluto de SKT. El torneo en Beijing atrae más de 60 millones de espectadores."
+  },
+  {
+    año: 2018,
+    titulo: "K/DA lanza POP/STARS — Un fenómeno cultural",
+    descripcion: "Riot Games lanza el grupo virtual K/DA con la canción POP/STARS durante el Mundial 2018 en Corea del Sur. La actuación en vivo con hologramas de las campeones es histórica. La canción alcanza más de 400 millones de reproducciones en YouTube."
+  },
+  {
+    año: 2018,
+    titulo: "Invictus Gaming — China en la cima",
+    descripcion: "Invictus Gaming de China gana el primer Mundial chino en suelo coreano. Las celebraciones en China fueron masivas. El jugador Rookie es declarado MVP del torneo."
+  },
+  {
+    año: 2019,
+    titulo: "FunPlus Phoenix — China bi-campeona",
+    descripcion: "FunPlus Phoenix gana el Mundial 2019 en París. True Damage actúa en la ceremonia de apertura en el Accor Arena. El ADC Lwx y el soporte Crisp forman la mejor botlane del torneo."
+  },
+  {
+    año: 2020,
+    titulo: "DAMWON Gaming — Nueva era coreana",
+    descripcion: "DAMWON Gaming (ahora DRX) gana el Mundial 2020, completamente online por la pandemia de COVID-19. ShowMaker emerge como el mejor mid laner de su generación."
+  },
+  {
+    año: 2021,
+    titulo: "Arcane — Netflix y el universo expandido",
+    descripcion: "Riot Games lanza Arcane en Netflix, una serie animada sobre los orígenes de Vi y Jinx en Piltóver y Zaun. La serie gana 9 Emmy Awards y es considerada una de las mejores series de animación de la historia. 34 millones de hogares ven la primera temporada."
+  },
+  {
+    año: 2021,
+    titulo: "EDward Gaming — China tricampeona",
+    descripcion: "EDward Gaming vence a DAMWON KIA en una épica final de 5 partidas en Reikiavik, Islandia. El jungler Jiejie y el mid Scout brillan durante todo el torneo."
+  },
+  {
+    año: 2022,
+    titulo: "T1 y Faker — El cuarto título",
+    descripcion: "T1 gana su cuarto campeonato mundial en San Francisco, venciendo a DRX en la final. Faker gana su cuarto anillo de campeón, cemantando su legado como el GOAT (Greater Of All Time) de los esports. La audiencia supera los 73 millones de espectadores simultáneos."
+  },
+  {
+    año: 2023,
+    titulo: "T1 cinco veces finalista — Weibo gana",
+    descripcion: "T1 llega a su quinta final mundial pero pierde ante Weibo Gaming en partidas dramáticas. El torneo en Corea del Sur bate todos los records de asistencia presencial."
+  },
+  {
+    año: 2024,
+    titulo: "T1 hace historia — Pentacampeón",
+    descripcion: "T1 se corona bicampeón consecutivo y pentacampeón histórico al ganar Worlds 2024. Faker juega su décima temporada profesional. El universo de LoL continúa expandiéndose con nuevos campeones, modos y contenido narrativo."
+  },
+  {
+    año: 2024,
+    titulo: "170+ campeones en el juego",
+    descripcion: "League of Legends supera los 170 campeones jugables. El juego continúa siendo el MOBA más jugado del mundo. Nuevos campeones como Smolder, Aurora, Ambessa y Mel se añaden al roster."
+  }
+];
+```
+
+---
+
+## 🖼️ SISTEMA DE IMÁGENES EN ALTA RESOLUCIÓN
+
+### API Principal: DataDragon (Riot Games Oficial)
+
+```javascript
+// OBTENER VERSIÓN ACTUAL PRIMERO (siempre):
+const version = await fetch('https://ddragon.leagueoflegends.com/api/versions.json')
+  .then(r => r.json())
+  .then(v => v[0]); // Ejemplo: "14.24.1"
+
+// SPLASH ART COMPLETO (máxima calidad ~1920x1080):
+const splashFull = `https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${championId}_${skinNum}.jpg`;
+// Ejemplo Jhin clásico: https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Jhin_0.jpg
+// Ejemplo Jhin Luna Sangrienta: https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Jhin_3.jpg
+
+// LOADING SCREEN ART (alta resolución, con borde):
+const loadingScreen = `https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${championId}_${skinNum}.jpg`;
+
+// ÍCONO CUADRADO DEL CAMPEÓN:
+const icon = `https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${championId}.png`;
+
+// ÍCONO DE HABILIDAD:
+const abilityIcon = `https://ddragon.leagueoflegends.com/cdn/${version}/img/spell/${spellId}.png`;
+
+// ÍCONO PASIVA:
+const passiveIcon = `https://ddragon.leagueoflegends.com/cdn/${version}/img/passive/${passiveImage}`;
+
+// ÍCONO DE ITEM:
+const itemIcon = `https://ddragon.leagueoflegends.com/cdn/${version}/img/item/${itemId}.png`;
+
+// ÍCONO DE RUNA:
+const runeIcon = `https://ddragon.leagueoflegends.com/cdn/img/${runeIconPath}`;
+
+// TODOS LOS CAMPEONES con stats completas:
+const allChampions = await fetch(
+  `https://ddragon.leagueoflegends.com/cdn/${version}/data/es_ES/champion.json`
+).then(r => r.json());
+
+// DETALLE COMPLETO de un campeón (skins, habilidades, lore):
+const championDetail = await fetch(
+  `https://ddragon.leagueoflegends.com/cdn/${version}/data/es_ES/champion/Jhin.json`
+).then(r => r.json());
+// → Contiene: skins[], spells[], passive, lore, blurb, stats, allytips, enemytips
+```
+
+### API Secundaria: CommunityDragon (imágenes en 4K y recursos extras)
+
+```javascript
+// BASE URL de CommunityDragon (mayor resolución que DataDragon):
+const BASE_CD = 'https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default';
+
+// SPLASH ART CENTRADO (mejor composición que DataDragon):
+const centeredSplash = `${BASE_CD}/assets/characters/${championIdLower}/skins/base/images/${championIdLower}_splash_centered_0.jpg`;
+// Ejemplo: .../jhin/skins/base/images/jhin_splash_centered_0.jpg
+
+// SKIN CENTRADA:
+const skinCentered = `${BASE_CD}/assets/characters/${championIdLower}/skins/skin${skinNum}/images/${championIdLower}_splash_centered_${skinNum}.jpg`;
+
+// ÍCONO DE CAMPEÓN EN ALTA RESOLUCIÓN (512x512):
+const hdIcon = `${BASE_CD}/assets/characters/${championIdLower}/hud/${championIdLower}_square_0.png`;
+
+// CHROMA IMAGES (variaciones de color de skins):
+const chromaImage = `${BASE_CD}/assets/characters/${championIdLower}/skins/skin${skinNum}/images/...`;
+
+// JSON completo con TODOS los datos de skins (incluyendo precios RP, rareza, chromás):
+const skinData = await fetch(
+  `${BASE_CD}/v1/champions/${championId_number}.json`
+).then(r => r.json());
+// → Contiene: id, name, skins[{id, name, isBase, cost, rarityGemPath, chromas}]
+
+// Para obtener el número de ID de un campeón:
+// Faker → "Faker" no, el ID numérico se obtiene del JSON de DataDragon
+// Ejemplo: Jhin = 202, Ahri = 103, Jinx = 222
+
+// LISTA COMPLETA DE IDs NUMÉRICOS:
+const championIds = {
+  Annie: 1, Olaf: 2, Galio: 3, TwistedFate: 4, XinZhao: 5,
+  Urgot: 6, LeBlanc: 7, Vladimir: 8, Fiddlesticks: 9, Kayle: 10,
+  MasterYi: 11, Alistar: 12, Ryze: 13, Sion: 14, Sivir: 15,
+  Soraka: 16, Teemo: 17, Tristana: 18, Warwick: 19, Nunu: 20,
+  MissFortune: 21, Ashe: 22, Tryndamere: 23, Jax: 24, Morgana: 25,
+  Zilean: 26, Singed: 27, Evelynn: 28, Twitch: 29, Karthus: 30,
+  Chogath: 31, Amumu: 32, Rammus: 33, Anivia: 34, Shaco: 35,
+  DrMundo: 36, Sona: 37, Kassadin: 38, Irelia: 39, Janna: 40,
+  GangPlank: 41, Corki: 42, Karma: 43, Taric: 44, Veigar: 45,
+  Trundle: 48, Swain: 50, Caitlyn: 51, Blitzcrank: 53, Malphite: 54,
+  Katarina: 55, Nocturne: 56, Nasus: 57, Nidalee: 58, Udyr: 59,
+  Poppy: 61, Gragas: 79, Pantheon: 80, Ezreal: 81, Mordekaiser: 82,
+  Yorick: 83, Akali: 84, Kennen: 85, Garen: 86, Leona: 89,
+  Malzahar: 90, Talon: 91, Riven: 92, KogMaw: 96, Shen: 98,
+  Lux: 99, Xerath: 101, Shyvana: 102, Ahri: 103, Graves: 104,
+  Fizz: 105, Volibear: 106, Rengar: 107, Varus: 110, Nautilus: 111,
+  Viktor: 112, Sejuani: 113, Fiora: 114, Ziggs: 115, Lulu: 117,
+  Draven: 119, Hecarim: 120, Khazix: 121, Darius: 122, Jayce: 126,
+  Lissandra: 127, Diana: 131, Quinn: 133, Syndra: 134, Aurelion: 136,
+  Kayn: 141, Zoe: 142, Zyra: 143, Kaisa: 145, Seraphine: 147,
+  Gnar: 150, Zac: 154, Yasuo: 157, Vel: 161, Twisted: 163, Taliyah: 163,
+  Camille: 164, Akshan: 166, Belveth: 200, Braum: 201, Jhin: 202,
+  Jinx: 222, TahmKench: 223, Viego: 234, Senna: 235, Aphelios: 523,
+  Samira: 360, Yone: 777, Gwen: 887, Renata: 888, Nilah: 895,
+  KSante: 897, Milio: 902, Naafiri: 950, Briar: 233, Hwei: 910,
+  Smolder: 901, Aurora: 893, Ambessa: 799, Mel: 800
+};
+```
+
+### API Terciaria: LoL Wiki (imágenes de mapas y lore art)
+
+```javascript
+// Imágenes del mapa de Runeterra:
+const runeterra_map = "https://static.wikia.nocookie.net/leagueoflegends/images/f/fd/Runeterra_map.jpg";
+
+// Grieta del Invocador:
+const summoners_rift = "https://static.wikia.nocookie.net/leagueoflegends/images/6/6e/Summoner%27s_Rift_Update_Map.jpg";
+
+// Abismo de los Lamentos (ARAM):
+const howling_abyss = "https://static.wikia.nocookie.net/leagueoflegends/images/d/db/Howling_Abyss_Map.jpg";
+```
+
+---
+
+## 🎬 SISTEMA DE ANIMACIONES — NIVEL GOD TIER
+
+### Librerías requeridas:
+```bash
+npm install framer-motion gsap @gsap/react lottie-react particles.js react-intersection-observer
+```
+
+### Animación 1: Partículas de polvo dorado (Hero section)
+```jsx
+import Particles from "react-particles";
+import { loadSlim } from "tsparticles-slim";
+
+const particlesConfig = {
+  particles: {
+    number: { value: 80 },
+    color: { value: ["#C8AA6E", "#F0E6D3", "#0BC4E3"] },
+    opacity: { value: { min: 0.1, max: 0.6 } },
+    size: { value: { min: 1, max: 3 } },
+    move: {
+      enable: true,
+      speed: 0.8,
+      direction: "top",
+      random: true,
+      drift: 1
+    }
+  },
+  background: { color: "transparent" }
+};
+// Partículas doradas que suben lentamente como cenizas mágicas
+```
+
+### Animación 2: Shared Element Transition (Card → Modal de Skin)
+```jsx
+// Cuando el usuario hace click en una skin card:
+// La imagen CRECE desde su posición exacta en el grid hasta llenar la pantalla
+// Esto se hace con Framer Motion layoutId
+
+// Card:
+<motion.div
+  layoutId={`skin-card-${skinId}`}
+  onClick={() => setSelectedSkin(skin)}
+  className="skin-card"
+  whileHover={{ scale: 1.05, y: -8 }}
+>
+  <motion.img layoutId={`skin-img-${skinId}`} src={skinThumb} />
+  <motion.h3 layoutId={`skin-name-${skinId}`}>{skin.name}</motion.h3>
+</motion.div>
+
+// Modal:
+<AnimatePresence>
+  {selectedSkin && (
+    <motion.div className="modal-overlay" onClick={() => setSelectedSkin(null)}
+      initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+      <motion.div layoutId={`skin-card-${selectedSkin.id}`} className="modal-content">
+        <motion.img layoutId={`skin-img-${selectedSkin.id}`} src={skinHD} />
+        <motion.h2 layoutId={`skin-name-${selectedSkin.id}`}>{selectedSkin.name}</motion.h2>
+        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { delay: 0.3 } }}>
+          {selectedSkin.rarity} — {selectedSkin.cost} RP
+        </motion.p>
+      </motion.div>
+    </motion.div>
+  )}
+</AnimatePresence>
+```
+
+### Animación 3: Scroll Reveal con stagger cinematográfico
+```jsx
+import { useInView } from 'react-intersection-observer';
+
+// Para la galería de campeones, cada card entra desde abajo con delay:
+const ChampionCard = ({ champion, index }) => {
+  const { ref, inView } = useInView({ threshold: 0.1, triggerOnce: true });
+  
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 60, scale: 0.9 }}
+      animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
+      transition={{ duration: 0.5, delay: (index % 5) * 0.08, ease: [0.23, 1, 0.32, 1] }}
+    >
+      ...
+    </motion.div>
+  );
+};
+```
+
+### Animación 4: Cursor personalizado de League of Legends
+```jsx
+// Cursor custom con forma de espada o hexágono
+// El cursor cambia al hover sobre elementos interactivos
+
+const CustomCursor = () => {
+  const [pos, setPos] = useState({ x: 0, y: 0 });
+  const [isHovering, setIsHovering] = useState(false);
+  
+  // Cursor principal: círculo dorado pequeño
+  // Cursor follower: círculo más grande que sigue con retraso (spring physics)
+  // Al hover: cursor se transforma en el ícono de espada de LoL
+};
+```
+
+### Animación 5: Hero con parallax en scroll
+```jsx
+// El splash art del hero se mueve más lento que el scroll (parallax)
+// Usando GSAP ScrollTrigger para smooth parallax
+
+import gsap from 'gsap';
+import ScrollTrigger from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
+
+gsap.to('.hero-image', {
+  yPercent: 30,
+  ease: 'none',
+  scrollTrigger: {
+    trigger: '.hero',
+    start: 'top top',
+    end: 'bottom top',
+    scrub: true
+  }
+});
+```
+
+### Animación 6: Transición entre páginas
+```jsx
+// Al navegar de una página a otra:
+// 1. La página actual se desvanece hacia arriba
+// 2. La nueva página aparece desde abajo
+// Usar Framer Motion con AnimatePresence en el Router
+
+const pageVariants = {
+  initial: { opacity: 0, y: 20 },
+  enter: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.23, 1, 0.32, 1] } },
+  exit: { opacity: 0, y: -20, transition: { duration: 0.3 } }
+};
+```
+
+### Animación 7: Glitch effect en el título del Hero
+```css
+/* El título principal hace un efecto glitch ocasional */
+@keyframes glitch {
+  0% { text-shadow: 0.05em 0 0 rgba(255,0,0,0.75), -0.05em -0.025em 0 rgba(0,255,0,0.75), -0.025em 0.05em 0 rgba(0,0,255,0.75); }
+  14% { text-shadow: 0.05em 0 0 rgba(255,0,0,0.75), -0.05em -0.025em 0 rgba(0,255,0,0.75), -0.025em 0.05em 0 rgba(0,0,255,0.75); }
+  15% { text-shadow: -0.05em -0.025em 0 rgba(255,0,0,0.75), 0.025em 0.025em 0 rgba(0,255,0,0.75), -0.05em -0.05em 0 rgba(0,0,255,0.75); }
+  49% { text-shadow: -0.05em -0.025em 0 rgba(255,0,0,0.75), 0.025em 0.025em 0 rgba(0,255,0,0.75), -0.05em -0.05em 0 rgba(0,0,255,0.75); }
+  50% { text-shadow: 0.025em 0.05em 0 rgba(255,0,0,0.75), 0.05em 0 0 rgba(0,255,0,0.75), 0 -0.05em 0 rgba(0,0,255,0.75); }
+  99% { text-shadow: 0.025em 0.05em 0 rgba(255,0,0,0.75), 0.05em 0 0 rgba(0,255,0,0.75), 0 -0.05em 0 rgba(0,0,255,0.75); }
+  100% { text-shadow: -0.025em 0 0 rgba(255,0,0,0.75), -0.025em -0.025em 0 rgba(0,255,0,0.75), -0.025em -0.05em 0 rgba(0,0,255,0.75); }
+}
+
+.hero-title { animation: glitch 8s infinite; animation-play-state: paused; }
+.hero-title:hover { animation-play-state: running; }
+```
+
+### Animación 8: Barra de stats de campeón animada
+```jsx
+// Al entrar a la página de un campeón, las barras de Ataque/Defensa/Magia
+// se llenan progresivamente con una animación fluida
+
+const StatBar = ({ label, value, max = 10 }) => {
+  const { ref, inView } = useInView({ triggerOnce: true });
+  const percentage = (value / max) * 100;
+  
+  return (
+    <div ref={ref} className="stat-bar">
+      <span>{label}</span>
+      <motion.div
+        className="bar-fill"
+        initial={{ width: 0 }}
+        animate={inView ? { width: `${percentage}%` } : {}}
+        transition={{ duration: 1.2, delay: 0.2, ease: [0.23, 1, 0.32, 1] }}
+      />
+      <span>{value}/{max}</span>
+    </div>
+  );
+};
+```
+
+### Animación 9: Hover 3D en cards de campeón
+```jsx
+// Las cards de campeón tienen efecto 3D de perspectiva al hover
+// La imagen se inclina según la posición del mouse
+
+const ChampCard = () => {
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;  // -0.5 a 0.5
+    const y = (e.clientY - rect.top) / rect.height - 0.5;   // -0.5 a 0.5
+    
+    e.currentTarget.style.transform = `
+      perspective(1000px)
+      rotateY(${x * 15}deg)
+      rotateX(${-y * 15}deg)
+      translateZ(10px)
+    `;
+  };
+  
+  const handleMouseLeave = (e) => {
+    e.currentTarget.style.transform = 'perspective(1000px) rotateY(0deg) rotateX(0deg)';
+  };
+  
+  return (
+    <div onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}
+         style={{ transition: 'transform 0.1s ease' }}>
+      ...
+    </div>
+  );
+};
+```
+
+### Animación 10: Loading screen al cambiar de página
+```jsx
+// Al navegar a la página de un campeón específico:
+// Aparece una pantalla de carga estilo "Loading Screen" del juego real
+// Con el arte de loading screen del campeón de fondo
+// Y una barra de progreso dorada que se llena
+
+const LoadingScreen = ({ champion }) => (
+  <motion.div className="loading-screen"
+    initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+    <img src={loadingScreenArt} className="loading-bg" />
+    <div className="loading-bar-container">
+      <motion.div className="loading-bar-fill"
+        initial={{ width: '0%' }}
+        animate={{ width: '100%' }}
+        transition={{ duration: 1.5, ease: 'linear' }}
+      />
+    </div>
+    <h1>{champion.name}</h1>
+    <p>{champion.title}</p>
+  </motion.div>
+);
+```
+
+### Animación 11: Efecto de partículas al hacer pentakill / completar acción
+```jsx
+// Cuando el usuario hace una acción importante (click en "Jugar gratis", etc.)
+// Explotan partículas doradas desde el punto de click
+
+const burst = (x, y) => {
+  // Crear 20 partículas que se dispersan en ángulos aleatorios
+  // con animación GSAP
+  for (let i = 0; i < 20; i++) {
+    const angle = (i / 20) * Math.PI * 2;
+    const distance = 80 + Math.random() * 60;
+    gsap.to(particle, {
+      x: Math.cos(angle) * distance,
+      y: Math.sin(angle) * distance,
+      opacity: 0,
+      scale: 0,
+      duration: 0.8 + Math.random() * 0.4,
+      ease: 'power2.out'
+    });
+  }
+};
+```
+
+---
+
+## 🗺️ MAPAS DE JUEGO — Diseño Correcto
+
+### Grieta del Invocador — SVG custom generado en código:
+```jsx
+// Si las imágenes de la wiki no cargan, generar este SVG:
+const SummonersRiftMap = () => (
+  <svg viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+    {/* Fondo verde oscuro del mapa */}
+    <rect width="800" height="800" fill="#1a3a1a"/>
+    
+    {/* Línea carril Top (izquierda vertical) */}
+    <path d="M 80 720 L 80 80 L 720 80" stroke="#8B7355" strokeWidth="60" fill="none" strokeLinecap="round"/>
+    
+    {/* Línea carril Bot (abajo horizontal) */}
+    <path d="M 80 720 L 720 720 L 720 80" stroke="#8B7355" strokeWidth="60" fill="none" strokeLinecap="round"/>
+    
+    {/* Carril Mid (diagonal) */}
+    <path d="M 80 720 L 720 80" stroke="#8B7355" strokeWidth="50" fill="none"/>
+    
+    {/* Nexo Azul */}
+    <circle cx="100" cy="700" r="40" fill="#1E90FF" opacity="0.8"/>
+    <text x="100" y="705" textAnchor="middle" fill="white" fontSize="12">NEXO</text>
+    
+    {/* Nexo Rojo */}
+    <circle cx="700" cy="100" r="40" fill="#FF4444" opacity="0.8"/>
+    <text x="700" y="105" textAnchor="middle" fill="white" fontSize="12">NEXO</text>
+    
+    {/* Río */}
+    <path d="M 0 400 Q 200 350 400 400 Q 600 450 800 400" 
+          stroke="#1E90FF" strokeWidth="30" fill="none" opacity="0.4"/>
+    
+    {/* Dragón */}
+    <text x="580" y="580" fontSize="24" textAnchor="middle">🐉</text>
+    <text x="580" y="605" fontSize="10" textAnchor="middle" fill="#C8AA6E">DRAGÓN</text>
+    
+    {/* Barón */}
+    <text x="200" y="220" fontSize="24" textAnchor="middle">👁️</text>
+    <text x="200" y="245" fontSize="10" textAnchor="middle" fill="#C8AA6E">BARÓN</text>
+    
+    {/* Etiquetas de carriles */}
+    <text x="50" y="400" fontSize="14" fill="#C8AA6E" transform="rotate(-90 50 400)">TOP</text>
+    <text x="400" y="770" fontSize="14" fill="#C8AA6E" textAnchor="middle">BOT</text>
+    <text x="430" y="430" fontSize="14" fill="#C8AA6E" transform="rotate(-45 430 430)">MID</text>
+  </svg>
+);
+```
+
+### Abismo de los Lamentos (ARAM) — Un solo carril:
+```jsx
+const HowlingAbyssMap = () => (
+  <svg viewBox="0 0 900 300" xmlns="http://www.w3.org/2000/svg">
+    {/* Fondo helado */}
+    <rect width="900" height="300" fill="#0a1a2e"/>
+    
+    {/* El puente único (carril central) */}
+    <rect x="0" y="100" width="900" height="100" fill="#1a3a5e" opacity="0.8"/>
+    
+    {/* Nexo Azul */}
+    <circle cx="50" cy="150" r="30" fill="#1E90FF"/>
+    
+    {/* Nexo Rojo */}
+    <circle cx="850" cy="150" r="30" fill="#FF4444"/>
+    
+    {/* Torres */}
+    {[150, 250, 650, 750].map(x => (
+      <rect key={x} x={x-10} y={120} width="20" height="60" fill="#C8AA6E"/>
+    ))}
+    
+    {/* El Abismo (vacío debajo del puente) */}
+    <rect x="0" y="200" width="900" height="100" fill="#000510"/>
+    <text x="450" y="260" textAnchor="middle" fill="#0BC4E3" opacity="0.3" fontSize="12">
+      ABISMO HELADO
+    </text>
+  </svg>
+);
+```
+
+---
+
+## 🎮 SECCIÓN MODOS DE JUEGO — Diseño Correcto Final
+
+```jsx
+// Cada modo debe mostrar el MAPA, no un personaje
+const gameModes = [
+  {
+    id: "summoners-rift",
+    nombre: "Grieta del Invocador",
+    badge: "5 CONTRA 5",
+    descripcion: "El modo principal de League of Legends...",
+    // USAR: SVG del mapa o imagen oficial del mapa verde
+    imagen: <SummonersRiftMap />, // SVG generado en código
+    puntos: ["3 carriles: Top, Mid, Bot", "Jungla con Dragón y Barón", "25-45 minutos"]
+  },
+  {
+    id: "aram",
+    nombre: "Abismo de los Lamentos",
+    badge: "TODOS AL MID",
+    descripcion: "Un solo carril. Campeones aleatorios. Combate sin parar.",
+    imagen: <HowlingAbyssMap />, // SVG generado en código
+    puntos: ["1 carril central", "Campeones asignados al azar", "15-20 minutos"]
+  },
+  {
+    id: "tft",
+    nombre: "Teamfight Tactics",
+    badge: "AUTO BATTLER",
+    descripcion: "Coloca campeones en un tablero hexagonal y combina sinergias.",
+    imagen: <TFTBoard />, // Tablero hexagonal SVG
+    puntos: ["8 jugadores simultáneos", "Tablero hexagonal", "30-40 minutos"]
+  },
+  {
+    id: "arena",
+    nombre: "Arena",
+    badge: "2V2V2V2",
+    descripcion: "Cuatro parejas se enfrentan en arenas pequeñas.",
+    imagen: <ArenaMap />, // Arena circular SVG
+    puntos: ["4 equipos de 2", "Mejoras entre rondas", "15-20 minutos"]
+  }
+];
+```
+
+---
+
+## 🎵 GRUPOS MUSICALES COMPLETOS Y ACTUALIZADOS
+
+```javascript
+const allMusicGroups = [
+  {
+    id: "kda",
+    nombre: "K/DA",
+    genero: "K-Pop / Pop Electrónico",
+    año_debut: 2018,
+    color_tema: "#9B5CD4",
+    miembros: [
+      { campeon: "Ahri", rol: "Vocalista principal", skin_num: 9 },
+      { campeon: "Akali", rol: "Rapera", skin_num: 8 },
+      { campeon: "Evelynn", rol: "Vocalista", skin_num: 5 },
+      { campeon: "KaiSa", rol: "Vocalista", skin_num: 2 }
+    ],
+    discografia: [
+      { titulo: "POP/STARS", año: 2018, descripcion: "Debut mundial, rompió todos los récords" },
+      { titulo: "THE BADDEST", año: 2020, descripcion: "Regreso con más poder" },
+      { titulo: "MORE", año: 2020, descripcion: "Mensaje de superación personal" },
+      { titulo: "I'LL SHOW YOU", año: 2020, descripcion: "El final del EP ALL OUT" }
+    ],
+    curiosidades: [
+      "POP/STARS tuvo más de 400 millones de reproducciones en YouTube",
+      "La actuación de 2018 en el Mundial usó hologramas en tiempo real",
+      "(G)I-DLE y Madison Beer prestaron sus voces en la vida real"
+    ]
+  },
+  {
+    id: "pentakill",
+    nombre: "Pentakill",
+    genero: "Heavy Metal / Power Metal",
+    año_debut: 2014,
+    color_tema: "#2E4057",
+    miembros: [
+      { campeon: "Mordekaiser", rol: "Bajo", skin_num: 1 },
+      { campeon: "Karthus", rol: "Vocalista", skin_num: 4 },
+      { campeon: "Yorick", rol: "Guitarra", skin_num: 1 },
+      { campeon: "Sona", rol: "Teclados", skin_num: 4 },
+      { campeon: "Olaf", rol: "Batería", skin_num: 1 },
+      { campeon: "Kayle", rol: "Guitarra líder", skin_num: 3 }
+    ],
+    discografia: [
+      { titulo: "Mortal Reminder", año: 2014, descripcion: "El álbum debut" },
+      { titulo: "Smite and Ignite", año: 2017, descripcion: "Segundo álbum más oscuro" },
+      { titulo: "III: Lost Chapter", año: 2021, descripcion: "Tercer álbum, más épico que nunca" }
+    ]
+  },
+  {
+    id: "true-damage",
+    nombre: "True Damage",
+    genero: "Hip-Hop / Trap / R&B",
+    año_debut: 2019,
+    color_tema: "#C8AA6E",
+    miembros: [
+      { campeon: "Ekko", rol: "MC principal", skin_num: 4 },
+      { campeon: "Qiyana", rol: "Rapera", skin_num: 1 },
+      { campeon: "Senna", rol: "Vocalista", skin_num: 1 },
+      { campeon: "Yasuo", rol: "Productor / MC", skin_num: 5 },
+      { campeon: "Akali", rol: "Rapera", skin_num: 10 }
+    ],
+    discografia: [
+      { titulo: "GIANTS", año: 2019, descripcion: "Actuación en vivo en Worlds 2019 en París" }
+    ]
+  },
+  {
+    id: "star-guardian",
+    nombre: "Star Guardian",
+    genero: "J-Pop / Electro Pop",
+    año_debut: 2017,
+    color_tema: "#FF69B4",
+    miembros: [
+      { campeon: "Lux", rol: "Líder / Vocalista", skin_num: 7 },
+      { campeon: "Jinx", rol: "Rebelde / Vocalista", skin_num: 4 },
+      { campeon: "Janna", rol: "Maestra / Guía", skin_num: 4 },
+      { campeon: "Lulu", rol: "Adorable / Soprano", skin_num: 4 },
+      { campeon: "Poppy", rol: "Fuerte / Contralto", skin_num: 5 }
+    ],
+    discografia: [
+      { titulo: "Feel Alive", año: 2022, descripcion: "Himno del universo Star Guardian 2022" },
+      { titulo: "Everything Goes", año: 2022, descripcion: "Balada emocional del universo" },
+      { titulo: "Still Here", año: 2017, descripcion: "Canción original del primer evento" }
+    ]
+  },
+  {
+    id: "heartsteel",
+    nombre: "Heartsteel",
+    genero: "Pop Alternativo / R&B / Hip-Hop",
+    año_debut: 2023,
+    color_tema: "#E91E63",
+    es_nuevo: true,
+    miembros: [
+      { campeon: "Sett", rol: "Vocalista principal", skin_num: 5 },
+      { campeon: "Yone", rol: "MC / Vocalista", skin_num: 4 },
+      { campeon: "Kayn", rol: "Rapero / MC oscuro", skin_num: 4 },
+      { campeon: "Aphelios", rol: "Instrumentalista / Vocalista", skin_num: 3 },
+      { campeon: "Ezreal", rol: "Vocalista pop", skin_num: 14 },
+      { campeon: "KSante", rol: "Vocalista R&B", skin_num: 1 }
+    ],
+    discografia: [
+      { titulo: "PARANOIA", año: 2023, descripcion: "El debut de Heartsteel, un hit instantáneo" },
+      { titulo: "SELF MADE", año: 2023, descripcion: "Himno de superación y ambición" },
+      { titulo: "ON OUR WAY", año: 2023, descripcion: "Balada del grupo completo" }
+    ],
+    curiosidades: [
+      "Heartsteel fue lanzado en octubre de 2023 como la nueva línea de skins musicales",
+      "PARANOIA tiene un videoclip animado de alta calidad",
+      "Es el primer grupo de LoL enfocado en un concepto romántico/rebelde",
+      "K'Sante fue el primer campeón LGBTQ+ del roster de Heartsteel"
+    ]
+  }
+];
+```
+
+---
+
+## 🆕 CAMPEONES NUEVOS (2022-2024) — Actualización
+
+```javascript
+const newChampions = [
+  {
+    id: "Nilah",
+    nombre: "Nilah",
+    titulo: "La Diosa del Júbilo",
+    region: "Ixtal / Toda Runeterra",
+    rol: ["Luchadora"],
+    año: 2022,
+    lore: "Nilah es una asceta del agua que viaja por el mundo buscando placer en cada batalla. Fue bendecida (o maldecida) por una deidad del júbilo que la hace volverse más poderosa con la felicidad de sus aliados."
+  },
+  {
+    id: "KSante",
+    nombre: "K'Sante",
+    titulo: "El Orgullo de Nazumah",
+    region: "Shurima (Nazumah)",
+    rol: ["Tanque"],
+    año: 2022,
+    lore: "K'Sante es un cazador de monstruos de Nazumah, una ciudad-estado de Shurima que no pertenece al Imperio. Cazó una criatura llamada Ntofo para obtener su piel y crear las ntofos, sus armas únicas que pueden transformarse."
+  },
+  {
+    id: "Milio",
+    nombre: "Milio",
+    titulo: "El Espíritu Amistoso del Fuego",
+    region: "Ixtal",
+    rol: ["Soporte", "Mago"],
+    año: 2023,
+    lore: "Milio es un niño de Ixtal con el don innato de la axiomagia del fuego, pero su llama cura en vez de quemar. Su sueño es restaurar el honor de su familia ante el Consejo de Ixtal."
+  },
+  {
+    id: "Naafiri",
+    nombre: "Naafiri",
+    titulo: "La Que Persigue el Horizonte",
+    region: "Shurima",
+    rol: ["Asesino"],
+    año: 2023,
+    lore: "Naafiri es una Darkin (antigua guerrera Ascendida corrompida) atrapada en el cuerpo de una perra y su manada de lobos. A diferencia de otros Darkin, Naafiri recuerda quién era y busca reunir a todos los Darkin."
+  },
+  {
+    id: "Briar",
+    nombre: "Briar",
+    titulo: "La Hambrienta",
+    region: "Noxus",
+    rol: ["Luchadora", "Asesino"],
+    año: 2023,
+    lore: "Briar es una joven vampírica creada por un grupo noxiano secreto. Tiene sed de sangre incontrolable y solo puede resistirla usando un casco especial. Cuando el casco se rompe, entra en un frenesí aterrador."
+  },
+  {
+    id: "Hwei",
+    nombre: "Hwei",
+    titulo: "El Artista Maldito",
+    region: "Ionia",
+    rol: ["Mago"],
+    año: 2023,
+    lore: "Hwei es un artista ioniano cuyas pinturas cobran vida literal. Fue manipulado por Jhin, quien usó su arte para crear escenas de terror. Ahora Hwei busca a Jhin para detenerlo y redimirse."
+  },
+  {
+    id: "Smolder",
+    nombre: "Smolder",
+    titulo: "El Dragón Malcriado",
+    region: "Noxus",
+    rol: ["Tirador"],
+    año: 2024,
+    lore: "Smolder es un dragón joven capturado por el ejército noxiano pero que en vez de ser ejecutado fue adoptado por un noble. Creció convencido de que los humanos son sus amigos y aliados, sin saber el peligro que lo rodea."
+  },
+  {
+    id: "Aurora",
+    nombre: "Aurora",
+    titulo: "La Bruja Entre Mundos",
+    region: "Freljord",
+    rol: ["Mago", "Asesino"],
+    año: 2024,
+    lore: "Aurora es una vasna (yordle-like) del Freljord que puede moverse entre el mundo real y el espiritual. Fue exiliada por su tribu por sus poderes y ahora viaja como mediadora entre ambos mundos."
+  },
+  {
+    id: "Ambessa",
+    nombre: "Ambessa",
+    titulo: "La Leona de Noxus",
+    region: "Noxus",
+    rol: ["Luchadora"],
+    año: 2024,
+    lore: "Ambessa Medarda es la madre de Mel Medarda (personaje de Arcane) y una de las generales más poderosas de Noxus. Brutal, calculadora y absolutamente implacable, busca convertir Piltóver en una colonia noxiana."
+  },
+  {
+    id: "Mel",
+    nombre: "Mel",
+    titulo: "La Hija Dorada",
+    region: "Noxus / Piltóver",
+    rol: ["Mago", "Soporte"],
+    año: 2025,
+    lore: "Mel Medarda es la hija de Ambessa, miembro del Consejo de Piltóver en Arcane. Posee poderes mágicos que ella misma desconoce: puede reflejar la magia y la energía que le llega. Protagonista de Arcane Temporada 2."
+  }
+];
+```
+
+---
+
+## 🔧 INSTRUCCIONES TÉCNICAS DE IMPLEMENTACIÓN — PASO A PASO
+
+### Paso 1: Instalar dependencias nuevas
+```bash
+npm install framer-motion gsap @gsap/react tsparticles react-particles tsparticles-slim react-intersection-observer
+```
+
+### Paso 2: Crear el hook useCommunityDragon
+```javascript
+// hooks/useCommunityDragon.js
+const BASE = 'https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default';
+
+export const useChampionSkins = async (championId_number) => {
+  const data = await fetch(`${BASE}/v1/champions/${championId_number}.json`).then(r => r.json());
+  // Retorna array de skins con: id, name, isBase, rarityGemPath, chromas
+  return data.skins;
+};
+
+export const getSkinSplash = (championNameLower, skinNum) =>
+  `${BASE}/assets/characters/${championNameLower}/skins/skin${skinNum}/images/${championNameLower}_splash_centered_${skinNum}.jpg`;
+```
+
+### Paso 3: Crear el componente SkinModal
+```jsx
+// components/SkinModal.jsx
+// Con AnimatePresence + layoutId para shared element transition
+// Ver código completo en sección "Animación 2" arriba
+```
+
+### Paso 4: Reemplazar las imágenes de modos de juego
+```jsx
+// pages/Modes.jsx
+// Reemplazar todas las imágenes de personajes por SVGs de mapas
+// Ver componentes SummonersRiftMap, HowlingAbyssMap arriba
+```
+
+### Paso 5: Añadir Heartsteel a la sección de música
+```jsx
+// pages/Music.jsx
+// Añadir el card de Heartsteel al final de la lista de grupos
+// Con color temático rosa/rojo (#E91E63)
+```
+
+### Paso 6: Añadir la historia de LoL a la sección de Historia
+```jsx
+// pages/History.jsx
+// Timeline vertical con los eventos del array lolHistory
+// Cada evento: año, título, descripción, imagen si disponible
+```
+
+### Paso 7: Añadir campeones nuevos (2022-2024)
+```jsx
+// Añadir los campeones del array newChampions a la base de datos
+// Sus imágenes se obtienen igual que los demás por DataDragon
+```
+
+---
+
+## ✅ CHECKLIST FINAL DE CALIDAD
+
+- [ ] Al hacer click en cualquier skin → abre modal con imagen HD + animación shared element
+- [ ] Modos de juego muestran MAPAS, no personajes
+- [ ] K/DA muestra las skins K/DA específicas de cada campeón
+- [ ] Heartsteel está incluido como grupo musical
+- [ ] Historia del juego incluye línea de tiempo desde 2006 hasta 2024
+- [ ] Campeones nuevos (Ambessa, Mel, Smolder, Aurora, Hwei, Briar, Naafiri, Milio, K'Sante) están incluidos
+- [ ] Cursor personalizado implementado
+- [ ] Parallax en el hero al hacer scroll
+- [ ] Transición cinematográfica entre páginas
+- [ ] Barras de stats se animan al entrar a la página del campeón
+- [ ] Cards de campeón tienen efecto 3D al hover
+- [ ] Partículas doradas en el hero
+- [ ] Loading screen al entrar a página de campeón
+- [ ] Todas las imágenes usan lazy loading
+- [ ] Sitio es 100% responsive en mobile
+
+---
+
+*Prompt V2 — Actualizado con correcciones visuales precisas, APIs en 4K, animaciones God-tier y grupos musicales completos hasta 2024*

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "wouter";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { CHAMPION_EXTENDED } from "@/data/champions";
 
 const DDV = "14.24.1";
@@ -39,6 +39,36 @@ const STAT_LABELS: Record<string, string> = {
   attackdamage: "Daño Ataque", attackspeed: "Velocidad Ataque", movespeed: "Velocidad",
 };
 
+const SKIN_TRANSLATIONS: Record<string, string> = {
+  "Classic": "Clásico", "Prestige": "Prestigio", "Legendary": "Legendaria", "Ultimate": "Última",
+  "Bloodmoon": "Luna de Sangre", "Blood Moon": "Luna de Sangre", "High Noon": "Mediodía",
+  "PROJECT": "PROYECTO", "Star Guardian": "Guardiana Estelar", "Battle Academia": "Academia de Batalla",
+  "Championship": "Campeonato", "Worlds": "Mundiales", "PsyOps": "PsiOps",
+  "Spirit Blossom": "Flor del Espíritu", "Dark Star": "Estrella Oscura", "Cosmic": "Cósmico",
+  "Elderwood": "Bosque Antiguo", "Coven": "Aquelarre", "Crime City": "Ciudad del Crimen",
+  "Pool Party": "Fiesta en la Piscina", "Odyssey": "Odisea", "Pulsefire": "Pulso de Fuego",
+  "Dawnbringer": "Portador del Alba", "Nightbringer": "Portador de la Noche", "Sentinel": "Centinela",
+  "Ruined": "Arruinado", "Arcane": "Arcane", "Battle Bunny": "Conejita de Batalla",
+  "Cosmic Hunter": "Cazador Cósmico", "Lunar Beast": "Bestia Lunar", "Witch": "Bruja",
+  "Crystal Rose": "Rosa de Cristal", "Bewitching": "Embrujada",
+};
+
+function translateSkinName(name: string, championName: string): string {
+  if (name === "default") return `${championName} Clásico`;
+  let translated = name.replace(championName, "").trim();
+  for (const [en, es] of Object.entries(SKIN_TRANSLATIONS)) {
+    if (translated.startsWith(en)) {
+      translated = es + translated.slice(en.length);
+      return `${championName} ${translated}`.trim();
+    }
+    if (translated.endsWith(en)) {
+      translated = translated.slice(0, -en.length) + es;
+      return `${championName} ${translated}`.trim();
+    }
+  }
+  return name;
+}
+
 export default function ChampionProfilePage() {
   const params = useParams<{ nombre: string }>();
   const champId = params.nombre;
@@ -47,10 +77,14 @@ export default function ChampionProfilePage() {
   const [loading, setLoading] = useState(true);
   const [tab, setTab] = useState<"habilidades" | "lore" | "skins" | "curiosidades">("habilidades");
   const [activeSpell, setActiveSpell] = useState<number | null>(null);
+  const [skinModal, setSkinModal] = useState<Skin | null>(null);
 
   useEffect(() => {
     if (!champId) return;
     setLoading(true);
+    setSkinModal(null);
+    setTab("habilidades");
+    setActiveSpell(null);
     fetch(`https://ddragon.leagueoflegends.com/cdn/${DDV}/data/es_ES/champion/${champId}.json`)
       .then((r) => r.json())
       .then((data) => {
@@ -143,7 +177,7 @@ export default function ChampionProfilePage() {
                   <motion.div
                     initial={{ width: 0 }}
                     animate={{ width: `${champ.info[k] * 10}%` }}
-                    transition={{ duration: 0.8, delay: 0.3 }}
+                    transition={{ duration: 1.2, delay: 0.3, ease: [0.23, 1, 0.32, 1] }}
                     className="h-full"
                     style={{ backgroundColor: "#C8AA6E" }}
                   />
@@ -266,24 +300,29 @@ export default function ChampionProfilePage() {
         {/* SKINS */}
         {tab === "skins" && (
           <div>
+            <p className="font-sans text-[#F0E6D3]/40 text-sm mb-4">Click en cualquier skin para verla en alta resolución</p>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {champ.skins.map((s) => (
                 <motion.div
                   key={s.id}
+                  layoutId={`skin-${s.id}`}
                   whileHover={{ y: -4 }}
-                  className="group relative overflow-hidden"
+                  onClick={() => setSkinModal(s)}
+                  className="group relative overflow-hidden cursor-pointer"
                 >
                   <div className="relative" style={{ aspectRatio: "2/1" }}>
-                    <img
+                    <motion.img
+                      layoutId={`skin-img-${s.id}`}
                       src={`https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${champ.id}_${s.num}.jpg`}
                       alt={s.name}
                       loading="lazy"
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#050E1A] via-transparent to-transparent" />
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity" style={{ boxShadow: "inset 0 0 0 2px #C8AA6E80" }} />
                   </div>
                   <div className="p-3 bg-[#091428]/80 border-t border-[#C8AA6E]/10">
-                    <p className="font-serif text-[#F0E6D3] text-sm font-bold">{s.name === "default" ? `${champ.name} Clásico` : s.name}</p>
+                    <p className="font-serif text-[#F0E6D3] text-sm font-bold">{translateSkinName(s.name, champ.name)}</p>
                     {s.name !== "default" && <p className="font-sans text-[#C8AA6E]/50 text-xs mt-0.5">Skin #{s.num}</p>}
                   </div>
                 </motion.div>
@@ -334,6 +373,52 @@ export default function ChampionProfilePage() {
           &larr; Volver a todos los campeones
         </Link>
       </div>
+
+      {/* Skin Lightbox */}
+      <AnimatePresence>
+        {skinModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSkinModal(null)}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#050E1A]/95 backdrop-blur-md cursor-pointer"
+          >
+            <motion.div
+              layoutId={`skin-${skinModal.id}`}
+              onClick={(e) => e.stopPropagation()}
+              className="relative max-w-6xl w-full max-h-[90vh] overflow-hidden border border-[#C8AA6E]/60 cursor-default"
+            >
+              <motion.img
+                layoutId={`skin-img-${skinModal.id}`}
+                src={`https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${champ.id}_${skinModal.num}.jpg`}
+                alt={skinModal.name}
+                className="w-full h-full object-cover"
+                style={{ maxHeight: "85vh" }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#050E1A] via-transparent to-transparent pointer-events-none" />
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0, transition: { delay: 0.3 } }}
+                className="absolute bottom-0 left-0 right-0 p-6 md:p-8"
+              >
+                <p className="font-sans text-xs tracking-[0.4em] uppercase mb-2 text-[#C8AA6E]">{champ.name}</p>
+                <h2 className="font-serif text-3xl md:text-5xl font-black text-[#F0E6D3] uppercase mb-2">{translateSkinName(skinModal.name, champ.name)}</h2>
+                {skinModal.name !== "default" && <p className="font-sans text-[#C8AA6E]/50 text-sm">Skin oficial #{skinModal.num}</p>}
+              </motion.div>
+              <button
+                onClick={() => setSkinModal(null)}
+                className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center bg-[#050E1A]/80 border border-[#C8AA6E]/40 hover:bg-[#C8AA6E] hover:text-[#050E1A] text-[#C8AA6E] transition-all"
+                aria-label="Cerrar"
+              >
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                  <path d="M2 2L16 16M16 2L2 16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                </svg>
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
