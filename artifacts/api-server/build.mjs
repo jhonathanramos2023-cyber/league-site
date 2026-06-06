@@ -100,8 +100,6 @@ async function buildAll() {
       "puppeteer",
       "puppeteer-core",
       "electron",
-      "zod",
-      "drizzle-orm",
       "pg",
     ],
     sourcemap: "linked",
