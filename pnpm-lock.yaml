@@ -203,7 +203,7 @@ importers:
         specifier: ^10
         version: 10.5.0
       zod:
-        specifier: ^3.25.76
+        specifier: 'catalog:'
         version: 3.25.76
     devDependencies:
       '@types/cookie-parser':
